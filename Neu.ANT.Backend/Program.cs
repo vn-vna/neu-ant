@@ -1,4 +1,7 @@
 
+using Neu.ANT.Backend.Configurations;
+using Neu.ANT.Backend.Services;
+
 namespace Neu.ANT.Backend
 {
     public class Program
@@ -7,16 +10,19 @@ namespace Neu.ANT.Backend
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.Configure<DatabaseConfigurations>(builder.Configuration.GetSection("Database"));
+            builder.Services
+                .AddSingleton<DatabaseConnectionService>()
+                .AddSingleton<UserDbService>()
+                .AddSingleton<TokenDbService>()
+                .AddSingleton<AuthenticationService>();
+
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -24,10 +30,7 @@ namespace Neu.ANT.Backend
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();
