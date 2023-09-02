@@ -14,8 +14,5 @@ namespace Neu.ANT.Common.Models
 
         [JsonProperty("name")]
         public string? DisplayName { get; set; } = null;
-
-        [JsonProperty("members")]
-        public List<string> Members { get; set; } = new List<string>();
     }
 }
