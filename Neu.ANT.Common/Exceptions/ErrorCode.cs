@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Neu.ANT.Common.Utilities
+namespace Neu.ANT.Common.Exceptions
 {
     public enum ErrorCode
     {
@@ -15,6 +15,9 @@ namespace Neu.ANT.Common.Utilities
         UserNotFound,
         AuthenticationFailed,
         TokenExpired,
-        InvalidToken
+        InvalidToken,
+
+        // Client Errors
+        LoginFailed
     }
 }

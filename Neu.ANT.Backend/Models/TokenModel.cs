@@ -13,9 +13,9 @@ namespace Neu.ANT.Backend.Models
         public string UserId { get; set; } = null!;
 
         [JsonProperty("created")]
-        public string DateCreated { get; set; } = null!;
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         [JsonProperty("expired")]
-        public string DateExpired { get; set; } = null!;
+        public DateTime DateExpired { get; set; } = DateTime.UtcNow;
     }
 }

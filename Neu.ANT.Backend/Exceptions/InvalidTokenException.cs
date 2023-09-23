@@ -5,7 +5,7 @@ namespace Neu.ANT.Backend.Exceptions
     public class InvalidTokenException : AntBaseException
     {
         public InvalidTokenException()
-            : base(Common.Utilities.ErrorCode.InvalidToken, "Cannot verify token")
+            : base(Common.Exceptions.ErrorCode.InvalidToken, "Cannot verify token")
         { }
     }
 }

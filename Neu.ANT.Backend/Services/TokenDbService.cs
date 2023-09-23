@@ -25,8 +25,8 @@ namespace Neu.ANT.Backend.Services
             {
                 Token = Guid.NewGuid().ToString(),
                 UserId = userid,
-                DateCreated = crrTime.ToISO8601(),
-                DateExpired = crrTime.Add(tokenDuration).ToISO8601()
+                DateCreated = crrTime,
+                DateExpired = crrTime.Add(tokenDuration)
             };
 
             await TokenCollection.InsertOneAsync(token);
@@ -35,6 +35,7 @@ namespace Neu.ANT.Backend.Services
         }
 
         public async Task<TokenModel?> GetToken(string token)
-            => (await TokenCollection.Find(r => r.Token == token).ToListAsync()).FirstOrDefault();
+            => (await TokenCollection.Find(r => r.Token == token).ToListAsync())
+                .FirstOrDefault();
     }
 }

@@ -1,8 +1,16 @@
-﻿namespace Neu.ANT.Backend.Models
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+
+namespace Neu.ANT.Backend.Models
 {
-    public class GroupRelationModel
-    {
-        public string GroupId { get; set; }
-        public string UserId { get; set; }
-    }
+  public class GroupRelationModel
+  {
+    [BsonId]
+    [JsonProperty("gid")]
+    public string GroupId { get; set; }
+
+    [BsonId]
+    [JsonProperty("uid")]
+    public string UserId { get; set; }
+  }
 }

@@ -5,7 +5,7 @@ namespace Neu.ANT.Backend.Exceptions
     public class TokenExpiredException : AntBaseException
     {
         public TokenExpiredException()
-            : base(Common.Utilities.ErrorCode.TokenExpired, "Token expired")
+            : base(Common.Exceptions.ErrorCode.TokenExpired, "Token expired")
         { }
     }
 }

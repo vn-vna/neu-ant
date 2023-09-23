@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Neu.ANT.Backend.Services;
+using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Exceptions;
 using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.Authenticate;
@@ -17,61 +19,31 @@ namespace Neu.ANT.Backend.Controllers
             _authService = authService;
         }
 
-        [HttpPost("/sign-up")]
-        public async Task<IActionResult> SignUp([FromQuery] string? username, [FromQuery] string? password)
+        [HttpPost("sign-up")]
+        public async Task<IActionResult> SignUp([FromQuery] string username, [FromQuery] string password)
         {
-            ApiResult<SignUpResult> res = new();
+            var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.SignUp(username, password))
+                .Execute(uid => new ApiSignUpResult() { UserId = uid });
 
-            if (username is null || password is null)
-            {
-                res.Success = false;
-                res.Error = "Username or password must not be empty";
-            }
-            else
-            {
-                try
-                {
-                    var uid = await _authService.SignUp(username, password);
-                    res.Success = true;
-                    res.Result = new() { UserId = uid };
-                }
-                catch (Exception ex)
-                {
-                    res.Success = false;
-                    res.Error = ex.Message;
-                }
-            }
-
-            return Json(res);
+            return Json(result);
         }
 
-        [HttpGet("/sign-in")]
+        [HttpGet("sign-in")]
         public async Task<IActionResult> SignIn([FromQuery] string username, [FromQuery] string password)
         {
-            ApiResult<Common.Models.ApiResponse.Authenticate.SignInResult> res = new() { };
+            var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.SignIn(username, password))
+                .Execute(token => new ApiSignInResult() { TokenId = token });
 
-            if (username is null || password is null)
-            {
-                res.Success = false;
-                res.Error = "Username or password must not be empty";
-            }
-            else
-            {
-                try
-                {
-                    var token = await _authService.SignIn(username, password);
-                    res.Success = true;
-                    res.Result = new() { TokenId = token };
-                }
-                catch (AntBaseException abex)
-                {
-                    res.Success= false;
-                    res.Error = abex.Message;
-                    res.ErrorCode = (int) abex.ErrorCode;
-                }
-            }
+            return Json(result);
+        }
 
-            return Json(res);
+        [HttpGet("uid")]
+        public async Task<IActionResult> GetUid([FromHeader(Name = "TOKEN")] string token)
+        {
+            var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.GetUidFromToken(token))
+                .Execute(uid => new ApiGetUidResult() { UserId = uid });
+
+            return Json(result);
         }
     }
 }

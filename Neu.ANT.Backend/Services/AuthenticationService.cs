@@ -19,7 +19,7 @@ namespace Neu.ANT.Backend.Services
             _userDb = userDb;
         }
 
-        public async Task<string?> SignIn(string username, string password)
+        public async Task<string> SignIn(string username, string password)
         {
             var uid = await _userDb.SignIn(username, password);
 
@@ -41,7 +41,6 @@ namespace Neu.ANT.Backend.Services
             return await _userDb.CreateUser(username, password);
         }
 
-
         public async Task<string> GetUidFromToken(string token)
         {
             var tokenObj = await _tokenDb.GetToken(token);
@@ -50,12 +49,13 @@ namespace Neu.ANT.Backend.Services
                 throw new InvalidTokenException();
             }
 
-            if (DateTime.UtcNow > IsoDatetime.ParseIDO8601(tokenObj.DateExpired))
+            if (DateTime.UtcNow > tokenObj.DateExpired)
             {
                 throw new TokenExpiredException();
             }
 
             return tokenObj.UserId;
         }
+
     }
 }
