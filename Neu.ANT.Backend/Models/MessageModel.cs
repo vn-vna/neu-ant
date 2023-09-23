@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace Neu.ANT.Common.Models
 {
-    public class MessageModel
-    {
-        [BsonId]
-        [JsonProperty("id")]
-        public string MessageId { get; set; } = null!;
+  public class MessageModel
+  {
+    [BsonId]
+    [JsonProperty("id")]
+    public string MessageId { get; set; } = null!;
 
-        [JsonProperty("sender")]
-        public string Sender { get; set; } = null!;
+    [JsonProperty("sender")]
+    public string Sender { get; set; } = null!;
 
-        [JsonProperty("group")]
-        public string GroupId { get; set; } = null!;
+    [JsonProperty("group")]
+    public string GroupId { get; set; } = null!;
 
-        [JsonProperty("content")]
-        public string Content { get; set; } = string.Empty;
+    [JsonProperty("content")]
+    public string Content { get; set; } = string.Empty;
 
-        [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
-        [JsonProperty("sent-datetime")]
-        public DateTime SentDateTime { get; set; } = DateTime.MinValue;
-    }
+    [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
+    [JsonProperty("sent-datetime")]
+    public DateTime SentDateTime { get; set; } = DateTime.MinValue;
+  }
 }

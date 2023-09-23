@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Neu.ANT.Common.Models
 {
-    public class GroupModel
-    {
-        [JsonProperty("id")]
-        public string Id { get; set; } = null!;
+  public class GroupModel
+  {
+    [JsonProperty("id")]
+    public string Id { get; set; } = null!;
 
-        [JsonProperty("name")]
-        public string? DisplayName { get; set; } = null;
-    }
+    [JsonProperty("name")]
+    public string? DisplayName { get; set; } = null;
+  }
 }

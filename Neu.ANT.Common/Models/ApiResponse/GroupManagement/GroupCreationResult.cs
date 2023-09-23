@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Neu.ANT.Common.Models.ApiResponse.Authenticate
+namespace Neu.ANT.Common.Models.ApiResponse.GroupManagement
 {
-  public class ApiSignInResult
+  public class GroupCreationResult
   {
-    [JsonProperty("token")]
-    public string? TokenId { get; set; }
+    [JsonProperty("gid")]
+    public string GroupId { get; set; }
   }
 }
