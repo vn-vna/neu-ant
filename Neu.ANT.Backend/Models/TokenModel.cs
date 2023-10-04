@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
 namespace Neu.ANT.Backend.Models
@@ -7,6 +8,7 @@ namespace Neu.ANT.Backend.Models
   {
     [BsonId]
     [JsonProperty("token_id")]
+    [BsonRepresentation(BsonType.String)]
     public string Token { get; set; } = null!;
 
     [JsonProperty("uid")]

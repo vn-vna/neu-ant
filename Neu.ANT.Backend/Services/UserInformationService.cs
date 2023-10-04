@@ -11,13 +11,13 @@ using System.Linq;
 
 namespace Neu.ANT.Backend.Services
 {
-  public class UserDbService
+  public class UserInformationService
   {
     public readonly IMongoCollection<UserModel> UsersCollection;
 
-    private readonly TokenDbService _tokenService;
+    private readonly SessionTokenService _tokenService;
 
-    public UserDbService(DatabaseConnectionService dbService)
+    public UserInformationService(DatabaseConnectionService dbService)
     {
       UsersCollection = dbService.MongoDatabase.GetCollection<UserModel>("userdb");
     }

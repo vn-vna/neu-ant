@@ -14,7 +14,7 @@ namespace Neu.ANT.Common.Clients
 {
   public class AuthenticationClient
   {
-    private readonly string? _userToken;
+    private string? _userToken;
     private readonly string? _clientUrl;
 
     public string? UserToken { get { return _userToken; } }
@@ -24,12 +24,12 @@ namespace Neu.ANT.Common.Clients
       this._clientUrl = clientUrl;
     }
 
-    public string SignIn(string username, string password)
+    public async Task SignIn(string username, string password)
     {
       var request = new RestRequest("/sign-in");
       request.AddQueryParameter("username", username);
       request.AddQueryParameter("password", password);
-      var response = RestClient.Get(request);
+      var response = await RestClient.GetAsync(request);
 
       var result = JsonConvert.DeserializeObject<ApiResult<ApiSignInResult>>(response.Content);
 
@@ -38,10 +38,10 @@ namespace Neu.ANT.Common.Clients
         throw new LoginFailedException($"Cannot log in as user {username}");
       }
 
-      return result.Result.TokenId;
+       this._userToken = result.Result.TokenId;
     }
 
-    public async Task<string> SignUp(string username, string password)
+    public async Task SignUp(string username, string password)
     {
       var request = new RestRequest("sign-up");
       request.AddQueryParameter("username", username);
@@ -54,8 +54,6 @@ namespace Neu.ANT.Common.Clients
       {
         throw new LoginFailedException($"Cannot log in as user {username}");
       }
-
-      return result.Result.UserId;
     }
 
     public RestClient RestClient

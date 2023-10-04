@@ -7,12 +7,12 @@ namespace Neu.ANT.Backend.Services
   public class AuthenticationService
   {
     private readonly ILogger<AuthenticationService> _logger;
-    private readonly TokenDbService _tokenDb;
-    private readonly UserDbService _userDb;
+    private readonly SessionTokenService _tokenDb;
+    private readonly UserInformationService _userDb;
 
     public AuthenticationService(
         ILogger<AuthenticationService> logger,
-        TokenDbService tokenDb, UserDbService userDb)
+        SessionTokenService tokenDb, UserInformationService userDb)
     {
       _logger = logger;
       _tokenDb = tokenDb;
@@ -53,6 +53,8 @@ namespace Neu.ANT.Backend.Services
       {
         throw new TokenExpiredException();
       }
+
+      await _tokenDb.ExtendToken(token);
 
       return tokenObj.UserId;
     }

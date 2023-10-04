@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Neu.ANT.Common.Models
   {
     [BsonId]
     [JsonProperty("id")]
+    [BsonRepresentation(BsonType.String)]
     public string MessageId { get; set; } = null!;
 
     [JsonProperty("sender")]

@@ -7,9 +7,9 @@ namespace Neu.ANT.Backend.Controllers
   [Route("/api/test")]
   public class HomeController : Controller
   {
-    private readonly UserDbService _userDb;
+    private readonly UserInformationService _userDb;
 
-    public HomeController(UserDbService userDb)
+    public HomeController(UserInformationService userDb)
     {
       _userDb = userDb;
     }

@@ -3,19 +3,22 @@ using Neu.ANT.Common.Models;
 
 namespace Neu.ANT.Backend.Services
 {
-  public class GroupDbService
+  public class GroupManagementService
   {
     private readonly IMongoCollection<GroupModel> _groupCollection;
     private readonly ILogger _logger;
 
-    public GroupDbService(IMongoDatabase mongoDatabase, ILogger<GroupDbService> logger)
+    public GroupManagementService(DatabaseConnectionService databaseConnection, ILogger<GroupManagementService> logger)
     {
       _logger = logger;
-      _groupCollection = mongoDatabase.GetCollection<GroupModel>("groupdb");
+      _groupCollection = databaseConnection.MongoDatabase.GetCollection<GroupModel>("groupdb");
     }
 
-    public async Task<GroupModel?> GetGroup(string id)
-        => (await _groupCollection.Find(r => r.Id == id).ToListAsync()).FirstOrDefault();
+    public async Task<GroupModel?> GetGroupInfo(string id)
+        => await _groupCollection.Find(r => r.Id == id).FirstOrDefaultAsync();
+
+    public async Task<List<GroupModel>> GetGroupInfos(List<string> ids)
+      => await _groupCollection.Find(r => ids.Contains(r.Id)).ToListAsync();
 
     public async Task<string> CreateGroup()
     {

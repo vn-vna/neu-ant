@@ -16,8 +16,13 @@ namespace Neu.ANT.Common.Exceptions
     AuthenticationFailed,
     TokenExpired,
     InvalidToken,
+    
+    // Message group features
+    PermissionMissing,
+    InvitationExpired,
 
     // Client Errors
-    LoginFailed
+    LoginFailed,
+    AuthRequired
   }
 }
