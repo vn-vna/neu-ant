@@ -13,8 +13,8 @@ namespace Neu.ANT.Backend.Services
 
     public GroupRelationService(DatabaseConnectionService databaseService)
     {
-      _groupRelationDatabase = databaseService.MongoDatabase.GetCollection<GroupRelationModel>("grpdb");
-      _groupInvitationDatabase = databaseService.MongoDatabase.GetCollection<GroupInvitationModel>("grpinv");
+      _groupRelationDatabase = databaseService.MongoDatabase.GetCollection<GroupRelationModel>("reldb");
+      _groupInvitationDatabase = databaseService.MongoDatabase.GetCollection<GroupInvitationModel>("invdb");
     }
 
     public async Task<List<string>> GetGroupsByUserId(string userId)
@@ -69,20 +69,28 @@ namespace Neu.ANT.Backend.Services
     {
       if (!await IsInviter(senderId, gid))
       {
-        throw new CreateInvitationErrorException(senderId, gid);
+        throw new GroupPermissionMissingException(senderId, gid);
       }
 
-      return null;
+      var invId = MangleInvitationToEveryoneId(senderId, gid);
+
+      return invId;
     }
 
     public async Task<string> CreateInvitationToUser(string senderUid, string gid, string receiverUid)
     {
       if (!await IsInviter(senderUid, gid))
       {
-        throw new CreateInvitationErrorException(senderUid, gid);
+        throw new GroupPermissionMissingException(senderUid, gid);
       }
 
-      string invId = MangleInvitationId(senderUid, gid, receiverUid);
+      var relation = await GetRelation(receiverUid, gid);
+      if (relation is not null)
+      {
+        throw new RelationExistsException(receiverUid, gid);
+      }
+
+      string invId = MangleInvitationToUserId(senderUid, gid, receiverUid);
       var invitation = await GetInvitationById(invId);
       var created = DateTime.UtcNow;
       var expired = created + new TimeSpan(7, 0, 0, 0); // The invitation will be expired after 7 days
@@ -103,6 +111,9 @@ namespace Neu.ANT.Backend.Services
       return invId;
     }
 
+    public async Task RemoveInvitationById(string invId)
+        => await _groupInvitationDatabase.DeleteOneAsync(r => r.InvitationId == invId);
+
     public async Task<string> JoinByInvitationId(string userId, string invitationId)
     {
       var invitation = await GetInvitationById(invitationId);
@@ -117,16 +128,31 @@ namespace Neu.ANT.Backend.Services
         throw new InvitationExpiredException();
       }
 
-      if (invitation.ReceiverId != null && invitation.ReceiverId != userId)
+      if (invitation.ReceiverId == null)
       {
-        throw new InvalidInvitationException();
+        var relId = await CreateRelation(userId, invitation.GroupId, new RelationPermission
+        {
+          IsAdmin = false,
+          IsInviter = true
+        });
+
+        return relId;
       }
 
-      return await CreateRelation(userId, invitationId, new RelationPermission
+      if (invitation.ReceiverId == userId)
       {
-        IsAdmin = false,
-        IsInviter = true,
-      });
+        var relId = await CreateRelation(userId, invitation.GroupId, new RelationPermission
+        {
+          IsAdmin = false,
+          IsInviter = true,
+        });
+
+        await RemoveInvitationById(invitationId);
+
+        return relId;
+      }
+
+      throw new InvalidInvitationException();
     }
 
     public string MangleRelationId(string uid, string gid)
@@ -134,10 +160,14 @@ namespace Neu.ANT.Backend.Services
       return HashUtils.SHA512($"{uid}@{gid}");
     }
 
-
-    public string MangleInvitationId(string sender, string gid, string receiver)
+    public string MangleInvitationToEveryoneId(string sender, string gid)
     {
-      return HashUtils.SHA512($"{sender}@{gid} -> {receiver}");
+      return HashUtils.MD5($"{sender}@{gid} # {Guid.NewGuid()}");
+    }
+
+    public string MangleInvitationToUserId(string sender, string gid, string receiver)
+    {
+      return HashUtils.MD5($"{sender}@{gid} -> {receiver}");
     }
 
     public async Task<bool> IsInviter(string uid, string gid)
