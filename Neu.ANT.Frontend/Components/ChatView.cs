@@ -16,5 +16,39 @@ namespace Neu.ANT.Frontend.Components
     {
       InitializeComponent();
     }
+
+    private void ChatView_Load(object sender, EventArgs e)
+    {
+      ResponsiveResizeComponents();
+    }
+
+    private void pn_MsgHistory_Resize(object sender, EventArgs e)
+    {
+      ResponsiveResizeComponents();
+    }
+
+    private void ResponsiveResizeComponents()
+    {
+      this.SuspendLayout();
+      pn_Header.Size = new Size()
+      {
+        Width = this.Width,
+        Height = 40
+      };
+
+      pn_Footer.Size = new Size()
+      {
+        Width = this.Width,
+        Height = 40
+      };
+
+      pn_TextBox.Size = new Size()
+      {
+        Width = this.Width - 40,
+        Height = 40
+      };
+
+      this.ResumeLayout(true);
+    }
   }
 }

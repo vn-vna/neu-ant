@@ -62,7 +62,7 @@
       // 
       // pn_Summaries
       // 
-      pn_Summaries.BackColor = Color.Teal;
+      pn_Summaries.BackColor = Color.DarkCyan;
       pn_Summaries.Controls.Add(pn_SummariesInner);
       pn_Summaries.Dock = DockStyle.Left;
       pn_Summaries.Location = new Point(0, 0);

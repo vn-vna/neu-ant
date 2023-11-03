@@ -16,5 +16,33 @@ namespace Neu.ANT.Frontend.Components
     {
       InitializeComponent();
     }
+
+    private void GroupView_Load(object sender, EventArgs e)
+    {
+      ResponsiveResizeComponents();
+    }
+
+    private void GroupView_Resize(object sender, EventArgs e)
+    {
+
+      ResponsiveResizeComponents();
+    }
+
+    private void ResponsiveResizeComponents()
+    {
+      this.SuspendLayout();
+      pn_GroupSideBar.Size = new Size()
+      {
+        Width = 300,
+        Height = this.Height
+      };
+
+      pn_ChatViewZone.Size = new Size()
+      {
+        Width = this.Width - 300,
+        Height = this.Height
+      };
+      this.ResumeLayout(true);
+    }
   }
 }
