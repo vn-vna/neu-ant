@@ -3,23 +3,25 @@ using Neu.ANT.Backend.Services;
 
 namespace Neu.ANT.Backend.Controllers
 {
-    [ApiController]
-    [Route("/api/test")]
-    public class HomeController : Controller
+  [ApiController]
+  [Route("/api/test")]
+  public class HomeController : Controller
+  {
+    private readonly UserInformationService _userDb;
+
+    public HomeController(UserInformationService userDb)
     {
-        private readonly UserDbService _userDb;
-
-        public HomeController(UserDbService userDb)
-        {
-            _userDb = userDb;
-        }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return Json(new { 
-                lmfao = 0
-            });
-        }
+      _userDb = userDb;
     }
+
+    [HttpGet]
+    [Route("/")]
+    public IActionResult Index()
+    {
+      return Json(new
+      {
+        status = "OK"
+      });
+    }
+  }
 }

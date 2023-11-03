@@ -1,4 +1,4 @@
-﻿using Neu.ANT.Common.Utilities;
+﻿using Neu.ANT.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Neu.ANT.Common.Exceptions
 {
-    public class AntBaseException : Exception
+  public class AntBaseException : Exception
+  {
+    private readonly ErrorCode _errorCode;
+
+    public ErrorCode ErrorCode => _errorCode;
+
+    public AntBaseException(ErrorCode code, string message) : base(message)
     {
-        private readonly ErrorCode _errorCode;
-
-        public ErrorCode ErrorCode => _errorCode;
-
-        public AntBaseException(ErrorCode code, string message): base(message) {
-            _errorCode = code;
-        }
+      _errorCode = code;
     }
+  }
 }

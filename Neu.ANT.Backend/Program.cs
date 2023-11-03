@@ -1,39 +1,59 @@
 
 using Neu.ANT.Backend.Configurations;
 using Neu.ANT.Backend.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Neu.ANT.Backend
 {
-    public class Program
+  public static class Program
+  {
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.Configure<DatabaseConfigurations>(builder.Configuration.GetSection("Database"));
-            builder.Services
-                .AddSingleton<DatabaseConnectionService>()
-                .AddSingleton<UserDbService>()
-                .AddSingleton<TokenDbService>()
-                .AddSingleton<AuthenticationService>();
-
-
-            var app = builder.Build();
-
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseAuthorization();
-            app.MapControllers();
-
-            app.Run();
-        }
+      CreateServer().Run();
     }
+
+    public static WebApplication CreateServer()
+    {
+      var builder = WebApplication
+          .CreateBuilder();
+
+      builder.CollectConfiguration<DatabaseConfigurations>("Database");
+      builder.ConfigureServices();
+
+      var app = builder.Build();
+
+      if (app.Environment.IsDevelopment())
+      {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+      }
+
+      app.UseHttpsRedirection();
+      app.UseAuthorization();
+      app.MapControllers();
+
+      return app;
+    }
+
+    public static void CollectConfiguration<T>(this WebApplicationBuilder builder, string section)
+        where T : class
+        => builder.Services.Configure<T>(builder.Configuration.GetSection(section));
+
+    public static void ConfigureServices(this WebApplicationBuilder builder)
+    {
+
+      builder.Services.AddEndpointsApiExplorer();
+      builder.Services.AddSwaggerGen();
+      builder.Services.AddSingleton<DatabaseConnectionService>();
+
+      builder.Services.AddSingleton<UserInformationService>();
+      builder.Services.AddSingleton<SessionTokenService>();
+      builder.Services.AddSingleton<GroupManagementService>();
+      builder.Services.AddSingleton<GroupRelationService>();
+      builder.Services.AddSingleton<MessageManagementService>();
+      builder.Services.AddSingleton<AuthenticationService>();
+
+      builder.Services.AddControllers().AddNewtonsoftJson();
+    }
+  }
 }
