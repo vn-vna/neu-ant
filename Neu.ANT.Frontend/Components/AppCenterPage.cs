@@ -27,18 +27,28 @@ namespace Neu.ANT.Frontend.Components
       pn_Content.SuspendLayout();
       pn_Content.Controls.Clear();
 
+      btn_UserPreference.BackColor = Color.Teal;
+      btn_Notification.BackColor = Color.Teal;
+      btn_Group.BackColor = Color.Teal;
+
       switch (state)
       {
         case AppCenterPageState.UserView:
           pn_Content.Controls.Add(new UserView());
+          btn_UserPreference.BackColor = Color.LightSeaGreen;
           break;
 
         case AppCenterPageState.GroupView:
           pn_Content.Controls.Add(new GroupView());
+          btn_Group.BackColor = Color.LightSeaGreen;
           break;
 
         case AppCenterPageState.ChatView:
           pn_Content.Controls.Add(new ChatView());
+          break;
+
+        case AppCenterPageState.NotificationView:
+          btn_Notification.BackColor = Color.LightSeaGreen;
           break;
 
         default:
@@ -58,6 +68,16 @@ namespace Neu.ANT.Frontend.Components
       _stateController.SetState(AppCenterPageState.UserView);
     }
 
+    private void btn_Group_Click(object sender, EventArgs e)
+    {
+      _stateController.SetState(AppCenterPageState.GroupView);
+    }
+
+    private void btn_Notification_Click(object sender, EventArgs e)
+    {
+      _stateController.SetState(AppCenterPageState.NotificationView);
+    }
+
     public CommonStateController<AppCenterPageState> StateController => _stateController;
 
     public enum AppCenterPageState
@@ -65,7 +85,8 @@ namespace Neu.ANT.Frontend.Components
       Undefined,
       UserView,
       GroupView,
-      ChatView
+      ChatView,
+      NotificationView
     }
   }
 }
