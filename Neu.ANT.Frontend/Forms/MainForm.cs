@@ -27,7 +27,15 @@ namespace Neu.ANT.Frontend.Forms
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-      _stateController.SetState(MainFormState.WelcomePage);
+      try
+      {
+        AccountState.Instance.AuthClient.LoadToken(Properties.Settings.Default.SavedToken);
+        _stateController.SetState(MainFormState.AppCenter);
+      }
+      catch (SignInFailedException)
+      {
+        _stateController.SetState(MainFormState.WelcomePage);
+      }
     }
 
     private void MainForm_ListenState(MainFormState state)
@@ -35,20 +43,19 @@ namespace Neu.ANT.Frontend.Forms
       this.Invoke(new Action(() =>
       {
         SuspendLayout();
-        panel1.Controls.Clear();
+        pn_Cotent.Controls.Clear();
 
         switch (state)
         {
           case MainFormState.WelcomePage:
-            panel1.Controls.Add(WelcomePage.Instance);
+            pn_Cotent.Controls.Add(new WelcomePage());
             break;
 
-          case MainFormState.MainPage:
-            panel1.Controls.Add(AppCenterPage.Instance);
+          case MainFormState.AppCenter:
+            pn_Cotent.Controls.Add(new AppCenterPage());
             break;
 
-          case MainFormState.LoadingPage:
-            panel1.Controls.Add(LoadingPage.Instance);
+          default:
             break;
         }
 
@@ -57,14 +64,13 @@ namespace Neu.ANT.Frontend.Forms
     }
 
     public static MainForm Instance => _instance.Value;
-    public CommonStateController<MainFormState> StateController => _stateController;
+    public CommonStateController<MainFormState> FormStateController => _stateController;
 
     public enum MainFormState
     {
       Undefined,
       WelcomePage,
-      LoadingPage,
-      MainPage
+      AppCenter
     }
   }
 }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Neu.ANT.Frontend.Components
 {
-  public partial class MainSideBarItemControl : UserControl
+  public partial class ChatView : UserControl
   {
-    public MainSideBarItemControl()
+    public ChatView()
     {
       InitializeComponent();
     }

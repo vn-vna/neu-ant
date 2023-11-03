@@ -37,7 +37,7 @@ namespace Neu.ANT.Frontend.Forms
           break;
 
         case LoginFormState.ShowLogin:
-          basePanel.Controls.Add(loginPanel);
+          basePanel.Controls.Add(pn_LoginPanel);
           break;
 
         case LoginFormState.Loading:
@@ -124,19 +124,20 @@ namespace Neu.ANT.Frontend.Forms
       {
         this.Invoke(new Action(() =>
         {
+          bool savePassword = cb_RememberPassword.Checked;
+          if (savePassword)
+          {
+            Properties.Settings.Default.SavedToken = AccountState.Instance.AuthClient.UserToken;
+            Properties.Settings.Default.Save();
+          }
           Close();
-          MainForm.Instance.StateController.SetState(MainForm.MainFormState.MainPage);
+          MainForm.Instance.FormStateController.SetState(MainForm.MainFormState.AppCenter);
         }));
       }
       else
       {
         _stateController.SetState(LoginFormState.ShowLogin);
       }
-    }
-
-    private void btn_SubmitLogin_Click_1(object sender, EventArgs e)
-    {
-      PerformLogin();
     }
 
     public enum LoginFormState
