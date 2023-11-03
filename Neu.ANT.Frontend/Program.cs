@@ -1,3 +1,6 @@
+using Neu.ANT.Frontend.Forms;
+using System.Runtime.InteropServices;
+
 namespace Neu.ANT.Frontend
 {
   internal static class Program
@@ -11,7 +14,7 @@ namespace Neu.ANT.Frontend
       // To customize application configuration such as set high DPI settings or default font,
       // see https://aka.ms/applicationconfiguration.
       ApplicationConfiguration.Initialize();
-      Application.Run(new Form1());
+      Application.Run(MainForm.Instance);
     }
   }
 }
