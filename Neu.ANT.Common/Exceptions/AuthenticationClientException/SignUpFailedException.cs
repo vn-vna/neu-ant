@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Neu.ANT.Common.Exceptions.AuthenticationClientException
 {
-  class LoginFailedException : AntBaseException
+  public class SignUpFailedException : AntBaseException
   {
-    public LoginFailedException(string reason)
+    public SignUpFailedException(string reason)
       : base(ErrorCode.LoginFailed, reason)
     { }
   }

@@ -24,35 +24,35 @@ namespace Neu.ANT.Common.Clients
       this._clientUrl = clientUrl;
     }
 
-    public async Task SignIn(string username, string password)
+    public void SignIn(string username, string password)
     {
-      var request = new RestRequest("/sign-in");
+      var request = new RestRequest("sign-in");
       request.AddQueryParameter("username", username);
       request.AddQueryParameter("password", password);
-      var response = await RestClient.GetAsync(request);
+
+      var response = RestClient.Get(request);
 
       var result = JsonConvert.DeserializeObject<ApiResult<ApiSignInResult>>(response.Content);
-
       if (!result.Success)
       {
-        throw new LoginFailedException($"Cannot log in as user {username}");
+        throw new SignInFailedException($"Cannot log in as user {username}: [CODE {result.ErrorCode}] {result.Error}");
       }
 
-       this._userToken = result.Result.TokenId;
+      this._userToken = result.Result.TokenId;
     }
 
-    public async Task SignUp(string username, string password)
+    public void SignUp(string username, string password)
     {
       var request = new RestRequest("sign-up");
       request.AddQueryParameter("username", username);
       request.AddQueryParameter("password", password);
-      var response = await RestClient.PostAsync(request);
+      var response = RestClient.Post(request);
 
       var result = JsonConvert.DeserializeObject<ApiResult<ApiSignUpResult>>(response.Content);
 
       if (!result.Success)
       {
-        throw new LoginFailedException($"Cannot log in as user {username}");
+        throw new SignInFailedException($"Cannot log in as user {username}");
       }
     }
 
