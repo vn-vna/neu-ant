@@ -103,9 +103,39 @@ namespace Neu.ANT.Frontend.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap User_Default {
+            get {
+                object obj = ResourceManager.GetObject("User_Default", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap User_Icon {
             get {
                 object obj = ResourceManager.GetObject("User_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UserDefault {
+            get {
+                object obj = ResourceManager.GetObject("UserDefault", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UserDefault32 {
+            get {
+                object obj = ResourceManager.GetObject("UserDefault32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

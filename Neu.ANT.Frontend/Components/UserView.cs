@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Neu.ANT.Frontend.Components
 {
-  public partial class MainSideBarControl : UserControl
+  public partial class UserView : UserControl
   {
-    public MainSideBarControl()
+    public UserView()
     {
       InitializeComponent();
     }

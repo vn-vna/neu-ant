@@ -1,13 +1,13 @@
-﻿namespace Neu.ANT.Frontend.Forms
+﻿namespace Neu.ANT.Frontend.Components
 {
-  partial class MainForm
+  partial class UserView
   {
-    /// <summary>
+    /// <summary> 
     /// Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
 
-    /// <summary>
+    /// <summary> 
     /// Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,40 +20,26 @@
       base.Dispose(disposing);
     }
 
-    #region Windows Form Designer generated code
+    #region Component Designer generated code
 
-    /// <summary>
-    /// Required method for Designer support - do not modify
+    /// <summary> 
+    /// Required method for Designer support - do not modify 
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent()
     {
-      pn_Cotent = new Panel();
       SuspendLayout();
       // 
-      // pn_Cotent
-      // 
-      pn_Cotent.Dock = DockStyle.Fill;
-      pn_Cotent.Location = new Point(0, 0);
-      pn_Cotent.Name = "pn_Cotent";
-      pn_Cotent.Size = new Size(1008, 561);
-      pn_Cotent.TabIndex = 0;
-      // 
-      // MainForm
+      // AccountCenter
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
-      ClientSize = new Size(1008, 561);
-      Controls.Add(pn_Cotent);
-      MinimumSize = new Size(1024, 560);
-      Name = "MainForm";
-      StartPosition = FormStartPosition.CenterScreen;
-      Text = "MainForm";
-      Load += MainForm_Load;
+      Name = "AccountCenter";
+      Size = new Size(879, 555);
       ResumeLayout(false);
     }
 
     #endregion
-    private Panel pn_Cotent;
+
   }
 }

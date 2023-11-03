@@ -1,6 +1,6 @@
 ﻿namespace Neu.ANT.Frontend.Components
 {
-  partial class LoadingPage
+  partial class ChatView
   {
     /// <summary> 
     /// Required designer variable.
@@ -28,37 +28,17 @@
     /// </summary>
     private void InitializeComponent()
     {
-      label1 = new Label();
       SuspendLayout();
       // 
-      // label1
-      // 
-      label1.Dock = DockStyle.Fill;
-      label1.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-      label1.ForeColor = Color.Teal;
-      label1.Location = new Point(0, 0);
-      label1.Margin = new Padding(0);
-      label1.Name = "label1";
-      label1.Size = new Size(931, 547);
-      label1.TabIndex = 0;
-      label1.Text = "LOADING...";
-      label1.TextAlign = ContentAlignment.MiddleCenter;
-      // 
-      // LoadingPage
+      // ChatView
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
-      Controls.Add(label1);
-      Margin = new Padding(0);
-      Name = "LoadingPage";
-      Size = new Size(931, 547);
-      Load += LoadingPage_Load;
-      Resize += LoadingPage_Resize;
+      Name = "ChatView";
+      Size = new Size(580, 579);
       ResumeLayout(false);
     }
 
     #endregion
-
-    private Label label1;
   }
 }

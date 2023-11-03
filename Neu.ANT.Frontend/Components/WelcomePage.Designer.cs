@@ -34,9 +34,9 @@
       pictureBox1 = new PictureBox();
       panel2 = new Panel();
       panel3 = new Panel();
-      label4 = new Label();
+      lb_SignUp = new Label();
       label3 = new Label();
-      button1 = new Button();
+      btn_SignIn = new Button();
       label2 = new Label();
       panel1.SuspendLayout();
       panel4.SuspendLayout();
@@ -95,27 +95,27 @@
       // 
       // panel3
       // 
-      panel3.Controls.Add(label4);
+      panel3.Controls.Add(lb_SignUp);
       panel3.Controls.Add(label3);
-      panel3.Controls.Add(button1);
+      panel3.Controls.Add(btn_SignIn);
       panel3.Controls.Add(label2);
       panel3.Location = new Point(55, 157);
       panel3.Name = "panel3";
       panel3.Size = new Size(313, 244);
       panel3.TabIndex = 0;
       // 
-      // label4
+      // lb_SignUp
       // 
-      label4.AutoSize = true;
-      label4.BackColor = Color.White;
-      label4.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point);
-      label4.ForeColor = Color.Teal;
-      label4.Location = new Point(115, 180);
-      label4.Name = "label4";
-      label4.Size = new Size(82, 15);
-      label4.TabIndex = 3;
-      label4.Text = "Đăng ký ngay!";
-      label4.Click += label4_Click;
+      lb_SignUp.AutoSize = true;
+      lb_SignUp.BackColor = Color.White;
+      lb_SignUp.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point);
+      lb_SignUp.ForeColor = Color.Teal;
+      lb_SignUp.Location = new Point(115, 180);
+      lb_SignUp.Name = "lb_SignUp";
+      lb_SignUp.Size = new Size(82, 15);
+      lb_SignUp.TabIndex = 3;
+      lb_SignUp.Text = "Đăng ký ngay!";
+      lb_SignUp.Click += lb_SignUp_Click;
       // 
       // label3
       // 
@@ -126,21 +126,21 @@
       label3.TabIndex = 2;
       label3.Text = "Bạn chưa có tài khoản?";
       // 
-      // button1
+      // btn_SignIn
       // 
-      button1.BackColor = Color.Teal;
-      button1.FlatAppearance.BorderSize = 0;
-      button1.FlatStyle = FlatStyle.Flat;
-      button1.ForeColor = Color.White;
-      button1.Location = new Point(59, 119);
-      button1.Margin = new Padding(0);
-      button1.Name = "button1";
-      button1.Size = new Size(195, 34);
-      button1.TabIndex = 1;
-      button1.TabStop = false;
-      button1.Text = "Đăng nhập";
-      button1.UseVisualStyleBackColor = false;
-      button1.Click += button1_Click;
+      btn_SignIn.BackColor = Color.Teal;
+      btn_SignIn.FlatAppearance.BorderSize = 0;
+      btn_SignIn.FlatStyle = FlatStyle.Flat;
+      btn_SignIn.ForeColor = Color.White;
+      btn_SignIn.Location = new Point(59, 119);
+      btn_SignIn.Margin = new Padding(0);
+      btn_SignIn.Name = "btn_SignIn";
+      btn_SignIn.Size = new Size(195, 34);
+      btn_SignIn.TabIndex = 1;
+      btn_SignIn.TabStop = false;
+      btn_SignIn.Text = "Đăng nhập";
+      btn_SignIn.UseVisualStyleBackColor = false;
+      btn_SignIn.Click += btn_SignIn_Click;
       // 
       // label2
       // 
@@ -162,6 +162,7 @@
       Controls.Add(panel1);
       Name = "WelcomePage";
       Size = new Size(932, 558);
+      Load += WelcomePage_Load;
       panel1.ResumeLayout(false);
       panel4.ResumeLayout(false);
       panel4.PerformLayout();
@@ -177,9 +178,9 @@
     private Panel panel1;
     private Panel panel2;
     private Panel panel3;
-    private Label label4;
+    private Label lb_SignUp;
     private Label label3;
-    private Button button1;
+    private Button btn_SignIn;
     private Label label2;
     private Panel panel4;
     private Label label1;

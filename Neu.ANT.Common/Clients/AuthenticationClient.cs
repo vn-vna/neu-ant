@@ -56,6 +56,25 @@ namespace Neu.ANT.Common.Clients
       }
     }
 
+    public void LoadToken(string token)
+    {
+      if (string.IsNullOrEmpty(token))
+      {
+        throw new SignInFailedException("No sign in token found");
+      }
+
+      var request = new RestRequest("uid");
+      request.AddHeader("TOKEN", token);
+      var response = RestClient.Get(request);
+
+      var result = JsonConvert.DeserializeObject<ApiResult<ApiGetUidResult>>(response.Content);
+
+      if (!result.Success)
+      {
+        throw new SignInFailedException("Cannot login with saved token");
+      }
+    }
+
     public RestClient RestClient
     {
       get

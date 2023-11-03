@@ -1,6 +1,6 @@
 ﻿namespace Neu.ANT.Frontend.Components
 {
-  partial class MainSideBarItemControl
+  partial class LoadingComponent
   {
     /// <summary> 
     /// Required designer variable.
@@ -28,18 +28,35 @@
     /// </summary>
     private void InitializeComponent()
     {
+      label1 = new Label();
       SuspendLayout();
       // 
-      // MainSideBarItem
+      // label1
+      // 
+      label1.Dock = DockStyle.Fill;
+      label1.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+      label1.ForeColor = Color.Teal;
+      label1.Location = new Point(0, 0);
+      label1.Margin = new Padding(0);
+      label1.Name = "label1";
+      label1.Size = new Size(770, 471);
+      label1.TabIndex = 0;
+      label1.Text = "LOADING...";
+      label1.TextAlign = ContentAlignment.MiddleCenter;
+      // 
+      // LoadingPage
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
+      Controls.Add(label1);
       Margin = new Padding(0);
-      Name = "MainSideBarItem";
-      Size = new Size(64, 64);
+      Name = "LoadingPage";
+      Size = new Size(770, 471);
       ResumeLayout(false);
     }
 
     #endregion
+
+    private Label label1;
   }
 }

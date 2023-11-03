@@ -13,8 +13,6 @@ namespace Neu.ANT.Frontend.Components
 {
   public partial class WelcomePage : UserControl
   {
-    private static Lazy<WelcomePage> _instance = new Lazy<WelcomePage>(() => new WelcomePage());
-
     public WelcomePage()
     {
       InitializeComponent();
@@ -24,16 +22,19 @@ namespace Neu.ANT.Frontend.Components
     private void ResponsiveAlignElement()
     { }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void btn_SignIn_Click(object sender, EventArgs e)
     {
       new LoginForm().ShowDialog();
     }
 
-    private void label4_Click(object sender, EventArgs e)
+    private void lb_SignUp_Click(object sender, EventArgs e)
     {
       new SignUpForm().ShowDialog();
     }
 
-    public static WelcomePage Instance => _instance.Value;
+    private void WelcomePage_Load(object sender, EventArgs e)
+    {
+      this.Dock = DockStyle.Fill;
+    }
   }
 }
