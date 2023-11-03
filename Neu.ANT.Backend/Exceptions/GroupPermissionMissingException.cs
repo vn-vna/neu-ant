@@ -2,9 +2,9 @@
 
 namespace Neu.ANT.Backend.Exceptions
 {
-  public class CreateInvitationErrorException : AntBaseException
+  public class GroupPermissionMissingException : AntBaseException
   {
-    public CreateInvitationErrorException(string uid, string gid)
+    public GroupPermissionMissingException(string uid, string gid)
       : base(ErrorCode.PermissionMissing, $"User {uid} has no permission to create invitation with group {gid}")
     { }
   }

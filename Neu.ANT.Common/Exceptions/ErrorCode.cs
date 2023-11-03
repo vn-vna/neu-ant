@@ -20,6 +20,7 @@ namespace Neu.ANT.Common.Exceptions
     // Message group features
     PermissionMissing,
     InvitationExpired,
+    RelationExists,
 
     // Client Errors
     LoginFailed,

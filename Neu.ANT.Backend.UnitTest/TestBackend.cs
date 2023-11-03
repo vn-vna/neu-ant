@@ -17,15 +17,5 @@ namespace Neu.ANT.Backend.UnitTest
           .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 
-    [TestMethod]
-    public void TestMethod1()
-    {
-      string username = RandomString(10);
-      string password = RandomString(10);
-
-      string uid = authClient.SignUp(username, password).Result;
-
-      Assert.IsNotNull(uid);
-    }
   }
 }

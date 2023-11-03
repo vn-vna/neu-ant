@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Neu.ANT.Common.Exceptions.AuthenticationClientException
 {
-  public class AuthenticationRequiredException : AntBaseException
+  public class SignInFailedException : AntBaseException
   {
-    public AuthenticationRequiredException()
-      : base(ErrorCode.AuthRequired, "Current client requires user to be authenticated") { }
+    public SignInFailedException(string reason)
+      : base(ErrorCode.LoginFailed, reason)
+    { }
   }
 }
