@@ -31,16 +31,18 @@ namespace Neu.ANT.Frontend.Components
       btn_Notification.BackColor = Color.Teal;
       btn_Group.BackColor = Color.Teal;
 
+      Control page = null;
+
       switch (state)
       {
         case AppCenterPageState.UserView:
-          pn_Content.Controls.Add(new UserView());
           btn_UserPreference.BackColor = Color.LightSeaGreen;
+          page = new UserView();
           break;
 
         case AppCenterPageState.GroupView:
-          pn_Content.Controls.Add(new GroupView());
           btn_Group.BackColor = Color.LightSeaGreen;
+          page = new GroupView();
           break;
 
         case AppCenterPageState.ChatView:
@@ -55,13 +57,40 @@ namespace Neu.ANT.Frontend.Components
           break;
       }
 
+      if (page is not null)
+      {
+        page.Dock = DockStyle.Fill;
+        pn_Content.Controls.Add(page);
+      }
+
       pn_Content.ResumeLayout(true);
     }
 
     private void AppCenterPage_Load(object sender, EventArgs e)
     {
+      ResponsiveResizeComponent();
+    }
+    private void AppCenterPage_Resize(object sender, EventArgs e)
+    {
+      ResponsiveResizeComponent();
+    }
+
+    private void ResponsiveResizeComponent()
+    {
+      pn_SideBar.Size = new Size()
+      {
+        Width = 64,
+        Height = this.Height
+      };
+
+      pn_Content.Size = new Size()
+      {
+        Width = this.Width - 60,
+        Height = this.Height,
+      };
 
     }
+
 
     private void btn_UserPreference_Click(object sender, EventArgs e)
     {

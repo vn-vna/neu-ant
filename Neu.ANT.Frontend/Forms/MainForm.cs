@@ -45,18 +45,27 @@ namespace Neu.ANT.Frontend.Forms
         SuspendLayout();
         pn_Cotent.Controls.Clear();
 
+        Control page = null;
+
         switch (state)
         {
           case MainFormState.WelcomePage:
-            pn_Cotent.Controls.Add(new WelcomePage());
+            page = new WelcomePage();
             break;
 
           case MainFormState.AppCenter:
-            pn_Cotent.Controls.Add(new AppCenterPage());
+            page = new AppCenterPage();
             break;
 
           default:
             break;
+        }
+
+        if (page != null)
+        {
+          page.Dock = DockStyle.Fill;
+          page.Visible = true;
+          pn_Cotent.Controls.Add(page);
         }
 
         ResumeLayout(true);

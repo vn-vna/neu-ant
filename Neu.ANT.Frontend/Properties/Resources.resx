@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Notification32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Notification32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="UserDefault" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UserDefault.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Facebook_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Facebook_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Apple_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Apple_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -127,8 +133,8 @@
   <data name="Welcome_Illut" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Welcome_Illut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Google_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Google_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TeamDefault32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TeamDefault32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="User_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\User_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,14 +142,11 @@
   <data name="Welcome_Illut_Oval" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Welcome_Illut_Oval.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TeamDefault32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TeamDefault32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Pass_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pass_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Facebook_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Facebook_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Google_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Google_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UserDefault32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UserDefault32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,7 +154,7 @@
   <data name="User_Default" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\User_Default.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Notification32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Notification32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UserDefault256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UserDefault256.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

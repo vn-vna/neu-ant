@@ -28,34 +28,13 @@
     /// </summary>
     private void InitializeComponent()
     {
-      panel1 = new Panel();
-      pn_Content = new Panel();
       pn_SideBar = new FlowLayoutPanel();
       btn_UserPreference = new Button();
       btn_Group = new Button();
       btn_Notification = new Button();
-      panel1.SuspendLayout();
+      pn_Content = new Panel();
       pn_SideBar.SuspendLayout();
       SuspendLayout();
-      // 
-      // panel1
-      // 
-      panel1.Controls.Add(pn_Content);
-      panel1.Dock = DockStyle.Right;
-      panel1.Location = new Point(64, 0);
-      panel1.Margin = new Padding(0);
-      panel1.Name = "panel1";
-      panel1.Size = new Size(905, 563);
-      panel1.TabIndex = 1;
-      // 
-      // pn_Content
-      // 
-      pn_Content.Dock = DockStyle.Right;
-      pn_Content.Location = new Point(0, 0);
-      pn_Content.Margin = new Padding(0);
-      pn_Content.Name = "pn_Content";
-      pn_Content.Size = new Size(905, 563);
-      pn_Content.TabIndex = 0;
       // 
       // pn_SideBar
       // 
@@ -111,27 +90,34 @@
       btn_Notification.TabStop = false;
       btn_Notification.Click += btn_Notification_Click;
       // 
+      // pn_Content
+      // 
+      pn_Content.Dock = DockStyle.Right;
+      pn_Content.Location = new Point(64, 0);
+      pn_Content.Margin = new Padding(0);
+      pn_Content.Name = "pn_Content";
+      pn_Content.Size = new Size(905, 563);
+      pn_Content.TabIndex = 1;
+      // 
       // AppCenterPage
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
       Controls.Add(pn_SideBar);
-      Controls.Add(panel1);
+      Controls.Add(pn_Content);
       Name = "AppCenterPage";
       Size = new Size(969, 563);
       Load += AppCenterPage_Load;
-      panel1.ResumeLayout(false);
+      Resize += AppCenterPage_Resize;
       pn_SideBar.ResumeLayout(false);
       ResumeLayout(false);
     }
 
     #endregion
-
-    private Panel panel1;
     private FlowLayoutPanel pn_SideBar;
     private Button btn_UserPreference;
-    private Panel pn_Content;
     private Button btn_Group;
     private Button btn_Notification;
+    private Panel pn_Content;
   }
 }

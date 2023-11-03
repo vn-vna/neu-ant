@@ -43,6 +43,7 @@
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
+      BackColor = Color.White;
       ClientSize = new Size(1008, 561);
       Controls.Add(pn_Cotent);
       MinimumSize = new Size(1024, 560);
