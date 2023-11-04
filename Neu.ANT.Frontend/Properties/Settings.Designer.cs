@@ -58,5 +58,17 @@ namespace Neu.ANT.Frontend.Properties {
                 this["SavedPassword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AppCenterState {
+            get {
+                return ((int)(this["AppCenterState"]));
+            }
+            set {
+                this["AppCenterState"] = value;
+            }
+        }
     }
 }

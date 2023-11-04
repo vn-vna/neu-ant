@@ -64,11 +64,22 @@ namespace Neu.ANT.Frontend.Components
       }
 
       pn_Content.ResumeLayout(true);
+
+      Properties.Settings.Default.AppCenterState = (int) state;
+      Properties.Settings.Default.Save();
     }
 
     private void AppCenterPage_Load(object sender, EventArgs e)
     {
-      _stateController.SetState(AppCenterPageState.UserView);
+      var savedState = (AppCenterPageState) Properties.Settings.Default.AppCenterState;
+
+      if (savedState == AppCenterPageState.Undefined)
+      {
+        savedState = AppCenterPageState.UserView;
+      }
+
+      _stateController.SetState(savedState);
+
       ResponsiveResizeComponent();
     }
     private void AppCenterPage_Resize(object sender, EventArgs e)
