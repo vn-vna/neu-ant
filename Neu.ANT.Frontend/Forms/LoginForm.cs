@@ -51,6 +51,16 @@ namespace Neu.ANT.Frontend.Forms
     private void LoginForm_Load(object sender, EventArgs e)
     {
       this.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+      if (Properties.Settings.Default.SavedUsername != null)
+      {
+        tb_Username.Text = Properties.Settings.Default.SavedUsername;
+      }
+
+      if (Properties.Settings.Default.SavedPassword != null)
+      {
+        tb_Password.Text = Properties.Settings.Default.SavedPassword;
+      }
     }
 
     private void btn_SubmitLogin_Click(object sender, EventArgs e)
@@ -128,6 +138,8 @@ namespace Neu.ANT.Frontend.Forms
           if (savePassword)
           {
             Properties.Settings.Default.SavedToken = AccountState.Instance.AuthClient.UserToken;
+            Properties.Settings.Default.SavedUsername = tb_Username.Text;
+            Properties.Settings.Default.SavedPassword = tb_Password.Text;
             Properties.Settings.Default.Save();
           }
           Close();

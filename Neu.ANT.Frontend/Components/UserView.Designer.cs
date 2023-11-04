@@ -30,6 +30,7 @@
     {
       pn_Summaries = new Panel();
       pn_SummariesInner = new Panel();
+      lb_LogOut = new Label();
       lb_Username = new Label();
       lb_DisplayName = new Label();
       pictureBox1 = new PictureBox();
@@ -62,7 +63,7 @@
       // 
       // pn_Summaries
       // 
-      pn_Summaries.BackColor = Color.DarkCyan;
+      pn_Summaries.BackColor = Color.Honeydew;
       pn_Summaries.Controls.Add(pn_SummariesInner);
       pn_Summaries.Dock = DockStyle.Left;
       pn_Summaries.Location = new Point(0, 0);
@@ -73,19 +74,31 @@
       // 
       // pn_SummariesInner
       // 
+      pn_SummariesInner.Controls.Add(lb_LogOut);
       pn_SummariesInner.Controls.Add(lb_Username);
       pn_SummariesInner.Controls.Add(lb_DisplayName);
       pn_SummariesInner.Controls.Add(pictureBox1);
       pn_SummariesInner.Location = new Point(3, 169);
       pn_SummariesInner.Name = "pn_SummariesInner";
-      pn_SummariesInner.Size = new Size(254, 212);
+      pn_SummariesInner.Size = new Size(254, 230);
       pn_SummariesInner.TabIndex = 0;
+      // 
+      // lb_LogOut
+      // 
+      lb_LogOut.AutoSize = true;
+      lb_LogOut.ForeColor = Color.IndianRed;
+      lb_LogOut.Location = new Point(97, 205);
+      lb_LogOut.Name = "lb_LogOut";
+      lb_LogOut.Size = new Size(61, 15);
+      lb_LogOut.TabIndex = 4;
+      lb_LogOut.Text = "Đăng xuất";
+      lb_LogOut.Click += lb_LogOut_Click;
       // 
       // lb_Username
       // 
       lb_Username.AutoSize = true;
       lb_Username.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
-      lb_Username.ForeColor = Color.White;
+      lb_Username.ForeColor = Color.Teal;
       lb_Username.Location = new Point(90, 183);
       lb_Username.Name = "lb_Username";
       lb_Username.Size = new Size(68, 15);
@@ -96,7 +109,7 @@
       // 
       lb_DisplayName.AutoSize = true;
       lb_DisplayName.Font = new Font("Segoe UI", 13F, FontStyle.Bold, GraphicsUnit.Point);
-      lb_DisplayName.ForeColor = Color.White;
+      lb_DisplayName.ForeColor = Color.Teal;
       lb_DisplayName.Location = new Point(60, 158);
       lb_DisplayName.Name = "lb_DisplayName";
       lb_DisplayName.Size = new Size(133, 25);
@@ -105,7 +118,7 @@
       // 
       // pictureBox1
       // 
-      pictureBox1.Image = Properties.Resources.UserDefault256;
+      pictureBox1.Image = Properties.Resources.User_Default;
       pictureBox1.Location = new Point(50, 0);
       pictureBox1.Name = "pictureBox1";
       pictureBox1.Size = new Size(154, 144);
@@ -360,5 +373,6 @@
     private Label label2;
     private Label label1;
     private Panel pn_DetailedInfo;
+    private Label lb_LogOut;
   }
 }

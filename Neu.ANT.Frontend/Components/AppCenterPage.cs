@@ -68,6 +68,7 @@ namespace Neu.ANT.Frontend.Components
 
     private void AppCenterPage_Load(object sender, EventArgs e)
     {
+      _stateController.SetState(AppCenterPageState.UserView);
       ResponsiveResizeComponent();
     }
     private void AppCenterPage_Resize(object sender, EventArgs e)

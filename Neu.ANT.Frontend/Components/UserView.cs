@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Neu.ANT.Frontend.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -52,6 +53,16 @@ namespace Neu.ANT.Frontend.Components
         X = (pn_DetailedInfo.Width - pn_DetailedInfoInner.Width) / 2,
         Y = (pn_DetailedInfo.Height - pn_DetailedInfoInner.Height) / 2,
       };
+    }
+
+    private void lb_LogOut_Click(object sender, EventArgs e)
+    {
+      Properties.Settings.Default.SavedToken = null;
+      Properties.Settings.Default.Save();
+
+      MainForm.Instance
+        .FormStateController
+        .SetState(MainForm.MainFormState.WelcomePage);
     }
   }
 }
