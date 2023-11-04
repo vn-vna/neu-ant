@@ -148,6 +148,12 @@
   <data name="TeamDefault32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TeamDefault32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PaperPlanePrimary24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PaperPlanePrimary24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LoadingAnim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LoadingAnim.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Apple_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Apple_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -163,7 +169,7 @@
   <data name="Notification32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Notification32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PaperPlanePrimary24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PaperPlanePrimary24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LoadingAnim1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LoadingAnim1.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

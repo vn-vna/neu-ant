@@ -99,7 +99,6 @@ namespace Neu.ANT.Frontend.Forms
 
     private void loginBackgrounWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-
       BackgroundWorker backgroundWorker = sender as BackgroundWorker;
 
       Dictionary<string, string> kwParams = e.Argument as Dictionary<string, string>;
@@ -117,7 +116,11 @@ namespace Neu.ANT.Frontend.Forms
         }
         catch (SignInFailedException lfex)
         {
-          MessageBox.Show($"Reason: {lfex.Message}", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          MessageBox.Show(
+            $"Reason: {lfex.Message}", 
+            "Login Failed", 
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error);
         }
 
         if (backgroundWorker.CancellationPending)
