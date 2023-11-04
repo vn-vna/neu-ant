@@ -82,6 +82,7 @@ namespace Neu.ANT.Frontend.Components
 
       ResponsiveResizeComponent();
     }
+
     private void AppCenterPage_Resize(object sender, EventArgs e)
     {
       ResponsiveResizeComponent();

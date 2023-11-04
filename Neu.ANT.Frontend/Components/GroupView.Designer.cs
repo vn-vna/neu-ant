@@ -36,7 +36,7 @@
       // 
       // pn_GroupSideBar
       // 
-      pn_GroupSideBar.BackColor = Color.DarkCyan;
+      pn_GroupSideBar.BackColor = Color.Honeydew;
       pn_GroupSideBar.Dock = DockStyle.Left;
       pn_GroupSideBar.Location = new Point(0, 0);
       pn_GroupSideBar.Margin = new Padding(0);

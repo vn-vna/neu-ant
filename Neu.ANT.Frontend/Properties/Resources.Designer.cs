@@ -123,6 +123,16 @@ namespace Neu.ANT.Frontend.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PaperPlanePrimary24 {
+            get {
+                object obj = ResourceManager.GetObject("PaperPlanePrimary24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Pass_Icon {
             get {
                 object obj = ResourceManager.GetObject("Pass_Icon", resourceCulture);

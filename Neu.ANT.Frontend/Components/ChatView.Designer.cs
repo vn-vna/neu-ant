@@ -40,7 +40,7 @@
       // 
       // pn_Header
       // 
-      pn_Header.BackColor = Color.DarkSlateBlue;
+      pn_Header.BackColor = Color.GhostWhite;
       pn_Header.Dock = DockStyle.Top;
       pn_Header.Location = new Point(0, 0);
       pn_Header.Name = "pn_Header";
@@ -49,7 +49,7 @@
       // 
       // pn_Footer
       // 
-      pn_Footer.BackColor = Color.DarkSlateBlue;
+      pn_Footer.BackColor = Color.Lavender;
       pn_Footer.Controls.Add(btn_SendMessage);
       pn_Footer.Controls.Add(pn_TextBox);
       pn_Footer.Dock = DockStyle.Bottom;
@@ -60,11 +60,11 @@
       // 
       // btn_SendMessage
       // 
-      btn_SendMessage.BackColor = Color.DarkSlateBlue;
+      btn_SendMessage.BackColor = Color.GhostWhite;
       btn_SendMessage.Dock = DockStyle.Right;
       btn_SendMessage.FlatAppearance.BorderSize = 0;
       btn_SendMessage.FlatStyle = FlatStyle.Flat;
-      btn_SendMessage.Image = Properties.Resources.PaperPlane24;
+      btn_SendMessage.Image = Properties.Resources.PaperPlanePrimary24;
       btn_SendMessage.Location = new Point(522, 0);
       btn_SendMessage.Name = "btn_SendMessage";
       btn_SendMessage.Size = new Size(40, 40);
@@ -73,7 +73,7 @@
       // 
       // pn_TextBox
       // 
-      pn_TextBox.BackColor = Color.DarkSlateBlue;
+      pn_TextBox.BackColor = Color.GhostWhite;
       pn_TextBox.Controls.Add(textBox1);
       pn_TextBox.Dock = DockStyle.Left;
       pn_TextBox.Location = new Point(0, 0);
@@ -85,7 +85,7 @@
       // 
       // textBox1
       // 
-      textBox1.BackColor = Color.DarkSlateBlue;
+      textBox1.BackColor = Color.GhostWhite;
       textBox1.BorderStyle = BorderStyle.None;
       textBox1.Dock = DockStyle.Fill;
       textBox1.Location = new Point(5, 5);
