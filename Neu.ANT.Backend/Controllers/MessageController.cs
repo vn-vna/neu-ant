@@ -6,6 +6,7 @@ using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse.MessageManagement;
 using Neu.ANT.Common.Models.ApiPostData.MessageManagement;
 using Neu.ANT.Common.Models;
+using Neu.ANT.Common.Models.ApiResponse;
 
 namespace Neu.ANT.Backend.Controllers
 {
@@ -38,7 +39,7 @@ namespace Neu.ANT.Backend.Controllers
     /// <returns>Api response template with the value is a list of message that is queried</returns>
     /// <exception cref="InvalidRelationException"></exception>
     [HttpGet("{gid}")]
-    public async Task<IActionResult> GetMessagesInGroup(
+    public async Task<ApiResult<GetMessagesInGroupResult>> GetMessagesInGroup(
       [FromRoute(Name = "gid")] string groupId,
       [FromHeader(Name = "USER_TOKEN")] string token,
       [FromQuery(Name = "tf")] DateTime? timeRangeFrom,
@@ -71,11 +72,11 @@ namespace Neu.ANT.Backend.Controllers
         GroupId = groupId,
       });
 
-      return Json(result);
+      return result;
     }
 
     [HttpPost("{gid}")]
-    public async Task<IActionResult> CreateMessageInGroup(
+    public async Task<ApiResult<bool>> CreateMessageInGroup(
       [FromRoute(Name = "gid")] string groupId,
       [FromHeader(Name = "USER_TOKEN")] string token,
       [FromBody] CreateMessagePostData createData)
@@ -101,7 +102,7 @@ namespace Neu.ANT.Backend.Controllers
         return true;
       });
 
-      return Json(result);
+      return result;
     }
 
   }

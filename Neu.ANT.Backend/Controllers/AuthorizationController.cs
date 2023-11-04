@@ -20,35 +20,35 @@ namespace Neu.ANT.Backend.Controllers
     }
 
     [HttpPost("sign-up")]
-    public async Task<IActionResult> SignUp(
+    public async Task<ApiResult<ApiSignUpResult>> SignUp(
       [FromQuery] string username, 
       [FromQuery] string password)
     {
       var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.SignUp(username, password))
           .Execute(uid => new ApiSignUpResult() { UserId = uid });
 
-      return Json(result);
+      return result;
     }
 
     [HttpGet("sign-in")]
-    public async Task<IActionResult> SignIn(
+    public async Task<ApiResult<ApiSignInResult>> SignIn(
       [FromQuery] string username, 
       [FromQuery] string password)
     {
       var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.SignIn(username, password))
           .Execute(token => new ApiSignInResult() { TokenId = token });
 
-      return Json(result);
+      return result;
     }
 
     [HttpGet("uid")]
-    public async Task<IActionResult> GetUid(
+    public async Task<ApiResult<ApiGetUidResult>> GetUid(
       [FromHeader(Name = "TOKEN")] string token)
     {
       var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.GetUidFromToken(token))
           .Execute(uid => new ApiGetUidResult() { UserId = uid });
 
-      return Json(result);
+      return result;
     }
   }
 }

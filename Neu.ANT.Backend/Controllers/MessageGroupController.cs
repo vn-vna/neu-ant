@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Neu.ANT.Backend.Exceptions;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
+using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
 
 namespace Neu.ANT.Backend.Controllers
@@ -25,7 +26,7 @@ namespace Neu.ANT.Backend.Controllers
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> CreateGroup(
+    public async Task<ApiResult<GroupCreationResult>> CreateGroup(
       [FromHeader(Name = "USER_TOKEN")] string token)
     {
       var result = await ApiExecutorUtils.GetExecutor(async () =>
@@ -43,11 +44,11 @@ namespace Neu.ANT.Backend.Controllers
         GroupId = gid,
       });
 
-      return Json(result);
+      return result;
     }
 
     [HttpGet("list")]
-    public async Task<IActionResult> GetUserGroups(
+    public async Task<ApiResult<GetUserGroupsInfoResult>> GetUserGroups(
       [FromHeader(Name = "USER_TOKEN")] string tokenId)
     {
       var result = await ApiExecutorUtils.GetExecutor(async () =>
@@ -67,11 +68,11 @@ namespace Neu.ANT.Backend.Controllers
         Groups = ginfs
       });
 
-      return Json(result);
+      return result;
     }
 
     [HttpGet("{gid}/invite")]
-    public async Task<IActionResult> CreateInviteLink(
+    public async Task<ApiResult<CreateInvitationResult>> CreateInviteLink(
       [FromHeader(Name = "USER_TOKEN")] string tokenId,
       [FromRoute(Name = "gid")] string gid)
     {
@@ -79,7 +80,7 @@ namespace Neu.ANT.Backend.Controllers
     }
 
     [HttpGet("{gid}/invite/{uid}")]
-    public async Task<IActionResult> InviteUserToJoin(
+    public async Task<ApiResult<CreateInvitationResult>> InviteUserToJoin(
       [FromHeader(Name = "USER_TOKEN")] string tokenId,
       [FromRoute(Name = "gid")] string groupId,
       [FromRoute(Name = "uid")] string userId)
@@ -94,11 +95,11 @@ namespace Neu.ANT.Backend.Controllers
         InvitationId = invId,
       });
 
-      return Json(result);
+      return result;
     }
 
     [HttpGet("join/{invite}")]
-    public async Task<IActionResult> JoinGroup(
+    public async Task<ApiResult<bool>> JoinGroup(
       [FromHeader(Name = "USER_TOKEN")] string tokenId,
       [FromRoute(Name = "invite")] string inviteId)
     {
@@ -109,7 +110,7 @@ namespace Neu.ANT.Backend.Controllers
         return relationId;
       }).Execute(relId => relId is not null);
 
-      return Json(result);
+      return result;
     }
   }
 }

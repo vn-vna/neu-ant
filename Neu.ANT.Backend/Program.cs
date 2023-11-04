@@ -52,6 +52,7 @@ namespace Neu.ANT.Backend
       builder.Services.AddSingleton<GroupRelationService>();
       builder.Services.AddSingleton<MessageManagementService>();
       builder.Services.AddSingleton<AuthenticationService>();
+      builder.Services.AddSwaggerGenNewtonsoftSupport();
 
       builder.Services.AddControllers().AddNewtonsoftJson();
     }
