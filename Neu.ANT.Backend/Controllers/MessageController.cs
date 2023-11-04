@@ -19,8 +19,8 @@ namespace Neu.ANT.Backend.Controllers
     private readonly MessageManagementService _messageManagementService;
 
     public MessageController(
-      GroupRelationService groupRelationService, 
-      AuthenticationService authenticationService, 
+      GroupRelationService groupRelationService,
+      AuthenticationService authenticationService,
       MessageManagementService messageManagementService)
     {
       _groupRelationService = groupRelationService;
@@ -46,7 +46,7 @@ namespace Neu.ANT.Backend.Controllers
       [FromQuery(Name = "tt")] DateTime? timeRangeTo,
       [FromQuery(Name = "sz")] int? maxSize)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () =>
+      return await ApiExecutorUtils.GetExecutor(async () =>
       {
         var threeDays = new TimeSpan(3, 0, 0, 0);
         var uid = await _authenticationService.GetUidFromToken(token);
@@ -71,8 +71,6 @@ namespace Neu.ANT.Backend.Controllers
         Messages = ret,
         GroupId = groupId,
       });
-
-      return result;
     }
 
     [HttpPost("{gid}")]
@@ -81,28 +79,28 @@ namespace Neu.ANT.Backend.Controllers
       [FromHeader(Name = "USER_TOKEN")] string token,
       [FromBody] CreateMessagePostData createData)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () =>
-      {
-        var uid = await _authenticationService.GetUidFromToken(token);
-        var relation = await _groupRelationService.GetRelation(uid, groupId) ?? throw new InvalidRelationException();
-
-        var message = new MessageModel
+      return await ApiExecutorUtils
+        .GetExecutor(async () =>
         {
-          MessageId = Guid.NewGuid().ToString(),
-          Content = createData.Content,
-          GroupId = groupId,
-          Sender = uid,
-          SentDateTime = DateTime.UtcNow,
-        };
+          var uid = await _authenticationService.GetUidFromToken(token);
+          var relation = await _groupRelationService.GetRelation(uid, groupId) ?? throw new InvalidRelationException();
 
-        await _messageManagementService.AppendMessage(message);
-        return true;
-      }).Execute(ack =>
-      {
-        return true;
-      });
+          var message = new MessageModel
+          {
+            MessageId = Guid.NewGuid().ToString(),
+            Content = createData.Content,
+            GroupId = groupId,
+            Sender = uid,
+            SentDateTime = DateTime.UtcNow,
+          };
 
-      return result;
+          await _messageManagementService.AppendMessage(message);
+          return true;
+        })
+        .Execute(ack =>
+        {
+          return true;
+        });
     }
 
   }

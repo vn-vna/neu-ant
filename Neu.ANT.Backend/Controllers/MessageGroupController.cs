@@ -51,24 +51,24 @@ namespace Neu.ANT.Backend.Controllers
     public async Task<ApiResult<GetUserGroupsInfoResult>> GetUserGroups(
       [FromHeader(Name = "USER_TOKEN")] string tokenId)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () =>
-      {
-        var userId = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
-        var groupIds = await _groupRelationService.GetGroupsByUserId(userId);
-        var rawInfo = await _groupManagementService.GetGroupInfos(groupIds);
-
-        return rawInfo.Select(info =>
+      return await ApiExecutorUtils
+        .GetExecutor(async () =>
         {
-          var members = _groupRelationService.GetUsersInGroupById(info.Id).Result;
-          return new UserGroupInfo { GroupId = info.Id, DisplayName = info.DisplayName, GroupMembers = members };
-        }).ToList();
+          var userId = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
+          var groupIds = await _groupRelationService.GetGroupsByUserId(userId);
+          var rawInfo = await _groupManagementService.GetGroupInfos(groupIds);
 
-      }).Execute(ginfs => new GetUserGroupsInfoResult
-      {
-        Groups = ginfs
-      });
+          return rawInfo.Select(info =>
+          {
+            var members = _groupRelationService.GetUsersInGroupById(info.Id).Result;
+            return new UserGroupInfo { GroupId = info.Id, DisplayName = info.DisplayName, GroupMembers = members };
+          }).ToList();
 
-      return result;
+        })
+        .Execute(ginfs => new GetUserGroupsInfoResult
+        {
+          Groups = ginfs
+        });
     }
 
     [HttpGet("{gid}/invite")]
@@ -85,17 +85,17 @@ namespace Neu.ANT.Backend.Controllers
       [FromRoute(Name = "gid")] string groupId,
       [FromRoute(Name = "uid")] string userId)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () =>
-      {
-        var senderId = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
-        var invitationId = await _groupRelationService.CreateInvitationToUser(senderId, groupId, userId);
-        return invitationId;
-      }).Execute(invId => new CreateInvitationResult()
-      {
-        InvitationId = invId,
-      });
-
-      return result;
+      return await ApiExecutorUtils
+        .GetExecutor(async () =>
+        {
+          var senderId = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
+          var invitationId = await _groupRelationService.CreateInvitationToUser(senderId, groupId, userId);
+          return invitationId;
+        })
+        .Execute(invId => new CreateInvitationResult()
+        {
+          InvitationId = invId,
+        });
     }
 
     [HttpGet("join/{invite}")]
@@ -103,14 +103,15 @@ namespace Neu.ANT.Backend.Controllers
       [FromHeader(Name = "USER_TOKEN")] string tokenId,
       [FromRoute(Name = "invite")] string inviteId)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () =>
-      {
-        var uid = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
-        var relationId = await _groupRelationService.JoinByInvitationId(uid, inviteId);
-        return relationId;
-      }).Execute(relId => relId is not null);
+      return await ApiExecutorUtils
+        .GetExecutor(async () =>
+        {
+          var uid = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
+          var relationId = await _groupRelationService.JoinByInvitationId(uid, inviteId);
+          return relationId;
+        })
+        .Execute(relId => relId is not null);
 
-      return result;
     }
   }
 }
