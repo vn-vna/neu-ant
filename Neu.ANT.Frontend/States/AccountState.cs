@@ -12,9 +12,11 @@ namespace Neu.ANT.Frontend.States
   {
     private static Lazy<AccountState> _instance = new Lazy<AccountState>(() => new AccountState());
     public readonly AuthenticationClient AuthClient;
+    public readonly UserInfoClient UserInfoClient;
 
     public AccountState() {
       AuthClient = new AuthenticationClient("http://localhost:5192");
+      UserInfoClient = new UserInfoClient(AuthClient);
     }
 
     public static AccountState Instance { get { return _instance.Value; } }

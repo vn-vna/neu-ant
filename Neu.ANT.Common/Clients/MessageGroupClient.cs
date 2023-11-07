@@ -1,4 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.AuthenticationClientException;
+﻿using Neu.ANT.Common.Exceptions.AuthenticationClient;
 using RestSharp;
 using System;
 using System.Collections.Generic;

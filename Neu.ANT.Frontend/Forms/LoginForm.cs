@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Neu.ANT.Common.Exceptions;
-using Neu.ANT.Common.Exceptions.AuthenticationClientException;
+using Neu.ANT.Common.Exceptions.AuthenticationClient;
 using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.Components;
 
@@ -28,8 +28,8 @@ namespace Neu.ANT.Frontend.Forms
 
     private void HandleStateChange(LoginFormState state)
     {
-      basePanel.SuspendLayout();
-      basePanel.Controls.Clear();
+      pn_Content.SuspendLayout();
+      pn_Content.Controls.Clear();
 
       switch (state)
       {
@@ -37,15 +37,18 @@ namespace Neu.ANT.Frontend.Forms
           break;
 
         case LoginFormState.ShowLogin:
-          basePanel.Controls.Add(pn_LoginPanel);
+          pn_Content.Controls.Add(pn_LoginPanel);
           break;
 
         case LoginFormState.Loading:
-          basePanel.Controls.Add(loadingLabel);
+          var loadingPage = new LoadingComponent();
+          loadingPage.LoadingLabel = "Logging you in...";
+          loadingPage.Dock = DockStyle.Fill;
+          pn_Content.Controls.Add(loadingPage);
           break;
       }
 
-      basePanel.ResumeLayout(true);
+      pn_Content.ResumeLayout(true);
     }
 
     private void LoginForm_Load(object sender, EventArgs e)
@@ -117,10 +120,17 @@ namespace Neu.ANT.Frontend.Forms
         catch (SignInFailedException lfex)
         {
           MessageBox.Show(
-            $"Reason: {lfex.Message}", 
-            "Login Failed", 
+            $"Reason: {lfex.Message}",
+            "Login Failed",
             MessageBoxButtons.OK,
             MessageBoxIcon.Error);
+
+          AccountState
+            .Instance
+            .AuthClient
+            .ClearToken();
+
+          return;
         }
 
         if (backgroundWorker.CancellationPending)
@@ -133,18 +143,19 @@ namespace Neu.ANT.Frontend.Forms
 
     private void loginBackgrounWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      if (AccountState.Instance.AuthClient.UserToken != null)
+      if (AccountState.Instance.AuthClient.IsAuthenticated)
       {
         this.Invoke(new Action(() =>
         {
-          bool savePassword = cb_RememberPassword.Checked;
+          bool savePassword = cb_RememberLogin.Checked;
+
           if (savePassword)
           {
             Properties.Settings.Default.SavedToken = AccountState.Instance.AuthClient.UserToken;
             Properties.Settings.Default.SavedUsername = tb_Username.Text;
-            Properties.Settings.Default.SavedPassword = tb_Password.Text;
             Properties.Settings.Default.Save();
           }
+
           Close();
           MainForm.Instance.FormStateController.SetState(MainForm.MainFormState.AppCenter);
         }));

@@ -52,8 +52,9 @@ namespace Neu.ANT.Backend.Services
       _tokenCollection.UpdateOne(filter, update);
     }
 
-    public async Task<TokenModel?> GetToken(string token)
+    public async Task<TokenModel> GetToken(string token)
         => (await _tokenCollection.Find(r => r.Token == token).ToListAsync())
-            .FirstOrDefault();
+            .FirstOrDefault() 
+        ?? throw new InvalidTokenException();
   }
 }

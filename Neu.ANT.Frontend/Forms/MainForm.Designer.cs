@@ -46,10 +46,11 @@
       BackColor = Color.White;
       ClientSize = new Size(1008, 561);
       Controls.Add(pn_Cotent);
+      MaximumSize = new Size(1366, 768);
       MinimumSize = new Size(1024, 560);
       Name = "MainForm";
       StartPosition = FormStartPosition.CenterScreen;
-      Text = "MainForm";
+      Text = "ANT Messenger";
       Load += MainForm_Load;
       ResumeLayout(false);
     }

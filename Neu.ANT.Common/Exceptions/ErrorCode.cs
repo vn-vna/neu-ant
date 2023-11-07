@@ -14,8 +14,10 @@ namespace Neu.ANT.Common.Exceptions
     UserExists,
     UserNotFound,
     AuthenticationFailed,
+    AuthorizationFailed,
     TokenExpired,
     InvalidToken,
+    UserDataNotMatch,
     
     // Message group features
     PermissionMissing,
@@ -24,6 +26,7 @@ namespace Neu.ANT.Common.Exceptions
 
     // Client Errors
     LoginFailed,
-    AuthRequired
+    AuthRequired,
+    FetchInfoFailed
   }
 }

@@ -159,7 +159,7 @@
       FormBorderStyle = FormBorderStyle.FixedDialog;
       Name = "SignUpForm";
       StartPosition = FormStartPosition.CenterScreen;
-      Text = "SignUpForm";
+      Text = "Đăng kí tài khoản";
       Load += SignUpForm_Load;
       panel1.ResumeLayout(false);
       panel1.PerformLayout();

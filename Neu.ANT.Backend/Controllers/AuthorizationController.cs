@@ -20,34 +20,34 @@ namespace Neu.ANT.Backend.Controllers
     }
 
     [HttpPost("sign-up")]
-    public async Task<ApiResult<ApiSignUpResult>> SignUp(
-      [FromQuery] string username,
-      [FromQuery] string password)
+    public async Task<ApiResult<SignUpResult>> SignUp(
+      [FromForm(Name = "username")] string username,
+      [FromForm(Name = "password")] string password)
     {
       return await ApiExecutorUtils
         .GetExecutor(async () => await _authService.SignUp(username, password))
-        .Execute(uid => new ApiSignUpResult() { UserId = uid });
+        .Execute(uid => new SignUpResult() { UserId = uid });
     }
 
-    [HttpGet("sign-in")]
-    public async Task<ApiResult<ApiSignInResult>> SignIn(
-      [FromQuery] string username,
-      [FromQuery] string password)
+    [HttpPost("sign-in")]
+    public async Task<ApiResult<Common.Models.ApiResponse.Authenticate.SignInResult>> SignIn(
+      [FromForm(Name = "username")] string username,
+      [FromForm(Name = "password")] string password)
     {
       var result = await ApiExecutorUtils
         .GetExecutor(async () => await _authService.SignIn(username, password))
-        .Execute(token => new ApiSignInResult() { TokenId = token });
+        .Execute(token => new Common.Models.ApiResponse.Authenticate.SignInResult() { TokenId = token });
 
       return result;
     }
 
     [HttpGet("uid")]
-    public async Task<ApiResult<ApiGetUidResult>> GetUid(
-      [FromHeader(Name = "TOKEN")] string token)
+    public async Task<ApiResult<UserIdView>> GetUid(
+      [FromHeader(Name = "USER_TOKEN")] string token)
     {
       var result = await ApiExecutorUtils
         .GetExecutor(async () => await _authService.GetUidFromToken(token))
-        .Execute(uid => new ApiGetUidResult() { UserId = uid });
+        .Execute(uid => new UserIdView() { UserId = uid });
 
       return result;
     }

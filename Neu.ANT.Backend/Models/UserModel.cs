@@ -16,16 +16,21 @@ namespace Neu.ANT.Common.Models
     [BsonRepresentation(BsonType.String)]
     public string UserId { get; set; } = null!;
 
-    [JsonProperty("username")]
     public string Username { get; set; } = null!;
 
-    [JsonProperty("display_name")]
-    public string? DisplayName { get; set; } = null;
-
-    [JsonProperty("hashed_password")]
     public string HashedPassword { get; set; } = null!;
 
-    [JsonProperty("groups")]
-    public List<string> Groups { get; set; } = null!;
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public int Gender { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? Birhdate { get; set; }
+  }
+
+  public class UserAuthenticationData
+  {
+    public string UserId { get; set; } = null!;
+    public string Username { get; set; } = null!;
+    public string HashedPassword { get; set; } = null!;
   }
 }

@@ -1,4 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.AuthenticationClientException;
+﻿using Neu.ANT.Common.Exceptions.AuthenticationClient;
 using Neu.ANT.Frontend.Components;
 using Neu.ANT.Frontend.States;
 using System;

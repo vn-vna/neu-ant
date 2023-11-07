@@ -25,7 +25,7 @@ namespace Neu.ANT.Backend.Controllers
       _groupRelationService = groupRelationDbService;
     }
 
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<ApiResult<GroupCreationResult>> CreateGroup(
       [FromHeader(Name = "USER_TOKEN")] string token)
     {
@@ -47,7 +47,7 @@ namespace Neu.ANT.Backend.Controllers
       return result;
     }
 
-    [HttpGet("list")]
+    [HttpGet]
     public async Task<ApiResult<GetUserGroupsInfoResult>> GetUserGroups(
       [FromHeader(Name = "USER_TOKEN")] string tokenId)
     {

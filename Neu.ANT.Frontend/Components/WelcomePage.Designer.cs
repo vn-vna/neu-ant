@@ -108,6 +108,7 @@
       // 
       lb_SignUp.AutoSize = true;
       lb_SignUp.BackColor = Color.White;
+      lb_SignUp.Cursor = Cursors.Hand;
       lb_SignUp.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point);
       lb_SignUp.ForeColor = Color.Teal;
       lb_SignUp.Location = new Point(115, 180);
@@ -129,6 +130,7 @@
       // btn_SignIn
       // 
       btn_SignIn.BackColor = Color.Teal;
+      btn_SignIn.Cursor = Cursors.Hand;
       btn_SignIn.FlatAppearance.BorderSize = 0;
       btn_SignIn.FlatStyle = FlatStyle.Flat;
       btn_SignIn.ForeColor = Color.White;

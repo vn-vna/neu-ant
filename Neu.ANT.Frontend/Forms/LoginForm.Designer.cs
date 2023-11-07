@@ -29,9 +29,9 @@
     private void InitializeComponent()
     {
       loginBackgrounWorker = new System.ComponentModel.BackgroundWorker();
-      basePanel = new Panel();
+      pn_Content = new Panel();
       pn_LoginPanel = new Panel();
-      cb_RememberPassword = new CheckBox();
+      cb_RememberLogin = new CheckBox();
       btn_SubmitLogin = new Button();
       lb_Password = new Label();
       tb_Password = new TextBox();
@@ -39,7 +39,7 @@
       tb_Username = new TextBox();
       lb_Title = new Label();
       loadingLabel = new Label();
-      basePanel.SuspendLayout();
+      pn_Content.SuspendLayout();
       pn_LoginPanel.SuspendLayout();
       SuspendLayout();
       // 
@@ -48,18 +48,18 @@
       loginBackgrounWorker.DoWork += loginBackgrounWorker_DoWork;
       loginBackgrounWorker.RunWorkerCompleted += loginBackgrounWorker_RunWorkerCompleted;
       // 
-      // basePanel
+      // pn_Content
       // 
-      basePanel.Controls.Add(pn_LoginPanel);
-      basePanel.Dock = DockStyle.Fill;
-      basePanel.Location = new Point(0, 0);
-      basePanel.Name = "basePanel";
-      basePanel.Size = new Size(316, 509);
-      basePanel.TabIndex = 0;
+      pn_Content.Controls.Add(pn_LoginPanel);
+      pn_Content.Dock = DockStyle.Fill;
+      pn_Content.Location = new Point(0, 0);
+      pn_Content.Name = "pn_Content";
+      pn_Content.Size = new Size(316, 509);
+      pn_Content.TabIndex = 0;
       // 
       // pn_LoginPanel
       // 
-      pn_LoginPanel.Controls.Add(cb_RememberPassword);
+      pn_LoginPanel.Controls.Add(cb_RememberLogin);
       pn_LoginPanel.Controls.Add(btn_SubmitLogin);
       pn_LoginPanel.Controls.Add(lb_Password);
       pn_LoginPanel.Controls.Add(tb_Password);
@@ -71,23 +71,24 @@
       pn_LoginPanel.Size = new Size(314, 256);
       pn_LoginPanel.TabIndex = 1;
       // 
-      // cb_RememberPassword
+      // cb_RememberLogin
       // 
-      cb_RememberPassword.AutoSize = true;
-      cb_RememberPassword.Location = new Point(27, 178);
-      cb_RememberPassword.Name = "cb_RememberPassword";
-      cb_RememberPassword.Size = new Size(102, 19);
-      cb_RememberPassword.TabIndex = 7;
-      cb_RememberPassword.Text = "Nhớ mật khẩu";
-      cb_RememberPassword.UseVisualStyleBackColor = true;
+      cb_RememberLogin.AutoSize = true;
+      cb_RememberLogin.Location = new Point(27, 178);
+      cb_RememberLogin.Name = "cb_RememberLogin";
+      cb_RememberLogin.Size = new Size(128, 19);
+      cb_RememberLogin.TabIndex = 7;
+      cb_RememberLogin.Text = "Ghi nhớ đăng nhập";
+      cb_RememberLogin.UseVisualStyleBackColor = true;
       // 
       // btn_SubmitLogin
       // 
       btn_SubmitLogin.BackColor = Color.Teal;
+      btn_SubmitLogin.Cursor = Cursors.Hand;
       btn_SubmitLogin.FlatAppearance.BorderSize = 0;
       btn_SubmitLogin.FlatStyle = FlatStyle.Flat;
       btn_SubmitLogin.ForeColor = Color.White;
-      btn_SubmitLogin.Location = new Point(79, 213);
+      btn_SubmitLogin.Location = new Point(79, 216);
       btn_SubmitLogin.Name = "btn_SubmitLogin";
       btn_SubmitLogin.Size = new Size(157, 23);
       btn_SubmitLogin.TabIndex = 6;
@@ -159,14 +160,14 @@
       AutoScaleMode = AutoScaleMode.Font;
       BackColor = Color.White;
       ClientSize = new Size(316, 509);
-      Controls.Add(basePanel);
+      Controls.Add(pn_Content);
       MaximizeBox = false;
       MinimizeBox = false;
       Name = "LoginForm";
       StartPosition = FormStartPosition.CenterScreen;
-      Text = "Login";
+      Text = "Đăng nhập";
       Load += LoginForm_Load;
-      basePanel.ResumeLayout(false);
+      pn_Content.ResumeLayout(false);
       pn_LoginPanel.ResumeLayout(false);
       pn_LoginPanel.PerformLayout();
       ResumeLayout(false);
@@ -174,9 +175,9 @@
 
     #endregion
     private System.ComponentModel.BackgroundWorker loginBackgrounWorker;
-    private Panel basePanel;
+    private Panel pn_Content;
     private Panel pn_LoginPanel;
-    private CheckBox cb_RememberPassword;
+    private CheckBox cb_RememberLogin;
     private Button btn_SubmitLogin;
     private Label lb_Password;
     private TextBox tb_Password;

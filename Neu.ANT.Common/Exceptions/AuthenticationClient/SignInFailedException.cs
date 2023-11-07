@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Neu.ANT.Common.Exceptions.AuthenticationClientException
+namespace Neu.ANT.Common.Exceptions.AuthenticationClient
 {
   public class SignInFailedException : AntBaseException
   {

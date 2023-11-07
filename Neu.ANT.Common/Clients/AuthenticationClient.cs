@@ -1,4 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.AuthenticationClientException;
+﻿using Neu.ANT.Common.Exceptions.AuthenticationClient;
 using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.Authenticate;
 using Newtonsoft.Json;
@@ -15,24 +15,26 @@ namespace Neu.ANT.Common.Clients
   public class AuthenticationClient
   {
     private string? _userToken;
-    private readonly string? _clientUrl;
+    public readonly string? BaseUrl;
 
-    public string? UserToken { get { return _userToken; } }
+    public string UserToken => _userToken ?? throw new AuthenticationRequiredException();
+    public bool IsAuthenticated => _userToken != null; 
 
     public AuthenticationClient(string clientUrl)
     {
-      this._clientUrl = clientUrl;
+      this.BaseUrl = clientUrl;
     }
 
     public void SignIn(string username, string password)
     {
       var request = new RestRequest("sign-in");
-      request.AddQueryParameter("username", username);
-      request.AddQueryParameter("password", password);
+      request.AlwaysMultipartFormData = true;
+      request.AddParameter("username", username);
+      request.AddParameter("password", password);
 
-      var response = RestClient.Get(request);
+      var response = AuthRestClient.Post(request);
 
-      var result = JsonConvert.DeserializeObject<ApiResult<ApiSignInResult>>(response.Content);
+      var result = JsonConvert.DeserializeObject<ApiResult<SignInResult>>(response.Content);
       if (!result.Success)
       {
         throw new SignInFailedException($"Cannot log in as user {username}: [CODE {result.ErrorCode}] {result.Error}");
@@ -44,15 +46,16 @@ namespace Neu.ANT.Common.Clients
     public void SignUp(string username, string password)
     {
       var request = new RestRequest("sign-up");
-      request.AddQueryParameter("username", username);
-      request.AddQueryParameter("password", password);
-      var response = RestClient.Post(request);
+      request.AlwaysMultipartFormData = true;
+      request.AddParameter("username", username);
+      request.AddParameter("password", password);
+      var response = AuthRestClient.Post(request);
 
-      var result = JsonConvert.DeserializeObject<ApiResult<ApiSignUpResult>>(response.Content);
+      var result = JsonConvert.DeserializeObject<ApiResult<SignUpResult>>(response.Content);
 
       if (!result.Success)
       {
-        throw new SignInFailedException($"Cannot log in as user {username}");
+        throw new SignUpFailedException($"Cannot sign up as user {username}");
       }
     }
 
@@ -64,22 +67,29 @@ namespace Neu.ANT.Common.Clients
       }
 
       var request = new RestRequest("uid");
-      request.AddHeader("TOKEN", token);
-      var response = RestClient.Get(request);
+      request.AddHeader("USER_TOKEN", token);
+      var response = AuthRestClient.Get(request);
 
-      var result = JsonConvert.DeserializeObject<ApiResult<ApiGetUidResult>>(response.Content);
+      var result = JsonConvert.DeserializeObject<ApiResult<UserIdView>>(response.Content);
 
       if (!result.Success)
       {
         throw new SignInFailedException("Cannot login with saved token");
       }
+
+      _userToken = token;
     }
 
-    public RestClient RestClient
+    public void ClearToken()
+    {
+      _userToken = null;
+    }
+
+    public RestClient AuthRestClient
     {
       get
       {
-        return new RestClient($"{_clientUrl}/api/auth");
+        return new RestClient($"{BaseUrl}/api/auth");
       }
     }
   }
