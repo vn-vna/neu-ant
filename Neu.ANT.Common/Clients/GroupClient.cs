@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Neu.ANT.Common.Clients
 {
-  public class MessageGroupClient
+  public class GroupClient
   {
     private readonly AuthenticationClient _authClient;
     private readonly string _clientUrl;
 
     private List<UserGroupInfo> _groupInfos;
 
-    public MessageGroupClient(AuthenticationClient authClient)
+    public GroupClient(AuthenticationClient authClient)
     {
       _authClient = authClient;
       _clientUrl = _authClient.BaseUrl;
@@ -32,10 +32,12 @@ namespace Neu.ANT.Common.Clients
 
       var result = JsonConvert.DeserializeObject<ApiResult<GroupInfosView>>(response.Content);
 
-      if (result.Success)
+      if (!result.Success)
       {
-        _groupInfos = result.Result.Groups;
+        throw new Exception(result.Error);
       }
+
+      _groupInfos = result.Result.Groups;
     }
 
     public void CreateGroup(string groupName)
@@ -50,7 +52,26 @@ namespace Neu.ANT.Common.Clients
 
       if (!result.Success)
       {
+        throw new Exception(result.Error);
       }
+    }
+
+    public List<MemberInfo> GetMemberInfos(string gui)
+    {
+      var request = new RestRequest("{gid}/members")
+              .AddHeader("USER_TOKEN", _authClient.UserToken)
+              .AddUrlSegment("gid", gui);
+
+      var response = RestClient.Get(request);
+
+      var result = JsonConvert.DeserializeObject<ApiResult<GroupMembersView>>(response.Content);
+
+      if (!result.Success)
+      {
+        throw new Exception(result.Error);
+      }
+
+      return result.Result.Members;
     }
 
     public List<UserGroupInfo> GroupInfos => _groupInfos;

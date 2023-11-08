@@ -14,7 +14,7 @@ namespace Neu.ANT.Common.Clients
   public class AuthenticationClient
   {
     private string? _userToken;
-    public readonly string? BaseUrl;
+    public readonly string BaseUrl;
 
     public string UserToken => _userToken ?? throw new Exception("No user token found");
     public bool IsAuthenticated => _userToken != null; 

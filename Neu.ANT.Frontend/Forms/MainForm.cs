@@ -28,7 +28,7 @@ namespace Neu.ANT.Frontend.Forms
     {
       try
       {
-        AccountState.Instance.AuthClient.LoadToken(Properties.Settings.Default.SavedToken);
+        ApplicationState.Instance.AuthClient.LoadToken(Properties.Settings.Default.SavedToken);
         _stateController.SetState(MainFormState.AppCenter);
       }
       catch (Exception)

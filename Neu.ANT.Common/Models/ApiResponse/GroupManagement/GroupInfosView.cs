@@ -15,9 +15,6 @@ namespace Neu.ANT.Common.Models.ApiResponse.GroupManagement
     [JsonProperty("name")]
     public string DisplayName { get; set; }
 
-    [JsonProperty("members")]
-    public List<string> GroupMembers { get; set; }
-
     [JsonProperty("latest_msgs")]
     public List<string> LatestMessages { get; set; }
   }

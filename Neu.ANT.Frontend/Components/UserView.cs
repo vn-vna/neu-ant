@@ -58,7 +58,7 @@ namespace Neu.ANT.Frontend.Components
 
     private void ResetComponentsData()
     {
-      _userData = AccountState.Instance.UserInfoClient.UserData;
+      _userData = ApplicationState.Instance.UserInfoClient.UserData;
 
       lb_DisplayName.Text = $"{_userData.FirstName} {_userData.LastName}";
       lb_SummaryUsername.Text = $"@{_userData.UserName}";
@@ -128,7 +128,7 @@ namespace Neu.ANT.Frontend.Components
     private void bw_LoadUserData_DoWork(object sender, DoWorkEventArgs e)
     {
       StateController.SetState(UserViewState.Loading);
-      AccountState
+      ApplicationState
         .Instance
         .UserInfoClient
         .FetchUserInfo();
@@ -190,7 +190,7 @@ namespace Neu.ANT.Frontend.Components
           gender = 1;
         }
 
-        AccountState
+        ApplicationState
           .Instance
           .UserInfoClient
           .UpdateUserData(firstName, lastName, birthDate, gender);

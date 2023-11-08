@@ -32,10 +32,8 @@
       btn_AddGroup = new Button();
       fpn_GroupList = new FlowLayoutPanel();
       pn_ChatViewZone = new Panel();
-      chatView1 = new ChatView();
       bw_LoadGroupList = new System.ComponentModel.BackgroundWorker();
       pn_GroupSideBar.SuspendLayout();
-      pn_ChatViewZone.SuspendLayout();
       SuspendLayout();
       // 
       // pn_GroupSideBar
@@ -81,22 +79,12 @@
       // pn_ChatViewZone
       // 
       pn_ChatViewZone.BackColor = Color.White;
-      pn_ChatViewZone.Controls.Add(chatView1);
       pn_ChatViewZone.Dock = DockStyle.Right;
       pn_ChatViewZone.Location = new Point(259, 0);
       pn_ChatViewZone.Margin = new Padding(0);
       pn_ChatViewZone.Name = "pn_ChatViewZone";
       pn_ChatViewZone.Size = new Size(621, 541);
       pn_ChatViewZone.TabIndex = 0;
-      // 
-      // chatView1
-      // 
-      chatView1.BackColor = Color.White;
-      chatView1.Dock = DockStyle.Fill;
-      chatView1.Location = new Point(0, 0);
-      chatView1.Name = "chatView1";
-      chatView1.Size = new Size(621, 541);
-      chatView1.TabIndex = 0;
       // 
       // bw_LoadGroupList
       // 
@@ -114,7 +102,6 @@
       Load += GroupView_Load;
       Resize += GroupView_Resize;
       pn_GroupSideBar.ResumeLayout(false);
-      pn_ChatViewZone.ResumeLayout(false);
       ResumeLayout(false);
     }
 
@@ -122,7 +109,6 @@
 
     private Panel pn_GroupSideBar;
     private Panel pn_ChatViewZone;
-    private ChatView chatView1;
     private FlowLayoutPanel fpn_GroupList;
     private System.ComponentModel.BackgroundWorker bw_LoadGroupList;
     private Button button1;

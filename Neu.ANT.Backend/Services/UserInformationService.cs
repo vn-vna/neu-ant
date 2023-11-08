@@ -69,6 +69,10 @@ namespace Neu.ANT.Backend.Services
         => (await _userCollection.Find(r => r.UserId == uid).ToListAsync()).FirstOrDefault()
         ?? throw new Exception("Invalid user id");
 
+    public async Task<List<UserModel>> GetUserByIds(List<string> uids)
+        => await _userCollection.Find(r => uids.Contains(r.UserId)).ToListAsync()
+        ?? throw new Exception("Invalid user id");
+
     public async Task<UserModel> FindUserByUsername(string username)
         => (await _userCollection.Find(r => r.Username == username).ToListAsync()).FirstOrDefault()
         ?? throw new Exception("Invalid username");

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse.MessageManagement;
-using Neu.ANT.Common.Models.ApiPostData.MessageManagement;
 using Neu.ANT.Common.Models;
 using Neu.ANT.Common.Models.ApiResponse;
 
@@ -66,7 +65,7 @@ namespace Neu.ANT.Backend.Controllers
     public async Task<ApiResult<bool>> CreateMessageInGroup(
       [FromRoute(Name = "gid")] string groupId,
       [FromHeader(Name = "USER_TOKEN")] string token,
-      [FromBody] CreateMessagePostData createData)
+      [FromForm] string content)
     {
       return await ApiExecutorUtils
         .GetExecutor(async () =>
@@ -77,7 +76,7 @@ namespace Neu.ANT.Backend.Controllers
           var message = new MessageModel
           {
             MessageId = Guid.NewGuid().ToString(),
-            Content = createData.Content,
+            Content = content,
             GroupId = groupId,
             Sender = uid,
             SentDateTime = DateTime.UtcNow,

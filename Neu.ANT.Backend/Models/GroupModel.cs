@@ -18,5 +18,8 @@ namespace Neu.ANT.Common.Models
 
     [JsonProperty("name")]
     public string? DisplayName { get; set; } = null;
+
+    [JsonProperty("created")]
+    public DateTime Created { get; set; } = DateTime.UtcNow;
   }
 }

@@ -113,6 +113,18 @@ namespace Neu.ANT.Frontend.Components
       }
 
       item.FixedBackColor = Color.Khaki;
+
+      pn_ChatViewZone.SuspendLayout();
+      pn_ChatViewZone.Controls.Clear();
+
+      var chatView = new ChatView();
+      chatView.GroupId = item.GroupId;
+      chatView.Dock = DockStyle.Fill;
+
+      pn_ChatViewZone.Controls.Add(chatView);
+
+      pn_ChatViewZone.ResumeLayout(false);
+      pn_ChatViewZone.PerformLayout();
     }
 
     private void fpn_GroupList_Resize(object sender, EventArgs e)
@@ -152,7 +164,7 @@ namespace Neu.ANT.Frontend.Components
         fpn_GroupList.Controls.Clear();
       }
 
-      var list = AccountState.Instance.MessageGroupClient.GroupInfos;
+      var list = ApplicationState.Instance.MessageGroupClient.GroupInfos;
 
       if (list is not null)
       {
@@ -184,7 +196,7 @@ namespace Neu.ANT.Frontend.Components
       StateController
         .SetState(GroupViewState.LoadingList);
 
-      AccountState
+      ApplicationState
         .Instance
         .MessageGroupClient
         .GetUserGroups();

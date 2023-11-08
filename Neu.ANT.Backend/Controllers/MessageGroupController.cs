@@ -4,6 +4,7 @@ using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
+using System.Collections;
 
 namespace Neu.ANT.Backend.Controllers
 {
@@ -14,14 +15,18 @@ namespace Neu.ANT.Backend.Controllers
     private readonly AuthenticationService _authenticationService;
     private readonly GroupManagementService _groupManagementService;
     private readonly GroupRelationService _groupRelationService;
+    private readonly UserInformationService _userInfoService;
+
     public MessageGroupController(
       AuthenticationService authenticationService,
       GroupManagementService groupDbService,
-      GroupRelationService groupRelationDbService)
+      GroupRelationService groupRelationDbService,
+      UserInformationService userInformationService)
     {
       _authenticationService = authenticationService;
       _groupManagementService = groupDbService;
       _groupRelationService = groupRelationDbService;
+      _userInfoService = userInformationService;
     }
 
     [HttpPost]
@@ -57,14 +62,37 @@ namespace Neu.ANT.Backend.Controllers
 
           return rawInfo.Select(info =>
           {
-            var members = _groupRelationService.GetUsersInGroupById(info.Id).Result;
-            return new UserGroupInfo { GroupId = info.Id, DisplayName = info.DisplayName, GroupMembers = members };
+            return new UserGroupInfo { GroupId = info.Id, DisplayName = info.DisplayName };
           }).ToList();
 
         })
         .Execute(ginfs => new GroupInfosView
         {
           Groups = ginfs
+        });
+    }
+
+    [HttpGet("{gid}/members")]
+    public async Task<ApiResult<GroupMembersView>> GetGroupMembers(
+      [FromHeader(Name = "USER_TOKEN")] string tokenId,
+      [FromRoute(Name = "gid")] string groupId)
+    {
+      return await ApiExecutorUtils
+        .GetExecutor(async () =>
+        {
+          var userId = await _authenticationService.GetUidFromToken(tokenId);
+          var memberIds = await _groupRelationService.GetUsersInGroupById(groupId);
+          var memberInfos = await _userInfoService.GetUserByIds(memberIds);
+
+          return memberInfos.Select(info => new MemberInfo
+          {
+            Id = info.UserId,
+            Name = $"{info.FirstName} {info.LastName}".Trim(),
+          }).ToList();
+        })
+        .Execute(members => new GroupMembersView
+        {
+          Members = members
         });
     }
 

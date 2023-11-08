@@ -57,11 +57,6 @@ namespace Neu.ANT.Frontend.Forms
       {
         tb_Username.Text = Properties.Settings.Default.SavedUsername;
       }
-
-      if (Properties.Settings.Default.SavedPassword != null)
-      {
-        tb_Password.Text = Properties.Settings.Default.SavedPassword;
-      }
     }
 
     private void btn_SubmitLogin_Click(object sender, EventArgs e)
@@ -111,7 +106,7 @@ namespace Neu.ANT.Frontend.Forms
 
         try
         {
-          AccountState.Instance
+          ApplicationState.Instance
             .AuthClient
             .SignIn(username, password);
         }
@@ -123,7 +118,7 @@ namespace Neu.ANT.Frontend.Forms
             MessageBoxButtons.OK,
             MessageBoxIcon.Error);
 
-          AccountState
+          ApplicationState
             .Instance
             .AuthClient
             .ClearToken();
@@ -141,7 +136,7 @@ namespace Neu.ANT.Frontend.Forms
 
     private void loginBackgrounWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      if (AccountState.Instance.AuthClient.IsAuthenticated)
+      if (ApplicationState.Instance.AuthClient.IsAuthenticated)
       {
         this.Invoke(new Action(() =>
         {
@@ -149,7 +144,7 @@ namespace Neu.ANT.Frontend.Forms
 
           if (savePassword)
           {
-            Properties.Settings.Default.SavedToken = AccountState.Instance.AuthClient.UserToken;
+            Properties.Settings.Default.SavedToken = ApplicationState.Instance.AuthClient.UserToken;
             Properties.Settings.Default.SavedUsername = tb_Username.Text;
             Properties.Settings.Default.Save();
           }

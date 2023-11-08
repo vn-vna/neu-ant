@@ -101,7 +101,7 @@ namespace Neu.ANT.Frontend.Components
     private void bw_LoadUserInfo_DoWork(object sender, DoWorkEventArgs e)
     {
       StateController.SetState(UserInspectorState.Loading);
-      AccountState.Instance
+      ApplicationState.Instance
         .UserInfoClient
         .FetchUserInfo();
     }

@@ -35,7 +35,7 @@ namespace Neu.ANT.Frontend.Forms
         return;
       }
 
-      AccountState
+      ApplicationState
         .Instance
         .MessageGroupClient
         .CreateGroup(groupName);

@@ -100,7 +100,7 @@ namespace Neu.ANT.Frontend.Forms
       try
       {
 
-        AccountState
+        ApplicationState
           .Instance
           .UserInfoClient
           .ChangePassword(oldPassword, newPassword);

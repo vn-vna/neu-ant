@@ -32,8 +32,10 @@
       pn_Footer = new Panel();
       btn_SendMessage = new Button();
       pn_TextBox = new Panel();
-      textBox1 = new TextBox();
-      pn_MsgHistory = new Panel();
+      tb_MessageContent = new TextBox();
+      bw_FetchMessage = new System.ComponentModel.BackgroundWorker();
+      fpn_MessageHistory = new FlowLayoutPanel();
+      bw_SendMessage = new System.ComponentModel.BackgroundWorker();
       pn_Footer.SuspendLayout();
       pn_TextBox.SuspendLayout();
       SuspendLayout();
@@ -70,11 +72,12 @@
       btn_SendMessage.Size = new Size(40, 40);
       btn_SendMessage.TabIndex = 1;
       btn_SendMessage.UseVisualStyleBackColor = false;
+      btn_SendMessage.Click += btn_SendMessage_Click;
       // 
       // pn_TextBox
       // 
       pn_TextBox.BackColor = Color.GhostWhite;
-      pn_TextBox.Controls.Add(textBox1);
+      pn_TextBox.Controls.Add(tb_MessageContent);
       pn_TextBox.Dock = DockStyle.Left;
       pn_TextBox.Location = new Point(0, 0);
       pn_TextBox.Margin = new Padding(0);
@@ -83,38 +86,51 @@
       pn_TextBox.Size = new Size(519, 40);
       pn_TextBox.TabIndex = 0;
       // 
-      // textBox1
+      // tb_MessageContent
       // 
-      textBox1.BackColor = Color.GhostWhite;
-      textBox1.BorderStyle = BorderStyle.None;
-      textBox1.Dock = DockStyle.Fill;
-      textBox1.Location = new Point(5, 5);
-      textBox1.Margin = new Padding(5);
-      textBox1.Multiline = true;
-      textBox1.Name = "textBox1";
-      textBox1.Size = new Size(509, 30);
-      textBox1.TabIndex = 0;
+      tb_MessageContent.BackColor = Color.GhostWhite;
+      tb_MessageContent.BorderStyle = BorderStyle.None;
+      tb_MessageContent.Dock = DockStyle.Fill;
+      tb_MessageContent.Location = new Point(5, 5);
+      tb_MessageContent.Margin = new Padding(5);
+      tb_MessageContent.Multiline = true;
+      tb_MessageContent.Name = "tb_MessageContent";
+      tb_MessageContent.Size = new Size(509, 30);
+      tb_MessageContent.TabIndex = 0;
+      tb_MessageContent.KeyDown += tb_MessageContent_KeyDown;
       // 
-      // pn_MsgHistory
+      // bw_FetchMessage
       // 
-      pn_MsgHistory.Dock = DockStyle.Fill;
-      pn_MsgHistory.Location = new Point(0, 40);
-      pn_MsgHistory.Name = "pn_MsgHistory";
-      pn_MsgHistory.Size = new Size(562, 489);
-      pn_MsgHistory.TabIndex = 2;
-      pn_MsgHistory.Resize += pn_MsgHistory_Resize;
+      bw_FetchMessage.DoWork += bw_FetchMessage_DoWork;
+      bw_FetchMessage.RunWorkerCompleted += bw_FetchMessage_RunWorkerCompleted;
+      // 
+      // fpn_MessageHistory
+      // 
+      fpn_MessageHistory.AutoScroll = true;
+      fpn_MessageHistory.Dock = DockStyle.Fill;
+      fpn_MessageHistory.FlowDirection = FlowDirection.BottomUp;
+      fpn_MessageHistory.Location = new Point(0, 40);
+      fpn_MessageHistory.Name = "fpn_MessageHistory";
+      fpn_MessageHistory.Size = new Size(562, 489);
+      fpn_MessageHistory.TabIndex = 2;
+      // 
+      // bw_SendMessage
+      // 
+      bw_SendMessage.DoWork += bw_SendMessage_DoWork;
+      bw_SendMessage.RunWorkerCompleted += bw_SendMessage_RunWorkerCompleted;
       // 
       // ChatView
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
       BackColor = Color.White;
-      Controls.Add(pn_MsgHistory);
+      Controls.Add(fpn_MessageHistory);
       Controls.Add(pn_Footer);
       Controls.Add(pn_Header);
       Name = "ChatView";
       Size = new Size(562, 569);
       Load += ChatView_Load;
+      Resize += ChatView_Resize;
       pn_Footer.ResumeLayout(false);
       pn_TextBox.ResumeLayout(false);
       pn_TextBox.PerformLayout();
@@ -125,9 +141,11 @@
 
     private Panel pn_Header;
     private Panel pn_Footer;
-    private Panel pn_MsgHistory;
     private Button btn_SendMessage;
     private Panel pn_TextBox;
-    private TextBox textBox1;
+    private TextBox tb_MessageContent;
+    private System.ComponentModel.BackgroundWorker bw_FetchMessage;
+    private FlowLayoutPanel fpn_MessageHistory;
+    private System.ComponentModel.BackgroundWorker bw_SendMessage;
   }
 }
