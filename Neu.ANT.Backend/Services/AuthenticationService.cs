@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Backend.Exceptions;
-using Neu.ANT.Backend.Utilities;
+﻿using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse.Authenticate;
 
 namespace Neu.ANT.Backend.Services
@@ -7,54 +6,39 @@ namespace Neu.ANT.Backend.Services
   public class AuthenticationService
   {
     private readonly ILogger<AuthenticationService> _logger;
-    private readonly SessionTokenService _tokenDb;
-    private readonly UserInformationService _userDb;
+    private readonly SessionTokenService _tokenService;
+    private readonly UserInformationService _userInfoService;
 
     public AuthenticationService(
         ILogger<AuthenticationService> logger,
         SessionTokenService tokenDb, UserInformationService userDb)
     {
       _logger = logger;
-      _tokenDb = tokenDb;
-      _userDb = userDb;
+      _tokenService = tokenDb;
+      _userInfoService = userDb;
     }
 
     public async Task<string> SignIn(string username, string password)
     {
-      var uid = await _userDb.SignIn(username, password);
-
-      if (uid == null)
-      {
-        throw new AuthenticationErrorException();
-      }
-
-      return await _tokenDb.RequestToken(uid);
+      var uid = await _userInfoService.AuthenticateUser(username, password);
+      return await _tokenService.RequestToken(uid);
     }
 
-    public async Task<string?> SignUp(string username, string password)
+    public async Task<string> SignUp(string username, string password)
     {
-      if (await _userDb.IsUsernameExists(username))
-      {
-        throw new UserExistsException();
-      }
-
-      return await _userDb.CreateUser(username, password);
+      return await _userInfoService.CreateUser(username, password);
     }
 
     public async Task<string> GetUidFromToken(string token)
     {
-      var tokenObj = await _tokenDb.GetToken(token);
-      if (tokenObj == null)
-      {
-        throw new InvalidTokenException();
-      }
+      var tokenObj = await _tokenService.GetToken(token);
 
       if (DateTime.UtcNow > tokenObj.DateExpired)
       {
-        throw new TokenExpiredException();
+        throw new Exception("Token expired");
       }
 
-      await _tokenDb.ExtendToken(token);
+      await _tokenService.ExtendToken(token);
 
       return tokenObj.UserId;
     }

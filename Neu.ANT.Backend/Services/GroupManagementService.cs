@@ -8,7 +8,9 @@ namespace Neu.ANT.Backend.Services
     private readonly IMongoCollection<GroupModel> _groupCollection;
     private readonly ILogger _logger;
 
-    public GroupManagementService(DatabaseConnectionService databaseConnection, ILogger<GroupManagementService> logger)
+    public GroupManagementService(
+      DatabaseConnectionService databaseConnection,
+      ILogger<GroupManagementService> logger)
     {
       _logger = logger;
       _groupCollection = databaseConnection.MongoDatabase.GetCollection<GroupModel>("groupdb");
@@ -20,14 +22,14 @@ namespace Neu.ANT.Backend.Services
     public async Task<List<GroupModel>> GetGroupInfos(List<string> ids)
       => await _groupCollection.Find(r => ids.Contains(r.Id)).ToListAsync();
 
-    public async Task<string> CreateGroup()
+    public async Task<string> CreateGroup(string displayName)
     {
       var id = Guid.NewGuid().ToString();
 
       await _groupCollection.InsertOneAsync(new GroupModel()
       {
         Id = id,
-        DisplayName = null,
+        DisplayName = displayName,
       });
 
       return id;

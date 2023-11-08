@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.SignalR;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
-using Neu.ANT.Common.Exceptions;
 using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.Authenticate;
 
@@ -20,35 +19,36 @@ namespace Neu.ANT.Backend.Controllers
     }
 
     [HttpPost("sign-up")]
-    public async Task<IActionResult> SignUp(
-      [FromQuery] string username, 
-      [FromQuery] string password)
+    public async Task<ApiResult<SignUpResult>> SignUp(
+      [FromForm(Name = "username")] string username,
+      [FromForm(Name = "password")] string password)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.SignUp(username, password))
-          .Execute(uid => new ApiSignUpResult() { UserId = uid });
-
-      return Json(result);
+      return await ApiExecutorUtils
+        .GetExecutor(async () => await _authService.SignUp(username, password))
+        .Execute(uid => new SignUpResult() { UserId = uid });
     }
 
-    [HttpGet("sign-in")]
-    public async Task<IActionResult> SignIn(
-      [FromQuery] string username, 
-      [FromQuery] string password)
+    [HttpPost("sign-in")]
+    public async Task<ApiResult<Common.Models.ApiResponse.Authenticate.SignInResult>> SignIn(
+      [FromForm(Name = "username")] string username,
+      [FromForm(Name = "password")] string password)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.SignIn(username, password))
-          .Execute(token => new ApiSignInResult() { TokenId = token });
+      var result = await ApiExecutorUtils
+        .GetExecutor(async () => await _authService.SignIn(username, password))
+        .Execute(token => new Common.Models.ApiResponse.Authenticate.SignInResult() { TokenId = token });
 
-      return Json(result);
+      return result;
     }
 
     [HttpGet("uid")]
-    public async Task<IActionResult> GetUid(
-      [FromHeader(Name = "TOKEN")] string token)
+    public async Task<ApiResult<UserIdView>> GetUid(
+      [FromHeader(Name = "USER_TOKEN")] string token)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () => await _authService.GetUidFromToken(token))
-          .Execute(uid => new ApiGetUidResult() { UserId = uid });
+      var result = await ApiExecutorUtils
+        .GetExecutor(async () => await _authService.GetUidFromToken(token))
+        .Execute(uid => new UserIdView() { UserId = uid });
 
-      return Json(result);
+      return result;
     }
   }
 }

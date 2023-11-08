@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using Neu.ANT.Backend.Exceptions;
 using Neu.ANT.Backend.Models;
 using Neu.ANT.Common.Utilities;
 using System.Runtime.Intrinsics.Arm;
@@ -58,7 +57,7 @@ namespace Neu.ANT.Backend.Services
     public async Task<GroupRelationModel> GetRelation(string uid, string gid)
         => await _groupRelationDatabase
           .Find(m => m.RelationId == MangleRelationId(uid, gid))
-          .FirstOrDefaultAsync();
+          .FirstOrDefaultAsync() ?? throw new Exception("Invalid relation");
 
     public async Task<GroupInvitationModel> GetInvitationById(string invitationId)
         => await _groupInvitationDatabase
@@ -69,7 +68,7 @@ namespace Neu.ANT.Backend.Services
     {
       if (!await IsInviter(senderId, gid))
       {
-        throw new GroupPermissionMissingException(senderId, gid);
+        throw new Exception("Permission denied");
       }
 
       var invId = MangleInvitationToEveryoneId(senderId, gid);
@@ -81,13 +80,13 @@ namespace Neu.ANT.Backend.Services
     {
       if (!await IsInviter(senderUid, gid))
       {
-        throw new GroupPermissionMissingException(senderUid, gid);
+        throw new Exception("Permission denied");
       }
 
       var relation = await GetRelation(receiverUid, gid);
       if (relation is not null)
       {
-        throw new RelationExistsException(receiverUid, gid);
+        throw new Exception("User already in group");
       }
 
       string invId = MangleInvitationToUserId(senderUid, gid, receiverUid);
@@ -120,17 +119,19 @@ namespace Neu.ANT.Backend.Services
 
       if (invitation is null)
       {
-        throw new InvalidInvitationException();
+        throw new Exception("Invalid invitation");
       }
 
       if (invitation.ExpiredDatetime < DateTime.UtcNow)
       {
-        throw new InvitationExpiredException();
+        throw new Exception("Invitation expired");
       }
+
+      string relId = null;
 
       if (invitation.ReceiverId == null)
       {
-        var relId = await CreateRelation(userId, invitation.GroupId, new RelationPermission
+        relId = await CreateRelation(userId, invitation.GroupId, new RelationPermission
         {
           IsAdmin = false,
           IsInviter = true
@@ -139,20 +140,20 @@ namespace Neu.ANT.Backend.Services
         return relId;
       }
 
-      if (invitation.ReceiverId == userId)
+      if (invitation.ReceiverId != userId)
       {
-        var relId = await CreateRelation(userId, invitation.GroupId, new RelationPermission
-        {
-          IsAdmin = false,
-          IsInviter = true,
-        });
-
-        await RemoveInvitationById(invitationId);
-
-        return relId;
+        throw new Exception("Permission denied");
       }
 
-      throw new InvalidInvitationException();
+      relId = await CreateRelation(userId, invitation.GroupId, new RelationPermission
+      {
+        IsAdmin = false,
+        IsInviter = true,
+      });
+
+      await RemoveInvitationById(invitationId);
+
+      return relId;
     }
 
     public string MangleRelationId(string uid, string gid)

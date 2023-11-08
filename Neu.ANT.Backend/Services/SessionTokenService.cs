@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using Neu.ANT.Backend.Exceptions;
 using Neu.ANT.Backend.Models;
 using Neu.ANT.Backend.Utilities;
 
@@ -41,7 +40,7 @@ namespace Neu.ANT.Backend.Services
 
       if (tokenInfo is null)
       {
-        throw new InvalidTokenException();
+        throw new Exception("Invalid token");
       }
 
       var nextExpiredTime = DateTime.UtcNow + new TimeSpan(3, 0, 0, 0);
@@ -52,8 +51,9 @@ namespace Neu.ANT.Backend.Services
       _tokenCollection.UpdateOne(filter, update);
     }
 
-    public async Task<TokenModel?> GetToken(string token)
+    public async Task<TokenModel> GetToken(string token)
         => (await _tokenCollection.Find(r => r.Token == token).ToListAsync())
-            .FirstOrDefault();
+            .FirstOrDefault() 
+        ?? throw new Exception("Invalid token");
   }
 }

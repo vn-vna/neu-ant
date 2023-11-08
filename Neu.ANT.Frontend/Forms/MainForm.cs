@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.AuthenticationClientException;
-using Neu.ANT.Frontend.Components;
+﻿using Neu.ANT.Frontend.Components;
 using Neu.ANT.Frontend.States;
 using System;
 using System.Collections.Generic;
@@ -27,7 +26,15 @@ namespace Neu.ANT.Frontend.Forms
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-      _stateController.SetState(MainFormState.WelcomePage);
+      try
+      {
+        ApplicationState.Instance.AuthClient.LoadToken(Properties.Settings.Default.SavedToken);
+        _stateController.SetState(MainFormState.AppCenter);
+      }
+      catch (Exception)
+      {
+        _stateController.SetState(MainFormState.WelcomePage);
+      }
     }
 
     private void MainForm_ListenState(MainFormState state)
@@ -35,21 +42,29 @@ namespace Neu.ANT.Frontend.Forms
       this.Invoke(new Action(() =>
       {
         SuspendLayout();
-        panel1.Controls.Clear();
+        pn_Cotent.Controls.Clear();
+
+        Control page = null;
 
         switch (state)
         {
           case MainFormState.WelcomePage:
-            panel1.Controls.Add(WelcomePage.Instance);
+            page = new WelcomePage();
             break;
 
-          case MainFormState.MainPage:
-            panel1.Controls.Add(AppCenterPage.Instance);
+          case MainFormState.AppCenter:
+            page = new AppCenterPage();
             break;
 
-          case MainFormState.LoadingPage:
-            panel1.Controls.Add(LoadingPage.Instance);
+          default:
             break;
+        }
+
+        if (page != null)
+        {
+          page.Dock = DockStyle.Fill;
+          page.Visible = true;
+          pn_Cotent.Controls.Add(page);
         }
 
         ResumeLayout(true);
@@ -57,14 +72,13 @@ namespace Neu.ANT.Frontend.Forms
     }
 
     public static MainForm Instance => _instance.Value;
-    public CommonStateController<MainFormState> StateController => _stateController;
+    public CommonStateController<MainFormState> FormStateController => _stateController;
 
     public enum MainFormState
     {
       Undefined,
       WelcomePage,
-      LoadingPage,
-      MainPage
+      AppCenter
     }
   }
 }

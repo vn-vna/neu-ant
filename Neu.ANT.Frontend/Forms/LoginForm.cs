@@ -8,8 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Neu.ANT.Common.Exceptions;
-using Neu.ANT.Common.Exceptions.AuthenticationClientException;
 using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.Components;
 
@@ -28,8 +26,8 @@ namespace Neu.ANT.Frontend.Forms
 
     private void HandleStateChange(LoginFormState state)
     {
-      basePanel.SuspendLayout();
-      basePanel.Controls.Clear();
+      pn_Content.SuspendLayout();
+      pn_Content.Controls.Clear();
 
       switch (state)
       {
@@ -37,20 +35,28 @@ namespace Neu.ANT.Frontend.Forms
           break;
 
         case LoginFormState.ShowLogin:
-          basePanel.Controls.Add(loginPanel);
+          pn_Content.Controls.Add(pn_LoginPanel);
           break;
 
         case LoginFormState.Loading:
-          basePanel.Controls.Add(loadingLabel);
+          var loadingPage = new LoadingComponent();
+          loadingPage.LoadingLabel = "Logging you in...";
+          loadingPage.Dock = DockStyle.Fill;
+          pn_Content.Controls.Add(loadingPage);
           break;
       }
 
-      basePanel.ResumeLayout(true);
+      pn_Content.ResumeLayout(true);
     }
 
     private void LoginForm_Load(object sender, EventArgs e)
     {
       this.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+      if (Properties.Settings.Default.SavedUsername != null)
+      {
+        tb_Username.Text = Properties.Settings.Default.SavedUsername;
+      }
     }
 
     private void btn_SubmitLogin_Click(object sender, EventArgs e)
@@ -89,7 +95,6 @@ namespace Neu.ANT.Frontend.Forms
 
     private void loginBackgrounWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-
       BackgroundWorker backgroundWorker = sender as BackgroundWorker;
 
       Dictionary<string, string> kwParams = e.Argument as Dictionary<string, string>;
@@ -101,13 +106,24 @@ namespace Neu.ANT.Frontend.Forms
 
         try
         {
-          AccountState.Instance
+          ApplicationState.Instance
             .AuthClient
             .SignIn(username, password);
         }
-        catch (SignInFailedException lfex)
+        catch (Exception ex)
         {
-          MessageBox.Show($"Reason: {lfex.Message}", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          MessageBox.Show(
+            $"Reason: {ex.Message}",
+            "Login Failed",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error);
+
+          ApplicationState
+            .Instance
+            .AuthClient
+            .ClearToken();
+
+          return;
         }
 
         if (backgroundWorker.CancellationPending)
@@ -120,23 +136,27 @@ namespace Neu.ANT.Frontend.Forms
 
     private void loginBackgrounWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      if (AccountState.Instance.AuthClient.UserToken != null)
+      if (ApplicationState.Instance.AuthClient.IsAuthenticated)
       {
         this.Invoke(new Action(() =>
         {
+          bool savePassword = cb_RememberLogin.Checked;
+
+          if (savePassword)
+          {
+            Properties.Settings.Default.SavedToken = ApplicationState.Instance.AuthClient.UserToken;
+            Properties.Settings.Default.SavedUsername = tb_Username.Text;
+            Properties.Settings.Default.Save();
+          }
+
           Close();
-          MainForm.Instance.StateController.SetState(MainForm.MainFormState.MainPage);
+          MainForm.Instance.FormStateController.SetState(MainForm.MainFormState.AppCenter);
         }));
       }
       else
       {
         _stateController.SetState(LoginFormState.ShowLogin);
       }
-    }
-
-    private void btn_SubmitLogin_Click_1(object sender, EventArgs e)
-    {
-      PerformLogin();
     }
 
     public enum LoginFormState

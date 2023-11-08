@@ -28,31 +28,34 @@
     /// </summary>
     private void InitializeComponent()
     {
-      panel1 = new Panel();
+      pn_Cotent = new Panel();
       SuspendLayout();
       // 
-      // panel1
+      // pn_Cotent
       // 
-      panel1.Dock = DockStyle.Fill;
-      panel1.Location = new Point(0, 0);
-      panel1.Name = "panel1";
-      panel1.Size = new Size(941, 554);
-      panel1.TabIndex = 0;
+      pn_Cotent.Dock = DockStyle.Fill;
+      pn_Cotent.Location = new Point(0, 0);
+      pn_Cotent.Name = "pn_Cotent";
+      pn_Cotent.Size = new Size(1008, 561);
+      pn_Cotent.TabIndex = 0;
       // 
       // MainForm
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
-      ClientSize = new Size(941, 554);
-      Controls.Add(panel1);
+      BackColor = Color.White;
+      ClientSize = new Size(1008, 561);
+      Controls.Add(pn_Cotent);
+      MaximumSize = new Size(1366, 768);
+      MinimumSize = new Size(1024, 560);
       Name = "MainForm";
       StartPosition = FormStartPosition.CenterScreen;
-      Text = "MainForm";
+      Text = "ANT Messenger";
       Load += MainForm_Load;
       ResumeLayout(false);
     }
 
     #endregion
-    private Panel panel1;
+    private Panel pn_Cotent;
   }
 }

@@ -90,7 +90,7 @@ namespace Neu.ANT.Frontend.Forms
       var username = signupData["username"];
       var password = signupData["password"];
 
-      AccountState.Instance
+      ApplicationState.Instance
         .AuthClient
         .SignUp(username, password);
 

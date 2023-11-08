@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Neu.ANT.Backend.Exceptions;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse.MessageManagement;
-using Neu.ANT.Common.Models.ApiPostData.MessageManagement;
 using Neu.ANT.Common.Models;
+using Neu.ANT.Common.Models.ApiResponse;
 
 namespace Neu.ANT.Backend.Controllers
 {
-  [Route("api/message")]
+  [Route("api/messages")]
   [ApiController]
   public class MessageController : Controller
   {
@@ -18,8 +17,8 @@ namespace Neu.ANT.Backend.Controllers
     private readonly MessageManagementService _messageManagementService;
 
     public MessageController(
-      GroupRelationService groupRelationService, 
-      AuthenticationService authenticationService, 
+      GroupRelationService groupRelationService,
+      AuthenticationService authenticationService,
       MessageManagementService messageManagementService)
     {
       _groupRelationService = groupRelationService;
@@ -27,29 +26,19 @@ namespace Neu.ANT.Backend.Controllers
       _messageManagementService = messageManagementService;
     }
 
-    /// <summary>
-    /// Get messages those are sent to specified group
-    /// </summary>
-    /// <param name="groupId">ID of the group</param>
-    /// <param name="token">User Session token</param>
-    /// <param name="timeRangeFrom">Time query lower bound</param>
-    /// <param name="timeRangeTo">Time query upper bound</param>
-    /// <param name="maxSize">Limit the maximum number of messages to be queried</param>
-    /// <returns>Api response template with the value is a list of message that is queried</returns>
-    /// <exception cref="InvalidRelationException"></exception>
     [HttpGet("{gid}")]
-    public async Task<IActionResult> GetMessagesInGroup(
+    public async Task<ApiResult<MessageInGroupView>> GetMessagesInGroup(
       [FromRoute(Name = "gid")] string groupId,
       [FromHeader(Name = "USER_TOKEN")] string token,
       [FromQuery(Name = "tf")] DateTime? timeRangeFrom,
       [FromQuery(Name = "tt")] DateTime? timeRangeTo,
       [FromQuery(Name = "sz")] int? maxSize)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () =>
+      return await ApiExecutorUtils.GetExecutor(async () =>
       {
         var threeDays = new TimeSpan(3, 0, 0, 0);
         var uid = await _authenticationService.GetUidFromToken(token);
-        var relation = await _groupRelationService.GetRelation(uid, groupId) ?? throw new InvalidRelationException();
+        var relation = await _groupRelationService.GetRelation(uid, groupId);
         var trFrom = timeRangeFrom ?? DateTime.UtcNow - threeDays;
         var trTo = timeRangeTo ?? DateTime.UtcNow;
         var sz = maxSize ?? 100;
@@ -65,43 +54,41 @@ namespace Neu.ANT.Backend.Controllers
         }).ToList() ?? new List<MessageData>();
 
         return msgList;
-      }).Execute(ret => new GetMessagesInGroupResult
+      }).Execute(ret => new MessageInGroupView
       {
         Messages = ret,
         GroupId = groupId,
       });
-
-      return Json(result);
     }
 
     [HttpPost("{gid}")]
-    public async Task<IActionResult> CreateMessageInGroup(
+    public async Task<ApiResult<bool>> CreateMessageInGroup(
       [FromRoute(Name = "gid")] string groupId,
       [FromHeader(Name = "USER_TOKEN")] string token,
-      [FromBody] CreateMessagePostData createData)
+      [FromForm] string content)
     {
-      var result = await ApiExecutorUtils.GetExecutor(async () =>
-      {
-        var uid = await _authenticationService.GetUidFromToken(token);
-        var relation = await _groupRelationService.GetRelation(uid, groupId) ?? throw new InvalidRelationException();
-
-        var message = new MessageModel
+      return await ApiExecutorUtils
+        .GetExecutor(async () =>
         {
-          MessageId = Guid.NewGuid().ToString(),
-          Content = createData.Content,
-          GroupId = groupId,
-          Sender = uid,
-          SentDateTime = DateTime.UtcNow,
-        };
+          var uid = await _authenticationService.GetUidFromToken(token);
+          var relation = await _groupRelationService.GetRelation(uid, groupId);
 
-        await _messageManagementService.AppendMessage(message);
-        return true;
-      }).Execute(ack =>
-      {
-        return true;
-      });
+          var message = new MessageModel
+          {
+            MessageId = Guid.NewGuid().ToString(),
+            Content = content,
+            GroupId = groupId,
+            Sender = uid,
+            SentDateTime = DateTime.UtcNow,
+          };
 
-      return Json(result);
+          await _messageManagementService.AppendMessage(message);
+          return true;
+        })
+        .Execute(ack =>
+        {
+          return true;
+        });
     }
 
   }
