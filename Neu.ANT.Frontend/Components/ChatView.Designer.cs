@@ -29,6 +29,11 @@
     private void InitializeComponent()
     {
       pn_Header = new Panel();
+      flowLayoutPanel1 = new FlowLayoutPanel();
+      btn_Options = new Button();
+      btn_Invite = new Button();
+      panel1 = new Panel();
+      lb_GroupName = new Label();
       pn_Footer = new Panel();
       btn_SendMessage = new Button();
       pn_TextBox = new Panel();
@@ -36,6 +41,9 @@
       bw_FetchMessage = new System.ComponentModel.BackgroundWorker();
       fpn_MessageHistory = new FlowLayoutPanel();
       bw_SendMessage = new System.ComponentModel.BackgroundWorker();
+      pn_Header.SuspendLayout();
+      flowLayoutPanel1.SuspendLayout();
+      panel1.SuspendLayout();
       pn_Footer.SuspendLayout();
       pn_TextBox.SuspendLayout();
       SuspendLayout();
@@ -43,11 +51,70 @@
       // pn_Header
       // 
       pn_Header.BackColor = Color.GhostWhite;
+      pn_Header.Controls.Add(flowLayoutPanel1);
+      pn_Header.Controls.Add(panel1);
       pn_Header.Dock = DockStyle.Top;
       pn_Header.Location = new Point(0, 0);
       pn_Header.Name = "pn_Header";
       pn_Header.Size = new Size(562, 40);
       pn_Header.TabIndex = 0;
+      // 
+      // flowLayoutPanel1
+      // 
+      flowLayoutPanel1.Controls.Add(btn_Options);
+      flowLayoutPanel1.Controls.Add(btn_Invite);
+      flowLayoutPanel1.Dock = DockStyle.Right;
+      flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
+      flowLayoutPanel1.Location = new Point(454, 0);
+      flowLayoutPanel1.Name = "flowLayoutPanel1";
+      flowLayoutPanel1.Size = new Size(108, 40);
+      flowLayoutPanel1.TabIndex = 1;
+      // 
+      // btn_Options
+      // 
+      btn_Options.FlatAppearance.BorderSize = 0;
+      btn_Options.FlatStyle = FlatStyle.Flat;
+      btn_Options.Image = Properties.Resources.Menu32;
+      btn_Options.Location = new Point(68, 0);
+      btn_Options.Margin = new Padding(0);
+      btn_Options.Name = "btn_Options";
+      btn_Options.Size = new Size(40, 40);
+      btn_Options.TabIndex = 0;
+      btn_Options.Text = " ";
+      btn_Options.UseVisualStyleBackColor = true;
+      // 
+      // btn_Invite
+      // 
+      btn_Invite.FlatAppearance.BorderSize = 0;
+      btn_Invite.FlatStyle = FlatStyle.Flat;
+      btn_Invite.Image = Properties.Resources.AddUser32;
+      btn_Invite.Location = new Point(28, 0);
+      btn_Invite.Margin = new Padding(0);
+      btn_Invite.Name = "btn_Invite";
+      btn_Invite.Size = new Size(40, 40);
+      btn_Invite.TabIndex = 1;
+      btn_Invite.Text = " ";
+      btn_Invite.UseVisualStyleBackColor = true;
+      // 
+      // panel1
+      // 
+      panel1.Controls.Add(lb_GroupName);
+      panel1.Dock = DockStyle.Left;
+      panel1.Location = new Point(0, 0);
+      panel1.Name = "panel1";
+      panel1.Size = new Size(299, 40);
+      panel1.TabIndex = 0;
+      // 
+      // lb_GroupName
+      // 
+      lb_GroupName.Dock = DockStyle.Fill;
+      lb_GroupName.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+      lb_GroupName.Location = new Point(0, 0);
+      lb_GroupName.Name = "lb_GroupName";
+      lb_GroupName.Size = new Size(299, 40);
+      lb_GroupName.TabIndex = 0;
+      lb_GroupName.Text = "Group name";
+      lb_GroupName.TextAlign = ContentAlignment.MiddleLeft;
       // 
       // pn_Footer
       // 
@@ -131,6 +198,9 @@
       Size = new Size(562, 569);
       Load += ChatView_Load;
       Resize += ChatView_Resize;
+      pn_Header.ResumeLayout(false);
+      flowLayoutPanel1.ResumeLayout(false);
+      panel1.ResumeLayout(false);
       pn_Footer.ResumeLayout(false);
       pn_TextBox.ResumeLayout(false);
       pn_TextBox.PerformLayout();
@@ -147,5 +217,10 @@
     private System.ComponentModel.BackgroundWorker bw_FetchMessage;
     private FlowLayoutPanel fpn_MessageHistory;
     private System.ComponentModel.BackgroundWorker bw_SendMessage;
+    private Panel panel1;
+    private FlowLayoutPanel flowLayoutPanel1;
+    private Button btn_Options;
+    private Button btn_Invite;
+    private Label lb_GroupName;
   }
 }

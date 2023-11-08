@@ -18,6 +18,11 @@ namespace Neu.ANT.Frontend.Components
     private Dictionary<string, MemberInfo> _members { get; set; }
 
     public string GroupId { get; set; }
+    public string GroupName
+    {
+      get => lb_GroupName.Text;
+      set => lb_GroupName.Text = value;
+    }
 
     public ChatView()
     {
@@ -79,13 +84,15 @@ namespace Neu.ANT.Frontend.Components
       _members = ApplicationState
         .Instance
         .MessageGroupClient
-        .GetMemberInfos(GroupId).ToDictionary(x => x.Id);
+        .GetMemberInfos(GroupId)
+        .ToDictionary(x => x.Id);
 
       var messages = ApplicationState.Instance
         .MessageClient
         .GetMessage(GroupId, null, null, null);
 
       _msgList.Clear();
+      messages.Messages.Reverse();
 
       foreach (var msg in messages.Messages)
       {
@@ -135,12 +142,13 @@ namespace Neu.ANT.Frontend.Components
       Invoke(RefreshMessageViews);
     }
 
-    private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-    {
-
-    }
     private void bw_SendMessage_DoWork(object sender, DoWorkEventArgs e)
     {
+      if (string.IsNullOrEmpty(tb_MessageContent.Text))
+      {
+        return;
+      }
+
       ApplicationState
         .Instance
         .MessageClient

@@ -17,7 +17,7 @@ namespace Neu.ANT.Backend.Services
             .Find(r =>
                 r.GroupId == gid &&
                 (r.SentDateTime > from) && (r.SentDateTime < until))
-            .SortBy(f => f.SentDateTime)
+            .SortByDescending(f => f.SentDateTime)
             .Limit(maxSize)
             .ToListAsync();
 

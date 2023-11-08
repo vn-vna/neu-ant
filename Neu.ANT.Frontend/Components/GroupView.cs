@@ -118,6 +118,7 @@ namespace Neu.ANT.Frontend.Components
       pn_ChatViewZone.Controls.Clear();
 
       var chatView = new ChatView();
+      chatView.GroupName = item.GroupName;
       chatView.GroupId = item.GroupId;
       chatView.Dock = DockStyle.Fill;
 

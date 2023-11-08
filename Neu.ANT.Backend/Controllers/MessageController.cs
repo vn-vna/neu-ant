@@ -41,7 +41,7 @@ namespace Neu.ANT.Backend.Controllers
         var relation = await _groupRelationService.GetRelation(uid, groupId);
         var trFrom = timeRangeFrom ?? DateTime.UtcNow - threeDays;
         var trTo = timeRangeTo ?? DateTime.UtcNow;
-        var sz = maxSize ?? 100;
+        var sz = maxSize ?? 1000;
 
         var messages = await _messageManagementService.GetMessageInGroup(groupId, trFrom, trTo, sz);
 
