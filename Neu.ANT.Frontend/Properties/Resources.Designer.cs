@@ -163,6 +163,26 @@ namespace Neu.ANT.Frontend.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap QuestionMark256 {
+            get {
+                object obj = ResourceManager.GetObject("QuestionMark256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap QuestionMark32 {
+            get {
+                object obj = ResourceManager.GetObject("QuestionMark32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TeamDefault32 {
             get {
                 object obj = ResourceManager.GetObject("TeamDefault32", resourceCulture);

@@ -20,14 +20,14 @@ namespace Neu.ANT.Backend.Services
     public async Task<List<GroupModel>> GetGroupInfos(List<string> ids)
       => await _groupCollection.Find(r => ids.Contains(r.Id)).ToListAsync();
 
-    public async Task<string> CreateGroup()
+    public async Task<string> CreateGroup(string displayName)
     {
       var id = Guid.NewGuid().ToString();
 
       await _groupCollection.InsertOneAsync(new GroupModel()
       {
         Id = id,
-        DisplayName = null,
+        DisplayName = displayName,
       });
 
       return id;

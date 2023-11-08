@@ -29,20 +29,54 @@
     private void InitializeComponent()
     {
       pn_GroupSideBar = new Panel();
+      btn_AddGroup = new Button();
+      fpn_GroupList = new FlowLayoutPanel();
       pn_ChatViewZone = new Panel();
       chatView1 = new ChatView();
+      bw_LoadGroupList = new System.ComponentModel.BackgroundWorker();
+      pn_GroupSideBar.SuspendLayout();
       pn_ChatViewZone.SuspendLayout();
       SuspendLayout();
       // 
       // pn_GroupSideBar
       // 
       pn_GroupSideBar.BackColor = Color.Honeydew;
+      pn_GroupSideBar.Controls.Add(btn_AddGroup);
+      pn_GroupSideBar.Controls.Add(fpn_GroupList);
       pn_GroupSideBar.Dock = DockStyle.Left;
       pn_GroupSideBar.Location = new Point(0, 0);
       pn_GroupSideBar.Margin = new Padding(0);
       pn_GroupSideBar.Name = "pn_GroupSideBar";
       pn_GroupSideBar.Size = new Size(259, 541);
       pn_GroupSideBar.TabIndex = 0;
+      // 
+      // btn_AddGroup
+      // 
+      btn_AddGroup.Dock = DockStyle.Bottom;
+      btn_AddGroup.FlatAppearance.BorderSize = 0;
+      btn_AddGroup.FlatStyle = FlatStyle.Flat;
+      btn_AddGroup.Location = new Point(0, 511);
+      btn_AddGroup.Margin = new Padding(0);
+      btn_AddGroup.Name = "btn_AddGroup";
+      btn_AddGroup.Size = new Size(259, 30);
+      btn_AddGroup.TabIndex = 1;
+      btn_AddGroup.Text = "Tạo mới";
+      btn_AddGroup.UseVisualStyleBackColor = true;
+      btn_AddGroup.Click += btn_AddGroup_Click;
+      // 
+      // fpn_GroupList
+      // 
+      fpn_GroupList.AutoScroll = true;
+      fpn_GroupList.Dock = DockStyle.Top;
+      fpn_GroupList.FlowDirection = FlowDirection.TopDown;
+      fpn_GroupList.Location = new Point(0, 0);
+      fpn_GroupList.Margin = new Padding(0);
+      fpn_GroupList.Name = "fpn_GroupList";
+      fpn_GroupList.Size = new Size(259, 511);
+      fpn_GroupList.TabIndex = 0;
+      fpn_GroupList.WrapContents = false;
+      fpn_GroupList.Scroll += fpn_GroupList_Scroll;
+      fpn_GroupList.Resize += fpn_GroupList_Resize;
       // 
       // pn_ChatViewZone
       // 
@@ -64,6 +98,11 @@
       chatView1.Size = new Size(621, 541);
       chatView1.TabIndex = 0;
       // 
+      // bw_LoadGroupList
+      // 
+      bw_LoadGroupList.DoWork += bw_LoadGroupList_DoWork;
+      bw_LoadGroupList.RunWorkerCompleted += bw_LoadGroupList_RunWorkerCompleted;
+      // 
       // GroupView
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
@@ -74,6 +113,7 @@
       Size = new Size(880, 541);
       Load += GroupView_Load;
       Resize += GroupView_Resize;
+      pn_GroupSideBar.ResumeLayout(false);
       pn_ChatViewZone.ResumeLayout(false);
       ResumeLayout(false);
     }
@@ -83,5 +123,9 @@
     private Panel pn_GroupSideBar;
     private Panel pn_ChatViewZone;
     private ChatView chatView1;
+    private FlowLayoutPanel fpn_GroupList;
+    private System.ComponentModel.BackgroundWorker bw_LoadGroupList;
+    private Button button1;
+    private Button btn_AddGroup;
   }
 }

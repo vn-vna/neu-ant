@@ -27,12 +27,13 @@ namespace Neu.ANT.Backend.Controllers
 
     [HttpPost]
     public async Task<ApiResult<GroupCreationResult>> CreateGroup(
-      [FromHeader(Name = "USER_TOKEN")] string token)
+      [FromHeader(Name = "USER_TOKEN")] string token,
+      [FromForm(Name = "name")] string displayName)
     {
       var result = await ApiExecutorUtils.GetExecutor(async () =>
       {
         var uid = await _authenticationService.GetUidFromToken(token) ?? throw new InvalidTokenException();
-        var gid = await _groupManagementService.CreateGroup();
+        var gid = await _groupManagementService.CreateGroup(displayName);
         var rid = await _groupRelationService.CreateRelation(uid, gid, new Models.RelationPermission
         {
           IsAdmin = true,
