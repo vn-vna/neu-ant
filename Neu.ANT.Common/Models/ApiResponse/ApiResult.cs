@@ -15,9 +15,6 @@ namespace Neu.ANT.Common.Models.ApiResponse
     [JsonProperty("error_message")]
     public string? Error { get; set; }
 
-    [JsonProperty("error_code")]
-    public int? ErrorCode { get; set; }
-
     [JsonProperty("result")]
     public T? Result { get; set; }
   }

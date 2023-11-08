@@ -1,6 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions;
-using Neu.ANT.Common.Exceptions.UserInfoClient;
-using Neu.ANT.Common.Models.ApiResponse;
+﻿using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.UserData;
 using Newtonsoft.Json;
 using RestSharp;
@@ -33,7 +31,7 @@ namespace Neu.ANT.Common.Clients
 
       if (!result.Success)
       {
-        throw new FetchInfoFailedException();
+        throw new Exception("Cannot fetch user info");
       }
 
       _userData = result.Result;
@@ -54,7 +52,7 @@ namespace Neu.ANT.Common.Clients
 
       if (!result.Success)
       {
-        throw new ChangePasswordFailedException((ErrorCode)result.ErrorCode);
+        throw new Exception("Cannot change password");
       }
     }
 
@@ -75,7 +73,7 @@ namespace Neu.ANT.Common.Clients
 
       if (!result.Success)
       {
-        throw new UpdateUserDataFailedException((ErrorCode)result.ErrorCode);
+        throw new Exception("Cannot update user data");
       }
     }
 
@@ -83,7 +81,7 @@ namespace Neu.ANT.Common.Clients
 
     public RestClient UserDataRestClient
     {
-      get => new RestClient($"{_auth.BaseUrl}/api/user");
+      get => new RestClient($"{_auth.BaseUrl}/api/users");
     }
   }
 }

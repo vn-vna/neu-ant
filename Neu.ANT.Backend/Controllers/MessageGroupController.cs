@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Neu.ANT.Backend.Exceptions;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse;
@@ -8,7 +7,7 @@ using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
 
 namespace Neu.ANT.Backend.Controllers
 {
-  [Route("api/group")]
+  [Route("api/groups")]
   [ApiController]
   public class MessageGroupController : Controller
   {
@@ -26,13 +25,13 @@ namespace Neu.ANT.Backend.Controllers
     }
 
     [HttpPost]
-    public async Task<ApiResult<GroupCreationResult>> CreateGroup(
+    public async Task<ApiResult<bool>> CreateGroup(
       [FromHeader(Name = "USER_TOKEN")] string token,
       [FromForm(Name = "name")] string displayName)
     {
       var result = await ApiExecutorUtils.GetExecutor(async () =>
       {
-        var uid = await _authenticationService.GetUidFromToken(token) ?? throw new InvalidTokenException();
+        var uid = await _authenticationService.GetUidFromToken(token);
         var gid = await _groupManagementService.CreateGroup(displayName);
         var rid = await _groupRelationService.CreateRelation(uid, gid, new Models.RelationPermission
         {
@@ -40,22 +39,19 @@ namespace Neu.ANT.Backend.Controllers
           IsInviter = true
         });
         return gid;
-      }).Execute(gid => new GroupCreationResult()
-      {
-        GroupId = gid,
-      });
+      }).Execute(gid => !string.IsNullOrEmpty(gid));
 
       return result;
     }
 
     [HttpGet]
-    public async Task<ApiResult<GetUserGroupsInfoResult>> GetUserGroups(
+    public async Task<ApiResult<GroupInfosView>> GetUserGroups(
       [FromHeader(Name = "USER_TOKEN")] string tokenId)
     {
       return await ApiExecutorUtils
         .GetExecutor(async () =>
         {
-          var userId = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
+          var userId = await _authenticationService.GetUidFromToken(tokenId);
           var groupIds = await _groupRelationService.GetGroupsByUserId(userId);
           var rawInfo = await _groupManagementService.GetGroupInfos(groupIds);
 
@@ -66,53 +62,41 @@ namespace Neu.ANT.Backend.Controllers
           }).ToList();
 
         })
-        .Execute(ginfs => new GetUserGroupsInfoResult
+        .Execute(ginfs => new GroupInfosView
         {
           Groups = ginfs
         });
     }
 
-    [HttpGet("{gid}/invite")]
-    public async Task<ApiResult<CreateInvitationResult>> CreateInviteLink(
-      [FromHeader(Name = "USER_TOKEN")] string tokenId,
-      [FromRoute(Name = "gid")] string gid)
-    {
-      throw new NotImplementedException();
-    }
-
-    [HttpGet("{gid}/invite/{uid}")]
-    public async Task<ApiResult<CreateInvitationResult>> InviteUserToJoin(
+    [HttpPost("{gid}/invite")]
+    public async Task<ApiResult<string>> InviteUserToJoin(
       [FromHeader(Name = "USER_TOKEN")] string tokenId,
       [FromRoute(Name = "gid")] string groupId,
-      [FromRoute(Name = "uid")] string userId)
+      [FromForm(Name = "uid")] string userId)
     {
       return await ApiExecutorUtils
         .GetExecutor(async () =>
         {
-          var senderId = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
+          var senderId = await _authenticationService.GetUidFromToken(tokenId);
           var invitationId = await _groupRelationService.CreateInvitationToUser(senderId, groupId, userId);
           return invitationId;
         })
-        .Execute(invId => new CreateInvitationResult()
-        {
-          InvitationId = invId,
-        });
+        .Execute(invId => invId);
     }
 
-    [HttpGet("join/{invite}")]
+    [HttpPost("join")]
     public async Task<ApiResult<bool>> JoinGroup(
       [FromHeader(Name = "USER_TOKEN")] string tokenId,
-      [FromRoute(Name = "invite")] string inviteId)
+      [FromForm(Name = "invite")] string inviteId)
     {
       return await ApiExecutorUtils
         .GetExecutor(async () =>
         {
-          var uid = await _authenticationService.GetUidFromToken(tokenId) ?? throw new InvalidTokenException();
+          var uid = await _authenticationService.GetUidFromToken(tokenId);
           var relationId = await _groupRelationService.JoinByInvitationId(uid, inviteId);
           return relationId;
         })
-        .Execute(relId => relId is not null);
-
+        .Execute(relId => !string.IsNullOrEmpty(relId));
     }
   }
 }

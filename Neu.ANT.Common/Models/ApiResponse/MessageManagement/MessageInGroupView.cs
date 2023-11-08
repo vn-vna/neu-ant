@@ -22,7 +22,7 @@ namespace Neu.ANT.Common.Models.ApiResponse.MessageManagement
     public string Sender { get; set; }
   }
 
-  public class GetMessagesInGroupResult
+  public class MessageInGroupView
   {
     [JsonProperty("messages")]
     public List<MessageData> Messages { get; set; }

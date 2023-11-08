@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Authentication;
-using Neu.ANT.Backend.Exceptions;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse;
@@ -11,7 +10,7 @@ using Neu.ANT.Common.Models.ApiResponse.UserData;
 
 namespace Neu.ANT.Backend.Controllers
 {
-  [Route("api/user")]
+  [Route("api/users")]
   [ApiController]
   public class UserDataController : ControllerBase
   {

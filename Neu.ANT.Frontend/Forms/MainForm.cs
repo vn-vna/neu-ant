@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.AuthenticationClient;
-using Neu.ANT.Frontend.Components;
+﻿using Neu.ANT.Frontend.Components;
 using Neu.ANT.Frontend.States;
 using System;
 using System.Collections.Generic;
@@ -32,7 +31,7 @@ namespace Neu.ANT.Frontend.Forms
         AccountState.Instance.AuthClient.LoadToken(Properties.Settings.Default.SavedToken);
         _stateController.SetState(MainFormState.AppCenter);
       }
-      catch (SignInFailedException)
+      catch (Exception)
       {
         _stateController.SetState(MainFormState.WelcomePage);
       }

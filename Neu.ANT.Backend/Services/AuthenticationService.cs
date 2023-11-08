@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Backend.Exceptions;
-using Neu.ANT.Backend.Utilities;
+﻿using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse.Authenticate;
 
 namespace Neu.ANT.Backend.Services
@@ -36,7 +35,7 @@ namespace Neu.ANT.Backend.Services
 
       if (DateTime.UtcNow > tokenObj.DateExpired)
       {
-        throw new TokenExpiredException();
+        throw new Exception("Token expired");
       }
 
       await _tokenService.ExtendToken(token);

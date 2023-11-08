@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions;
-using Neu.ANT.Common.Models.ApiResponse;
+﻿using Neu.ANT.Common.Models.ApiResponse;
 
 namespace Neu.ANT.Backend.Utilities
 {
@@ -22,11 +21,10 @@ namespace Neu.ANT.Backend.Utilities
         result.Success = true;
         result.Result = mapping(ret);
       }
-      catch (AntBaseException abex)
+      catch (Exception ex)
       {
         result.Success = false;
-        result.ErrorCode = (int)abex.ErrorCode;
-        result.Error = abex.Message;
+        result.Error = ex.Message;
       }
 
       return result;

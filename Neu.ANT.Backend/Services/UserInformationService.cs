@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Neu.ANT.Backend.Configurations;
-using Neu.ANT.Backend.Exceptions;
 using Neu.ANT.Common.Models;
 using Neu.ANT.Backend.Utilities;
 using System.Security.Cryptography;
@@ -25,7 +24,7 @@ namespace Neu.ANT.Backend.Services
     {
       if (await IsUsernameExists(username))
       {
-        throw new UserExistsException();
+        throw new Exception("Username already exists");
       }
 
       var uid = Guid.NewGuid().ToString();
@@ -44,14 +43,14 @@ namespace Neu.ANT.Backend.Services
             r => r.Username == username &&
             r.HashedPassword == AuthenticationUtils.GetPasswordHash(username, password)).ToListAsync())
         .FirstOrDefault()?.UserId
-        ?? throw new AuthenticationErrorException();
+        ?? throw new Exception("Invalid username or password");
 
     public async Task<bool> ChangeUserPassword(string userid, string oldPassword, string newPassword)
     {
       var userData = await GetUserById(userid);
       if (AuthenticationUtils.GetPasswordHash(userData.Username, oldPassword) != userData.HashedPassword)
       {
-        throw new AuthenticationErrorException();
+        throw new Exception("Invalid password");
       }
 
       var filter = Builders<UserModel>.Filter
@@ -68,11 +67,11 @@ namespace Neu.ANT.Backend.Services
 
     public async Task<UserModel> GetUserById(string uid)
         => (await _userCollection.Find(r => r.UserId == uid).ToListAsync()).FirstOrDefault()
-        ?? throw new UserNotFoundException();
+        ?? throw new Exception("Invalid user id");
 
     public async Task<UserModel> FindUserByUsername(string username)
         => (await _userCollection.Find(r => r.Username == username).ToListAsync()).FirstOrDefault()
-        ?? throw new UserNotFoundException();
+        ?? throw new Exception("Invalid username");
 
     public async Task<bool> UpdateUser(UserModel user)
     {
@@ -90,7 +89,7 @@ namespace Neu.ANT.Backend.Services
 
       if (result.ModifiedCount < 1)
       {
-        throw new UpdateUserFailedException();
+        throw new Exception("Failed to update user");
       }
 
       return true;

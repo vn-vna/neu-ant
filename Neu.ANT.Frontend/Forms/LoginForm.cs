@@ -8,8 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Neu.ANT.Common.Exceptions;
-using Neu.ANT.Common.Exceptions.AuthenticationClient;
 using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.Components;
 
@@ -117,10 +115,10 @@ namespace Neu.ANT.Frontend.Forms
             .AuthClient
             .SignIn(username, password);
         }
-        catch (SignInFailedException lfex)
+        catch (Exception ex)
         {
           MessageBox.Show(
-            $"Reason: {lfex.Message}",
+            $"Reason: {ex.Message}",
             "Login Failed",
             MessageBoxButtons.OK,
             MessageBoxIcon.Error);

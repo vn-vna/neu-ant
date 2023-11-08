@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.SignalR;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
-using Neu.ANT.Common.Exceptions;
 using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.Authenticate;
 

@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.UserInfoClient;
-using Neu.ANT.Frontend.Components;
+﻿using Neu.ANT.Frontend.Components;
 using Neu.ANT.Frontend.States;
 using System;
 using System.Collections.Generic;
@@ -114,7 +113,7 @@ namespace Neu.ANT.Frontend.Forms
           MessageBoxButtons.OK,
           MessageBoxIcon.Information);
       }
-      catch (ChangePasswordFailedException ex)
+      catch (Exception ex)
       {
         MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;

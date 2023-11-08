@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.AuthenticationClient;
-using Neu.ANT.Common.Models.ApiResponse;
+﻿using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
 using Newtonsoft.Json;
 using RestSharp;
@@ -31,7 +30,7 @@ namespace Neu.ANT.Common.Clients
 
       var response = RestClient.Get(request);
 
-      var result = JsonConvert.DeserializeObject<ApiResult<GetUserGroupsInfoResult>>(response.Content);
+      var result = JsonConvert.DeserializeObject<ApiResult<GroupInfosView>>(response.Content);
 
       if (result.Success)
       {
@@ -60,7 +59,7 @@ namespace Neu.ANT.Common.Clients
     {
       get
       {
-        return new RestClient($"{_clientUrl}/api/group");
+        return new RestClient($"{_clientUrl}/api/groups");
       }
     }
 

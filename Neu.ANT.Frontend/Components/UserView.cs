@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.UserInfoClient;
-using Neu.ANT.Common.Models.ApiResponse.UserData;
+﻿using Neu.ANT.Common.Models.ApiResponse.UserData;
 using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.States;
 using System;
@@ -196,10 +195,10 @@ namespace Neu.ANT.Frontend.Components
           .UserInfoClient
           .UpdateUserData(firstName, lastName, birthDate, gender);
       }
-      catch (UpdateUserDataFailedException)
+      catch (Exception ex)
       {
         MessageBox.Show(
-          "Cập nhật thông tin thất bại.",
+          $"Cập nhật thông tin thất bại. Lý do: {ex.Message}",
           "Lỗi",
           MessageBoxButtons.OK,
           MessageBoxIcon.Error);

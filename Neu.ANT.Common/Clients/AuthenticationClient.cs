@@ -1,5 +1,4 @@
-﻿using Neu.ANT.Common.Exceptions.AuthenticationClient;
-using Neu.ANT.Common.Models.ApiResponse;
+﻿using Neu.ANT.Common.Models.ApiResponse;
 using Neu.ANT.Common.Models.ApiResponse.Authenticate;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,7 +16,7 @@ namespace Neu.ANT.Common.Clients
     private string? _userToken;
     public readonly string? BaseUrl;
 
-    public string UserToken => _userToken ?? throw new AuthenticationRequiredException();
+    public string UserToken => _userToken ?? throw new Exception("No user token found");
     public bool IsAuthenticated => _userToken != null; 
 
     public AuthenticationClient(string clientUrl)
@@ -37,7 +36,7 @@ namespace Neu.ANT.Common.Clients
       var result = JsonConvert.DeserializeObject<ApiResult<SignInResult>>(response.Content);
       if (!result.Success)
       {
-        throw new SignInFailedException($"Cannot log in as user {username}: [CODE {result.ErrorCode}] {result.Error}");
+        throw new Exception("Cannot sign in");
       }
 
       this._userToken = result.Result.TokenId;
@@ -55,7 +54,7 @@ namespace Neu.ANT.Common.Clients
 
       if (!result.Success)
       {
-        throw new SignUpFailedException($"Cannot sign up as user {username}");
+        throw new Exception("Cannot sign up");
       }
     }
 
@@ -63,7 +62,7 @@ namespace Neu.ANT.Common.Clients
     {
       if (string.IsNullOrEmpty(token))
       {
-        throw new SignInFailedException("No sign in token found");
+        throw new Exception("Token cannot be empty");
       }
 
       var request = new RestRequest("uid");
@@ -74,7 +73,7 @@ namespace Neu.ANT.Common.Clients
 
       if (!result.Success)
       {
-        throw new SignInFailedException("Cannot login with saved token");
+        throw new Exception("Cannot load token");
       }
 
       _userToken = token;

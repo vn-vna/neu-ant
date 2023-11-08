@@ -22,7 +22,7 @@ namespace Neu.ANT.Common.Models.ApiResponse.GroupManagement
     public List<string> LatestMessages { get; set; }
   }
 
-  public class GetUserGroupsInfoResult
+  public class GroupInfosView
   {
     public List<UserGroupInfo> Groups { get; set; }
   }
