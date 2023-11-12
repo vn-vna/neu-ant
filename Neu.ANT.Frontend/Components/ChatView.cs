@@ -1,4 +1,5 @@
 ﻿using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
+using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.States;
 using System;
 using System.Collections.Generic;
@@ -109,6 +110,8 @@ namespace Neu.ANT.Frontend.Components
           _msgList.Last().Content.Add($"{msg.SentDateTime} - {msg.Content}");
         }
       }
+
+      _msgList.Reverse();
     }
 
     private void RefreshMessageViews()
@@ -124,7 +127,8 @@ namespace Neu.ANT.Frontend.Components
       foreach (var msg in _msgList)
       {
         var msgItem = new MessageItem();
-        msgItem.SenderDisplayName = _members[msg.Sender].Name;
+        var displayName = string.IsNullOrEmpty(_members[msg.Sender].Name) ? $"@{_members[msg.Sender].Username}" : _members[msg.Sender].Name;
+        msgItem.SenderDisplayName = displayName;
         msgItem.Messages = msg.Content;
 
         fpn_MessageHistory.Controls.Add(msgItem);
@@ -182,6 +186,18 @@ namespace Neu.ANT.Frontend.Components
       {
         bw_SendMessage.RunWorkerAsync();
       }
+    }
+
+    private void btn_Invite_Click(object sender, EventArgs e)
+    {
+      var inviteForm = new InviteForm();
+      inviteForm.GroupId = GroupId;
+      inviteForm.ShowDialog();
+    }
+
+    private void btn_Options_Click(object sender, EventArgs e)
+    {
+
     }
   }
 }

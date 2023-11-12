@@ -60,7 +60,13 @@ namespace Neu.ANT.Frontend.Components
     {
       _userData = ApplicationState.Instance.UserInfoClient.UserData;
 
-      lb_DisplayName.Text = $"{_userData.FirstName} {_userData.LastName}";
+      var name = $"{_userData.FirstName} {_userData.LastName}".Trim();
+      if (string.IsNullOrEmpty(name))
+      {
+        name = "Không có tên";
+      }
+
+      lb_DisplayName.Text = name;
       lb_SummaryUsername.Text = $"@{_userData.UserName}";
       tb_FirstName.Text = _userData.FirstName;
       tb_LastName.Text = _userData.LastName;
@@ -123,6 +129,11 @@ namespace Neu.ANT.Frontend.Components
       MainForm.Instance
         .FormStateController
         .SetState(MainForm.MainFormState.WelcomePage);
+
+      ApplicationState
+        .Instance
+        .MessageGroupClient
+        .ClearData();
     }
 
     private void bw_LoadUserData_DoWork(object sender, DoWorkEventArgs e)

@@ -38,6 +38,42 @@ namespace Neu.ANT.Common.Clients
       }
 
       _groupInfos = result.Result.Groups;
+
+      _groupInfos.Sort((a, b) =>
+      {
+        if (a.LatestMessage.SentDateTime == null)
+        {
+          return 1;
+        }
+
+        if (b.LatestMessage.SentDateTime == null)
+        {
+          return -1;
+        }
+
+        if (a.LatestMessage.SentDateTime > b.LatestMessage.SentDateTime)
+        {
+          return -1;
+        }
+
+        if (a.LatestMessage.SentDateTime < b.LatestMessage.SentDateTime)
+        {
+          return 1;
+        }
+
+        if (a.Created > b.Created)
+        {
+          return -1;
+        }
+
+        if (a.Created < b.Created)
+        {
+          return 1;
+        }
+
+        return 0;
+      });
+
     }
 
     public void CreateGroup(string groupName)
@@ -72,6 +108,28 @@ namespace Neu.ANT.Common.Clients
       }
 
       return result.Result.Members;
+    }
+
+    public void SendInvite(string gid, string uid)
+    {
+      var request = new RestRequest("{gid}/invite")
+        .AddHeader("USER_TOKEN", _authClient.UserToken)
+        .AddUrlSegment("gid", gid)
+        .AddParameter("uid", uid);
+
+      var response = RestClient.Post(request);
+
+      var result = JsonConvert.DeserializeObject<ApiResult<string>>(response.Content);
+
+      if (!result.Success)
+      {
+        throw new Exception(result.Error);
+      }
+    }
+
+    public void ClearData()
+    {
+      _groupInfos = null;
     }
 
     public List<UserGroupInfo> GroupInfos => _groupInfos;

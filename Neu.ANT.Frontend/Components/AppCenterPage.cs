@@ -46,11 +46,12 @@ namespace Neu.ANT.Frontend.Components
           break;
 
         case AppCenterPageState.ChatView:
-          pn_Content.Controls.Add(new ChatView());
+          page = new ChatView();
           break;
 
         case AppCenterPageState.NotificationView:
           btn_Notification.BackColor = Color.LightSeaGreen;
+          page = new InvitationView();
           break;
 
         default:

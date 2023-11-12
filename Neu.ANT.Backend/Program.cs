@@ -1,5 +1,6 @@
 
 using Neu.ANT.Backend.Configurations;
+using Neu.ANT.Backend.Notification;
 using Neu.ANT.Backend.Services;
 using System.Diagnostics.CodeAnalysis;
 
@@ -32,6 +33,8 @@ namespace Neu.ANT.Backend
       app.UseAuthorization();
       app.MapControllers();
 
+      app.MapHub<NotificationHub>("/hub/notifications");
+
       return app;
     }
 
@@ -44,15 +47,15 @@ namespace Neu.ANT.Backend
 
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
+      builder.Services.AddSwaggerGenNewtonsoftSupport();
       builder.Services.AddSingleton<DatabaseConnectionService>();
-
       builder.Services.AddSingleton<UserInformationService>();
       builder.Services.AddSingleton<SessionTokenService>();
       builder.Services.AddSingleton<GroupManagementService>();
       builder.Services.AddSingleton<GroupRelationService>();
       builder.Services.AddSingleton<MessageManagementService>();
       builder.Services.AddSingleton<AuthenticationService>();
-      builder.Services.AddSwaggerGenNewtonsoftSupport();
+      builder.Services.AddSignalR();
 
       builder.Services.AddControllers().AddNewtonsoftJson();
     }

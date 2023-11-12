@@ -82,6 +82,7 @@
       btn_Options.TabIndex = 0;
       btn_Options.Text = " ";
       btn_Options.UseVisualStyleBackColor = true;
+      btn_Options.Click += btn_Options_Click;
       // 
       // btn_Invite
       // 
@@ -95,6 +96,7 @@
       btn_Invite.TabIndex = 1;
       btn_Invite.Text = " ";
       btn_Invite.UseVisualStyleBackColor = true;
+      btn_Invite.Click += btn_Invite_Click;
       // 
       // panel1
       // 

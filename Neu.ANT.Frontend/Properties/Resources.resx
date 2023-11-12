@@ -139,14 +139,17 @@
   <data name="LoadingAnim" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LoadingAnim.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="AddUser32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AddUser32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Menu32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Menu32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="User_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\User_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Welcome_Illut" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Welcome_Illut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Plus32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Plus32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="QuestionMark32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\QuestionMark32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,8 +172,17 @@
   <data name="Apple_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Apple_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Check32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Check32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="UserDefault32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UserDefault32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XSign32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XSign32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AddUser32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AddUser32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Pass_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pass_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,7 +193,10 @@
   <data name="Notification32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Notification32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Menu32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Menu32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CheckTeal32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CheckTeal32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CloseRed32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CloseRed32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

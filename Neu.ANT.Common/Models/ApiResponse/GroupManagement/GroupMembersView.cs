@@ -14,6 +14,9 @@ namespace Neu.ANT.Common.Models.ApiResponse.GroupManagement
 
     [JsonProperty("name")]
     public string Name { get; set; }
+
+    [JsonProperty("username")]
+    public string Username { get; set; }
   }
 
   public class GroupMembersView

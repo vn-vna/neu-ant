@@ -14,5 +14,8 @@
     <Setting Name="AppCenterState" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="BackendBaseUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:5192</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

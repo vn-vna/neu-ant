@@ -102,5 +102,8 @@ namespace Neu.ANT.Backend.Services
     public async Task<bool> IsUsernameExists(string username)
         => await _userCollection.Find(m => m.Username == username).AnyAsync();
 
+    public async Task<List<UserModel>> SearchUserByUsername(string pattern, int limit)
+        => await _userCollection.Find(m => m.Username.Contains(pattern)).Limit(limit).ToListAsync();
+
   }
 }
