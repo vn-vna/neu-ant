@@ -77,6 +77,24 @@ namespace Neu.ANT.Common.Clients
       }
     }
 
+    public List<UserIdentityInfo> SearchUsername(string pattern = "")
+    {
+      var request = new RestRequest("search/username")
+        .AddHeader("USER_TOKEN", _auth.UserToken)
+        .AddQueryParameter("q", pattern);
+
+      var response = UserDataRestClient.Get(request);
+
+      var result = JsonConvert.DeserializeObject<ApiResult<UserSearchView>>(response.Content);
+
+      if (!result.Success)
+      {
+        throw new Exception("Cannot search username");
+      }
+
+      return result.Result.UserIdentityInfos;
+    }
+
     public UserDataView UserData => _userData;
 
     public RestClient UserDataRestClient

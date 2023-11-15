@@ -33,7 +33,7 @@ namespace Neu.ANT.Common.Clients
 
       var response = AuthRestClient.Post(request);
 
-      var result = JsonConvert.DeserializeObject<ApiResult<SignInResult>>(response.Content);
+      var result = JsonConvert.DeserializeObject<ApiResult<ActionSignInResult>>(response.Content);
       if (!result.Success)
       {
         throw new Exception("Cannot sign in");
@@ -50,7 +50,7 @@ namespace Neu.ANT.Common.Clients
       request.AddParameter("password", password);
       var response = AuthRestClient.Post(request);
 
-      var result = JsonConvert.DeserializeObject<ApiResult<SignUpResult>>(response.Content);
+      var result = JsonConvert.DeserializeObject<ApiResult<ActionSignUpResult>>(response.Content);
 
       if (!result.Success)
       {

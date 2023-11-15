@@ -1,4 +1,5 @@
 ﻿using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
+using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.States;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ namespace Neu.ANT.Frontend.Components
     private Dictionary<string, MemberInfo> _members { get; set; }
 
     public string GroupId { get; set; }
+    public string GroupName
+    {
+      get => lb_GroupName.Text;
+      set => lb_GroupName.Text = value;
+    }
 
     public ChatView()
     {
@@ -79,13 +85,15 @@ namespace Neu.ANT.Frontend.Components
       _members = ApplicationState
         .Instance
         .MessageGroupClient
-        .GetMemberInfos(GroupId).ToDictionary(x => x.Id);
+        .GetMemberInfos(GroupId)
+        .ToDictionary(x => x.Id);
 
       var messages = ApplicationState.Instance
         .MessageClient
         .GetMessage(GroupId, null, null, null);
 
       _msgList.Clear();
+      messages.Messages.Reverse();
 
       foreach (var msg in messages.Messages)
       {
@@ -102,6 +110,8 @@ namespace Neu.ANT.Frontend.Components
           _msgList.Last().Content.Add($"{msg.SentDateTime} - {msg.Content}");
         }
       }
+
+      _msgList.Reverse();
     }
 
     private void RefreshMessageViews()
@@ -117,7 +127,8 @@ namespace Neu.ANT.Frontend.Components
       foreach (var msg in _msgList)
       {
         var msgItem = new MessageItem();
-        msgItem.SenderDisplayName = _members[msg.Sender].Name;
+        var displayName = string.IsNullOrEmpty(_members[msg.Sender].Name) ? $"@{_members[msg.Sender].Username}" : _members[msg.Sender].Name;
+        msgItem.SenderDisplayName = displayName;
         msgItem.Messages = msg.Content;
 
         fpn_MessageHistory.Controls.Add(msgItem);
@@ -135,12 +146,13 @@ namespace Neu.ANT.Frontend.Components
       Invoke(RefreshMessageViews);
     }
 
-    private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-    {
-
-    }
     private void bw_SendMessage_DoWork(object sender, DoWorkEventArgs e)
     {
+      if (string.IsNullOrEmpty(tb_MessageContent.Text))
+      {
+        return;
+      }
+
       ApplicationState
         .Instance
         .MessageClient
@@ -174,6 +186,18 @@ namespace Neu.ANT.Frontend.Components
       {
         bw_SendMessage.RunWorkerAsync();
       }
+    }
+
+    private void btn_Invite_Click(object sender, EventArgs e)
+    {
+      var inviteForm = new InviteForm();
+      inviteForm.GroupId = GroupId;
+      inviteForm.ShowDialog();
+    }
+
+    private void btn_Options_Click(object sender, EventArgs e)
+    {
+
     }
   }
 }

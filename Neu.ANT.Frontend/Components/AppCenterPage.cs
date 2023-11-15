@@ -1,4 +1,5 @@
-﻿using Neu.ANT.Frontend.States;
+﻿using Neu.ANT.Common.Clients;
+using Neu.ANT.Frontend.States;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,15 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tulpep.NotificationWindow;
 
 namespace Neu.ANT.Frontend.Components
 {
   public partial class AppCenterPage : UserControl
   {
     private readonly CommonStateController<AppCenterPageState> _stateController;
+    private readonly NotificationHubClient _notificationHubClient;
 
     public AppCenterPage()
     {
+      _notificationHubClient = new NotificationHubClient(ApplicationState.Instance.AuthClient);
+
       InitializeComponent();
       _stateController = new CommonStateController<AppCenterPageState>(this, AppCenterPageState.Undefined);
       _stateController.OnStateChange += HandleStateChange;
@@ -46,11 +51,12 @@ namespace Neu.ANT.Frontend.Components
           break;
 
         case AppCenterPageState.ChatView:
-          pn_Content.Controls.Add(new ChatView());
+          page = new ChatView();
           break;
 
         case AppCenterPageState.NotificationView:
           btn_Notification.BackColor = Color.LightSeaGreen;
+          page = new InvitationView();
           break;
 
         default:
@@ -65,13 +71,38 @@ namespace Neu.ANT.Frontend.Components
 
       pn_Content.ResumeLayout(true);
 
-      Properties.Settings.Default.AppCenterState = (int) state;
+      Properties.Settings.Default.AppCenterState = (int)state;
       Properties.Settings.Default.Save();
     }
 
     private void AppCenterPage_Load(object sender, EventArgs e)
     {
-      var savedState = (AppCenterPageState) Properties.Settings.Default.AppCenterState;
+      _notificationHubClient.OnInvitation += () =>
+      {
+        NotificationManager
+          .Instance.ShowNotification(
+          "New Invitation",
+          "You have a new invitation",
+          (n) => { _stateController.SetState(AppCenterPageState.NotificationView); },
+          this);
+      };
+
+      _notificationHubClient.OnMessage += () =>
+      {
+        NotificationManager .Instance.ShowNotification( 
+          "New Message", 
+          "You have new message", 
+          (n) => { _stateController.SetState(AppCenterPageState.ChatView); }, 
+          this);
+      };
+
+      var exception = _notificationHubClient.Connect().Exception;
+      if (exception is not null)
+      {
+        MessageBox.Show("Cant connect to notification hub", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+
+      var savedState = (AppCenterPageState)Properties.Settings.Default.AppCenterState;
 
       if (savedState == AppCenterPageState.Undefined)
       {
@@ -101,7 +132,6 @@ namespace Neu.ANT.Frontend.Components
         Width = this.Width - 60,
         Height = this.Height,
       };
-
     }
 
 

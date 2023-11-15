@@ -63,7 +63,7 @@ namespace Neu.ANT.Frontend.Components
     private void GroupView_Load(object sender, EventArgs e)
     {
       ResponsiveResizeComponents();
-
+      StateController.SetState(GroupViewState.LoadingList);
       bw_LoadGroupList.RunWorkerAsync();
     }
 
@@ -103,6 +103,11 @@ namespace Neu.ANT.Frontend.Components
     private void GroupItem_OnClick(object sender, EventArgs e)
     {
       GroupItem item = sender as GroupItem;
+      if (_currentGroupId == item.GroupId)
+      {
+        return;
+      }
+
       _currentGroupId = item.GroupId;
 
       foreach (var control in fpn_GroupList.Controls)
@@ -117,9 +122,12 @@ namespace Neu.ANT.Frontend.Components
       pn_ChatViewZone.SuspendLayout();
       pn_ChatViewZone.Controls.Clear();
 
-      var chatView = new ChatView();
-      chatView.GroupId = item.GroupId;
-      chatView.Dock = DockStyle.Fill;
+      var chatView = new ChatView
+      {
+        GroupName = item.GroupName,
+        GroupId = item.GroupId,
+        Dock = DockStyle.Fill
+      };
 
       pn_ChatViewZone.Controls.Add(chatView);
 
@@ -149,20 +157,23 @@ namespace Neu.ANT.Frontend.Components
         {
           GroupItem groupItem = item as GroupItem;
           var horizontalMargin = groupItem.Margin.Left + groupItem.Margin.Right;
-          groupItem.Width = fpn_GroupList.Width - (itemOverflow ? SystemInformation.VerticalScrollBarWidth + horizontalMargin : horizontalMargin);
+          groupItem.MinimumSize = new Size()
+          {
+            Width = fpn_GroupList.Width - (itemOverflow ? SystemInformation.VerticalScrollBarWidth + horizontalMargin : horizontalMargin),
+            Height = groupItem.Height
+          };
         }
       }
       fpn_GroupList.ResumeLayout(true);
     }
 
-    private void RefreshGroupList()
+    private void RefreshGroupListUI()
     {
       fpn_GroupList.SuspendLayout();
 
-      if (fpn_GroupList.Controls.Count > 0)
-      {
-        fpn_GroupList.Controls.Clear();
-      }
+      var controlMap = fpn_GroupList.Controls
+        .Cast<GroupItem>()
+        .ToDictionary(x => x.GroupId, x => x);
 
       var list = ApplicationState.Instance.MessageGroupClient.GroupInfos;
 
@@ -170,20 +181,47 @@ namespace Neu.ANT.Frontend.Components
       {
         foreach (var item in list)
         {
-          var groupItem = new GroupItem();
-          groupItem.Click += GroupItem_OnClick;
-          groupItem.GroupName = item.DisplayName ?? "Unamed";
-          groupItem.LastMessage = item.LatestMessages?.FirstOrDefault() ?? "---";
-          groupItem.GroupId = item.GroupId;
+          var hasLatestMessage = item.LatestMessage.Content is not null;
+          var latestMsgDisp = hasLatestMessage ? $"{item.LatestMessage.SenderName ?? $"@{item.LatestMessage.SenderUsername}"}: {item.LatestMessage.Content}" : "Không có tin nhắn nào";
 
-          if (item.GroupId == _currentGroupId)
+          if (controlMap.ContainsKey(item.GroupId))
           {
-            groupItem.BackColor = Color.Khaki;
-          }
+            var groupItem = controlMap[item.GroupId];
+            groupItem.GroupName = item.DisplayName;
+            groupItem.GroupId = item.GroupId;
 
-          fpn_GroupList.Controls.Add(groupItem);
+            groupItem.LastMessage = latestMsgDisp;
+          }
+          else
+          {
+
+            var groupItem = new GroupItem()
+            {
+              GroupName = item.DisplayName,
+              GroupId = item.GroupId,
+              LastMessage = latestMsgDisp,
+              Dock = DockStyle.Top,
+              MinimumSize = new Size()
+              {
+                Width = fpn_GroupList.Width,
+                Height = 50
+              }
+            };
+
+            groupItem.Click += GroupItem_OnClick;
+
+            fpn_GroupList.Controls.Add(groupItem);
+            controlMap.Add(item.GroupId, groupItem);
+          }
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+          fpn_GroupList.Controls.SetChildIndex(controlMap[list[i].GroupId], i);
         }
       }
+
+      ResponsiveResizeComponents();
 
       fpn_GroupList.ResumeLayout(true);
 
@@ -193,9 +231,6 @@ namespace Neu.ANT.Frontend.Components
 
     private void bw_LoadGroupList_DoWork(object sender, DoWorkEventArgs e)
     {
-      StateController
-        .SetState(GroupViewState.LoadingList);
-
       ApplicationState
         .Instance
         .MessageGroupClient
@@ -206,7 +241,7 @@ namespace Neu.ANT.Frontend.Components
     {
       Invoke(() =>
       {
-        RefreshGroupList();
+        RefreshGroupListUI();
       });
     }
 

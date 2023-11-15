@@ -15,12 +15,14 @@ namespace Neu.ANT.Frontend.States
     public readonly UserInfoClient UserInfoClient;
     public readonly GroupClient MessageGroupClient;
     public readonly MessageClient MessageClient;
+    public readonly InvitationClient InvitationClient;
 
     public ApplicationState() {
-      AuthClient = new AuthenticationClient("http://localhost:5192");
+      AuthClient = new AuthenticationClient(Properties.Settings.Default.BackendBaseUrl);
       UserInfoClient = new UserInfoClient(AuthClient);
       MessageGroupClient = new GroupClient(AuthClient);
       MessageClient = new MessageClient(AuthClient);
+      InvitationClient = new InvitationClient(AuthClient);
     }
 
     public static ApplicationState Instance { get { return _instance.Value; } }

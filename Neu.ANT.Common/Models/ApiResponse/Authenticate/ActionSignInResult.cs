@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Neu.ANT.Common.Models.ApiResponse.Authenticate
 {
-  public class SignUpResult
+  public class ActionSignInResult
   {
-    [JsonProperty("uid")]
-    public string? UserId { get; set; } = null;
+    [JsonProperty("token")]
+    public string? TokenId { get; set; }
   }
 }

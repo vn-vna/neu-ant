@@ -70,5 +70,17 @@ namespace Neu.ANT.Frontend.Properties {
                 this["AppCenterState"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5192")]
+        public string BackendBaseUrl {
+            get {
+                return ((string)(this["BackendBaseUrl"]));
+            }
+            set {
+                this["BackendBaseUrl"] = value;
+            }
+        }
     }
 }

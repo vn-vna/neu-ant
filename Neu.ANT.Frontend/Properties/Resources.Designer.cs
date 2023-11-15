@@ -63,9 +63,49 @@ namespace Neu.ANT.Frontend.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddUser32 {
+            get {
+                object obj = ResourceManager.GetObject("AddUser32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Apple_Icon {
             get {
                 object obj = ResourceManager.GetObject("Apple_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Check32 {
+            get {
+                object obj = ResourceManager.GetObject("Check32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckTeal32 {
+            get {
+                object obj = ResourceManager.GetObject("CheckTeal32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CloseRed32 {
+            get {
+                object obj = ResourceManager.GetObject("CloseRed32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -106,6 +146,16 @@ namespace Neu.ANT.Frontend.Properties {
         internal static System.Drawing.Bitmap LoadingAnim1 {
             get {
                 object obj = ResourceManager.GetObject("LoadingAnim1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Menu32 {
+            get {
+                object obj = ResourceManager.GetObject("Menu32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,6 +206,16 @@ namespace Neu.ANT.Frontend.Properties {
         internal static System.Drawing.Bitmap Pass_Icon {
             get {
                 object obj = ResourceManager.GetObject("Pass_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Plus32 {
+            get {
+                object obj = ResourceManager.GetObject("Plus32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +316,16 @@ namespace Neu.ANT.Frontend.Properties {
         internal static System.Drawing.Bitmap Welcome_Illut_Oval {
             get {
                 object obj = ResourceManager.GetObject("Welcome_Illut_Oval", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap XSign32 {
+            get {
+                object obj = ResourceManager.GetObject("XSign32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
