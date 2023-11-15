@@ -138,7 +138,7 @@ namespace Neu.ANT.Frontend.Forms
     {
       if (ApplicationState.Instance.AuthClient.IsAuthenticated)
       {
-        this.Invoke(new Action(() =>
+        this.Invoke(new Action(async () =>
         {
           bool savePassword = cb_RememberLogin.Checked;
 

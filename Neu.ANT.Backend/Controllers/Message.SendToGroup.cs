@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models;
 using Neu.ANT.Common.Models.ApiResponse;
 
 namespace Neu.ANT.Backend.Controllers
 {
-  public partial class MessageController
+    public partial class MessageController
   {
     [HttpPost("{gid}")]
     public async Task<ApiResult<bool>> CreateMessageInGroup(
@@ -18,10 +19,10 @@ namespace Neu.ANT.Backend.Controllers
         {
           var uid = await _authenticationService.GetUidFromToken(token);
           var relation = await _groupRelationService.GetRelation(uid, groupId);
-
+          var messageId = Guid.NewGuid().ToString();
           var message = new MessageModel
           {
-            MessageId = Guid.NewGuid().ToString(),
+            MessageId = messageId,
             Content = content,
             GroupId = groupId,
             Sender = uid,
@@ -29,6 +30,7 @@ namespace Neu.ANT.Backend.Controllers
           };
 
           await _messageManagementService.AppendMessage(message);
+          _notificationQueueService.AddMessageNotification(groupId, messageId);
           return true;
         })
         .Execute(ack =>

@@ -21,7 +21,7 @@ namespace Neu.ANT.Frontend.Forms
     {
       InitializeComponent();
       _stateController = new CommonStateController<MainFormState>(this, MainFormState.Undefined);
-      _stateController.OnStateChange += MainForm_ListenState;
+      _stateController.OnStateChange += HandleState;
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace Neu.ANT.Frontend.Forms
       }
     }
 
-    private void MainForm_ListenState(MainFormState state)
+    private void HandleState(MainFormState state)
     {
       this.Invoke(new Action(() =>
       {

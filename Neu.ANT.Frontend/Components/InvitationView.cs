@@ -38,7 +38,12 @@ namespace Neu.ANT.Frontend.Components
       fpn_Content.SuspendLayout();
       fpn_Content.Controls.Clear();
 
-      foreach (var invitation in _invitations)
+      var invitations = _invitations
+        .OrderByDescending(invitation => invitation.Value.CreatedDatetime)
+        .OrderBy(invitation => invitation.Value.Responded)
+        .ToList();
+
+      foreach (var invitation in invitations)
       {
         var item = new InvitationItem();
         item.InvitationId = invitation.Key;
@@ -56,9 +61,12 @@ namespace Neu.ANT.Frontend.Components
 
         item.Responded = invitation.Value.Responded;
 
+        var itemOverflowed = invitations.Count * (item.Height + item.Margin.Top + item.Margin.Bottom) > fpn_Content.Height;
+        var itemWidth = fpn_Content.Width - (itemOverflowed ? SystemInformation.VerticalScrollBarWidth : 0) - item.Margin.Left - item.Margin.Right;
+
         item.Size = new Size()
         {
-          Width = fpn_Content.Width,
+          Width = itemWidth,
           Height = item.Height
         };
         fpn_Content.Controls.Add(item);

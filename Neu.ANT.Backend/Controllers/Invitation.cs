@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Neu.ANT.Backend.Notification;
 using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse;
@@ -15,17 +16,20 @@ namespace Neu.ANT.Backend.Controllers
     private readonly GroupManagementService _groupManagementService;
     private readonly GroupRelationService _groupRelationService;
     private readonly UserInformationService _userInfoService;
+    private readonly NotificationQueueService _notificationQueueService;
 
     public InvitationController(
       AuthenticationService authenticationService,
       GroupManagementService groupDbService,
       GroupRelationService groupRelationDbService,
-      UserInformationService userInformationService)
+      UserInformationService userInformationService,
+      NotificationQueueService notificationQueueService)
     {
       _authenticationService = authenticationService;
       _groupManagementService = groupDbService;
       _groupRelationService = groupRelationDbService;
       _userInfoService = userInformationService;
+      _notificationQueueService = notificationQueueService;
     }
   }
 }

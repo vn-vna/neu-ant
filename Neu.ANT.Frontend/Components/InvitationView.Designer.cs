@@ -34,6 +34,7 @@
       // 
       // fpn_Content
       // 
+      fpn_Content.AutoScroll = true;
       fpn_Content.BackColor = Color.White;
       fpn_Content.FlowDirection = FlowDirection.TopDown;
       fpn_Content.Location = new Point(90, 0);
@@ -41,6 +42,7 @@
       fpn_Content.Name = "fpn_Content";
       fpn_Content.Size = new Size(635, 544);
       fpn_Content.TabIndex = 0;
+      fpn_Content.WrapContents = false;
       // 
       // bw_LoadIvitationList
       // 

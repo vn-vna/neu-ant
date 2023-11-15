@@ -48,6 +48,7 @@ namespace Neu.ANT.Backend
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
       builder.Services.AddSwaggerGenNewtonsoftSupport();
+      builder.Services.AddSignalR();
       builder.Services.AddSingleton<DatabaseConnectionService>();
       builder.Services.AddSingleton<UserInformationService>();
       builder.Services.AddSingleton<SessionTokenService>();
@@ -55,7 +56,7 @@ namespace Neu.ANT.Backend
       builder.Services.AddSingleton<GroupRelationService>();
       builder.Services.AddSingleton<MessageManagementService>();
       builder.Services.AddSingleton<AuthenticationService>();
-      builder.Services.AddSignalR();
+      builder.Services.AddSingleton<NotificationQueueService>();
 
       builder.Services.AddControllers().AddNewtonsoftJson();
     }

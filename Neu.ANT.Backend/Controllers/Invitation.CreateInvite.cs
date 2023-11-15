@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Neu.ANT.Backend.Services;
 using Neu.ANT.Backend.Utilities;
 using Neu.ANT.Common.Models.ApiResponse;
 
 namespace Neu.ANT.Backend.Controllers
 {
-  public partial class InvitationController
+    public partial class InvitationController
   {
     [HttpPost]
     public async Task<ApiResult<string>> InviteUserToJoin(
@@ -17,6 +18,7 @@ namespace Neu.ANT.Backend.Controllers
         {
           var senderId = await _authenticationService.GetUidFromToken(tokenId);
           var invitationId = await _groupRelationService.CreateInvitationToUser(senderId, groupId, userId);
+          _notificationQueueService.AddInvitationNotification(userId, invitationId);
           return invitationId;
         })
         .Execute(invId => invId);

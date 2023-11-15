@@ -5,7 +5,7 @@ using Neu.ANT.Common.Models.ApiResponse.UserData;
 
 namespace Neu.ANT.Backend.Controllers
 {
-  public partial class UserData
+  public partial class UserDataController
   {
     [HttpGet("{username}")]
     public async Task<ApiResult<UserDataView>> InspectUser(

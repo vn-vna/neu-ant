@@ -7,6 +7,8 @@ namespace Neu.ANT.Backend.Notification
   {
     public async Task<ApiResult<bool>> Authorize(string token)
     {
+      Console.WriteLine($"Client {Context.ConnectionId} trying to authorize with token {token}");
+
       return await ApiExecutorUtils
         .GetExecutor(async () =>
           {
@@ -18,7 +20,15 @@ namespace Neu.ANT.Backend.Notification
 
             foreach (var group in userGroups)
             {
-              await Groups.AddToGroupAsync(Context.ConnectionId, group.Id);
+              await Groups.AddToGroupAsync(Context.ConnectionId, group);
+            }
+
+            if (uid != null)
+            {
+              Console.WriteLine($"User {uid} connected to notification hub");
+            } else
+            {
+              Console.WriteLine($"User authorization error for client id: {Context.ConnectionId}");
             }
 
             return uid != null;
