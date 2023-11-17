@@ -13,6 +13,8 @@ namespace Neu.ANT.Frontend.States
 
     public static NotificationManager Instance => _instance.Value;
 
+    public Form FormContext { get; set; }
+
     private List<NotificationForm> _notifications;
 
     private NotificationManager()
@@ -22,9 +24,9 @@ namespace Neu.ANT.Frontend.States
 
     public delegate void NotificationAction(NotificationForm notificationForm);
 
-    public void ShowNotification(string title, string content, NotificationAction action, Control parent)
+    public void ShowNotification(string title, string content, NotificationAction action)
     {
-      parent.Invoke(() =>
+      FormContext.Invoke(() =>
       {
         var noti = new NotificationForm
         {
@@ -36,16 +38,21 @@ namespace Neu.ANT.Frontend.States
 
         _notifications.Add(noti);
         noti.Show();
+
+        ReOrderNotification();
       });
 
-      ReOrderNotification();
     }
 
     public void CloseNotification(NotificationForm notificationForm)
     {
-      _notifications.Remove(notificationForm);
-      notificationForm.Close();
-      ReOrderNotification();
+      FormContext.Invoke(() =>
+      {
+        _notifications.Remove(notificationForm);
+        notificationForm.Close();
+
+        ReOrderNotification();
+      });
     }
 
     private void ReOrderNotification()
@@ -57,7 +64,7 @@ namespace Neu.ANT.Frontend.States
         notification.Location = new Point
         {
           X = Screen.PrimaryScreen.Bounds.X - notification.Width - 20,
-          Y = Screen.PrimaryScreen.Bounds.Y + Screen.PrimaryScreen.Bounds.Height - notification.Height * (i + 1) - 20 * (i + 1)
+          Y = Screen.PrimaryScreen.Bounds.Y - notification.Height * (i + 1) - 20 * (i + 1)
         };
       }
     }

@@ -16,12 +16,9 @@ namespace Neu.ANT.Frontend.Components
   public partial class AppCenterPage : UserControl
   {
     private readonly CommonStateController<AppCenterPageState> _stateController;
-    private readonly NotificationHubClient _notificationHubClient;
 
     public AppCenterPage()
     {
-      _notificationHubClient = new NotificationHubClient(ApplicationState.Instance.AuthClient);
-
       InitializeComponent();
       _stateController = new CommonStateController<AppCenterPageState>(this, AppCenterPageState.Undefined);
       _stateController.OnStateChange += HandleStateChange;
@@ -77,26 +74,19 @@ namespace Neu.ANT.Frontend.Components
 
     private void AppCenterPage_Load(object sender, EventArgs e)
     {
-      _notificationHubClient.OnInvitation += () =>
+
+      ApplicationState
+        .Instance
+        .NotificationHubClient.OnInvitation += () =>
       {
-        NotificationManager
-          .Instance.ShowNotification(
-          "New Invitation",
-          "You have a new invitation",
-          (n) => { _stateController.SetState(AppCenterPageState.NotificationView); },
-          this);
+        var result = MessageBox.Show("You have new invitation", "Invitation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        if (result == DialogResult.OK)
+        {
+          StateController.SetState(AppCenterPageState.NotificationView);
+        }
       };
 
-      _notificationHubClient.OnMessage += () =>
-      {
-        NotificationManager .Instance.ShowNotification( 
-          "New Message", 
-          "You have new message", 
-          (n) => { _stateController.SetState(AppCenterPageState.ChatView); }, 
-          this);
-      };
-
-      var exception = _notificationHubClient.Connect().Exception;
+      var exception = ApplicationState.Instance.NotificationHubClient.Connect().Exception;
       if (exception is not null)
       {
         MessageBox.Show("Cant connect to notification hub", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -21,6 +21,7 @@ namespace Neu.ANT.Backend.Notification
             foreach (var group in userGroups)
             {
               await Groups.AddToGroupAsync(Context.ConnectionId, group);
+              Console.WriteLine($"User {uid} added to group {group}");
             }
 
             if (uid != null)
