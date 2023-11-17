@@ -26,6 +26,8 @@ namespace Neu.ANT.Frontend.Forms
 
     private void MainForm_Load(object sender, EventArgs e)
     {
+      NotificationManager.Instance.FormContext = this;
+
       try
       {
         ApplicationState.Instance.AuthClient.LoadToken(Properties.Settings.Default.SavedToken);

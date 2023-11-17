@@ -1,4 +1,5 @@
-﻿using Neu.ANT.Frontend.Forms;
+﻿using Neu.ANT.Common.Clients;
+using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.States;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,20 @@ namespace Neu.ANT.Frontend.Components
   public partial class GroupView : UserControl
   {
     private CommonStateController<GroupViewState> StateController;
+    private readonly NotificationHubClient _notificationHubClient;
     private string _currentGroupId;
 
     public GroupView()
     {
+      _notificationHubClient = ApplicationState.Instance.NotificationHubClient;
       StateController = new CommonStateController<GroupViewState>(this, GroupViewState.Undefined);
       StateController.OnStateChange += HandleState;
       InitializeComponent();
+
+      this.HandleDestroyed += (sender, e) =>
+      {
+        _notificationHubClient.OnMessage -= bw_LoadGroupList.RunWorkerAsync;
+      };
     }
 
     private void HandleState(GroupViewState state)
@@ -62,6 +70,8 @@ namespace Neu.ANT.Frontend.Components
 
     private void GroupView_Load(object sender, EventArgs e)
     {
+      _notificationHubClient.OnMessage += bw_LoadGroupList.RunWorkerAsync;
+
       ResponsiveResizeComponents();
       StateController.SetState(GroupViewState.LoadingList);
       bw_LoadGroupList.RunWorkerAsync();

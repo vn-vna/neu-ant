@@ -16,6 +16,7 @@ namespace Neu.ANT.Frontend.States
     public readonly GroupClient MessageGroupClient;
     public readonly MessageClient MessageClient;
     public readonly InvitationClient InvitationClient;
+    public readonly NotificationHubClient NotificationHubClient;
 
     public ApplicationState() {
       AuthClient = new AuthenticationClient(Properties.Settings.Default.BackendBaseUrl);
@@ -23,6 +24,7 @@ namespace Neu.ANT.Frontend.States
       MessageGroupClient = new GroupClient(AuthClient);
       MessageClient = new MessageClient(AuthClient);
       InvitationClient = new InvitationClient(AuthClient);
+      NotificationHubClient = new NotificationHubClient(AuthClient);
     }
 
     public static ApplicationState Instance { get { return _instance.Value; } }

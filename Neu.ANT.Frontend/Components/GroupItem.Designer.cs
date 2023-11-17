@@ -36,7 +36,7 @@
       // 
       // pb_GroupImage
       // 
-      pb_GroupImage.Image = Properties.Resources.QuestionMark256;
+      pb_GroupImage.Image = Properties.Resources.AntLogo;
       pb_GroupImage.Location = new Point(5, 5);
       pb_GroupImage.Margin = new Padding(5);
       pb_GroupImage.Name = "pb_GroupImage";

@@ -64,11 +64,15 @@ namespace Neu.ANT.Backend.Services
     {
       if (notification is InvitationNotification invitationNotification)
       {
-        _notificationHub.Clients.Group(invitationNotification.Receiver).SendAsync("Invitation", invitationNotification.InvitationId);
+        Console.WriteLine($"Sending invitation notification to {invitationNotification.Receiver}");
+        _notificationHub.Clients.Group(invitationNotification.Receiver)
+          .SendAsync("Invitation", invitationNotification.InvitationId);
       }
       else if (notification is MessageNotification messageNotification)
       {
-        _notificationHub.Clients.Group(messageNotification.GroupId).SendAsync("Message", messageNotification.MessageId);
+        Console.WriteLine($"Sending message notification to {messageNotification.GroupId}");
+        _notificationHub.Clients.Group(messageNotification.GroupId)
+          .SendAsync("Message", messageNotification.MessageId);
       }
     }
   }

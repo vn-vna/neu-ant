@@ -1,4 +1,5 @@
-﻿using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
+﻿using Neu.ANT.Common.Clients;
+using Neu.ANT.Common.Models.ApiResponse.GroupManagement;
 using Neu.ANT.Frontend.Forms;
 using Neu.ANT.Frontend.States;
 using System;
@@ -17,6 +18,7 @@ namespace Neu.ANT.Frontend.Components
   {
     private List<ConsecutiveMessages> _msgList { get; set; }
     private Dictionary<string, MemberInfo> _members { get; set; }
+    private NotificationHubClient _notificationHubClient { get; set; }
 
     public string GroupId { get; set; }
     public string GroupName
@@ -27,12 +29,20 @@ namespace Neu.ANT.Frontend.Components
 
     public ChatView()
     {
+      _notificationHubClient = ApplicationState.Instance.NotificationHubClient;
       _msgList = new List<ConsecutiveMessages>();
       InitializeComponent();
+
+      this.HandleDestroyed += (sender, e) =>
+      {
+        _notificationHubClient.OnMessage -= bw_FetchMessage.RunWorkerAsync;
+      };
     }
 
     private void ChatView_Load(object sender, EventArgs e)
     {
+      _notificationHubClient.OnMessage += bw_FetchMessage.RunWorkerAsync;
+
       ResponsiveResizeComponents();
       bw_FetchMessage.RunWorkerAsync();
     }

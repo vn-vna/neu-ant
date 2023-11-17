@@ -40,7 +40,7 @@ namespace Neu.ANT.Common.Clients
         OnInvitation?.Invoke();
       });
 
-      _connection.On<string, string>("Message", (message, groupId) =>
+      _connection.On<string>("Message", (message) =>
       {
         OnMessage?.Invoke();
       });

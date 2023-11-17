@@ -73,6 +73,26 @@ namespace Neu.ANT.Frontend.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AntLogo {
+            get {
+                object obj = ResourceManager.GetObject("AntLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AntLogo_Animated {
+            get {
+                object obj = ResourceManager.GetObject("AntLogo_Animated", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Apple_Icon {
             get {
                 object obj = ResourceManager.GetObject("Apple_Icon", resourceCulture);

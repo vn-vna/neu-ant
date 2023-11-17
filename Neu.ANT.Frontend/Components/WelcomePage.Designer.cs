@@ -75,7 +75,7 @@
       // 
       // pictureBox1
       // 
-      pictureBox1.Image = Properties.Resources.Welcome_Illut;
+      pictureBox1.Image = Properties.Resources.AntLogo;
       pictureBox1.Location = new Point(33, 99);
       pictureBox1.Margin = new Padding(0);
       pictureBox1.Name = "pictureBox1";
