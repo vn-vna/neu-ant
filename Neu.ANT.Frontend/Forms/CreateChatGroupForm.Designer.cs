@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateChatGroupForm));
       label1 = new Label();
       tb_newGroupName = new TextBox();
       btn_Create = new Button();
@@ -81,6 +82,7 @@
       Controls.Add(tb_newGroupName);
       Controls.Add(label1);
       FormBorderStyle = FormBorderStyle.FixedDialog;
+      Icon = (Icon)resources.GetObject("$this.Icon");
       Name = "CreateChatGroupForm";
       StartPosition = FormStartPosition.CenterScreen;
       Text = "Tạo nhóm mới";

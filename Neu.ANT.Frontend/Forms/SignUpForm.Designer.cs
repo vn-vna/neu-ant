@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignUpForm));
       panel1 = new Panel();
       button1 = new Button();
       checkBox1 = new CheckBox();
@@ -157,6 +158,7 @@
       ClientSize = new Size(316, 509);
       Controls.Add(panel1);
       FormBorderStyle = FormBorderStyle.FixedDialog;
+      Icon = (Icon)resources.GetObject("$this.Icon");
       Name = "SignUpForm";
       StartPosition = FormStartPosition.CenterScreen;
       Text = "Đăng kí tài khoản";

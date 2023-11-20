@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       pn_Cotent = new Panel();
       SuspendLayout();
       // 
@@ -46,8 +47,7 @@
       BackColor = Color.White;
       ClientSize = new Size(1008, 561);
       Controls.Add(pn_Cotent);
-      MaximumSize = new Size(1366, 768);
-      MinimumSize = new Size(1024, 560);
+      Icon = (Icon)resources.GetObject("$this.Icon");
       Name = "MainForm";
       StartPosition = FormStartPosition.CenterScreen;
       Text = "ANT Messenger";

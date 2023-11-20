@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
       loginBackgrounWorker = new System.ComponentModel.BackgroundWorker();
       pn_Content = new Panel();
       pn_LoginPanel = new Panel();
@@ -161,6 +162,7 @@
       BackColor = Color.White;
       ClientSize = new Size(316, 509);
       Controls.Add(pn_Content);
+      Icon = (Icon)resources.GetObject("$this.Icon");
       MaximizeBox = false;
       MinimizeBox = false;
       Name = "LoginForm";

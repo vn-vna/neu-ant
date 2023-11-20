@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangePasswordForm));
       pn_Content = new Panel();
       panel1 = new Panel();
       lb_ConfirmPassword = new Label();
@@ -160,6 +161,7 @@
       BackColor = Color.White;
       ClientSize = new Size(316, 509);
       Controls.Add(pn_Content);
+      Icon = (Icon)resources.GetObject("$this.Icon");
       Name = "ChangePasswordForm";
       StartPosition = FormStartPosition.CenterScreen;
       Text = "Đổi mật khẩu";
