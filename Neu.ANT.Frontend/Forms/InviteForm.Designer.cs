@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InviteForm));
       lb_Username = new Label();
       tb_Username = new TextBox();
       lb_Title = new Label();
@@ -109,6 +110,7 @@
       Controls.Add(tb_Username);
       Controls.Add(lb_Username);
       FormBorderStyle = FormBorderStyle.FixedSingle;
+      Icon = (Icon)resources.GetObject("$this.Icon");
       Name = "InviteForm";
       Text = "InviteForm";
       FormClosing += InviteForm_FormClosing;
